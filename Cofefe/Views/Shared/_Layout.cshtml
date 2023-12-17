@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@model List<Product>;
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cofefe</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/StyleSheet.css" />
+</head>
+<body>
+    <header class="header">
+        <h1 class="shopname">Cofefe</h1>
+        <div class="shoppages">
+            <form style="grid-column: 1; justify-content:center; display:flex;"asp-action="Index" asp-controller="Home">
+                <button class="shoppagesbtn">Каталог</button>
+            </form>
+            <button class="shoppagesbtn" style="grid-column:2;">Корзина</button>
+            <form style="grid-column: 3; justify-content:center; display:flex;" asp-action="Favorite" asp-controller="Home">
+                <button type="submit" class="shoppagesbtn">Избранное</button>
+            </form>
+            <button class="shoppagesbtn" style="grid-column:4;">Выход</button>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

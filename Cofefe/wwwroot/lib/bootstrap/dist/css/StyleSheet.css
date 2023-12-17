@@ -1,0 +1,327 @@
+﻿body {
+    min-height: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto
+}
+
+.header {
+    width: auto;
+    height: 80px;
+    background-color: #391022;
+    grid-row: 1;
+    display:grid;
+    grid-template-columns: 20% 50% 30%;
+}
+
+.shopname {
+    margin-left: 20px;
+    margin-top: 20px;
+    color: #F7F7F7;
+    grid-column: 1;
+}
+
+.shoppages {
+    grid-column: 3;
+    display: flex;
+    align-content: center;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.shoppagesbtn {
+    background-color: #391022;
+    border: 0px;
+    color: #f7f7f7;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+.footer {
+    width: auto;
+    height: 80px;
+    grid-row: 3;
+    background-color: #391022;
+}
+
+.main {
+    width: auto;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-row: 2;
+}
+
+.filter {
+    grid-column: 1;
+    height: auto;
+    background-color: #9291A1;
+    display:grid;
+    grid-template-rows:50px 1fr;
+}
+.filternamediv {
+    display: flex;
+    font-size: 1.3em;
+    align-items: center;
+    justify-content: center;
+    grid-row: 1;
+}
+    .filternamediv h2 {
+        margin: 0;
+    }
+.filtercontentdiv {
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: 150px 150px 250px 150px 1fr;
+}
+.filtercontentdivelement1 {
+    grid-row: 1;
+    font-size: 1em;
+    display: grid;
+    
+    grid-template-rows: 25px 1fr;
+}
+    .filtercontentdivelement1 h2 {
+        margin: 0;
+    }
+.acidityname {
+    grid-row: 1;
+    display:flex;
+    justify-content: center;
+}
+.aciditycontent {
+    grid-row: 2;
+    user-select: none;
+    display:grid;
+    grid-template-rows: 33% 33% 33%;
+}
+.filtercontentdivelement2 {
+    grid-row: 2;
+    font-size: 1em;
+    display: grid;
+    grid-template-rows: 25px 1fr;
+}
+
+    .filtercontentdivelement2 h2 {
+        margin: 0;
+    }
+.densityname {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.densitycontent {
+    grid-row: 2;
+    user-select: none;
+    display: grid;
+    grid-template-rows: 33% 33% 33%;
+}
+.filtercontentdivelement3 {
+    grid-row: 3;
+    font-size: 1em;
+    display: grid;
+    grid-template-rows: 25px 1fr;
+}
+
+    .filtercontentdivelement3 h2 {
+        margin: 0;
+    }
+.growthname {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.growthcontent {
+    grid-row: 2;
+    user-select: none;
+    display: grid;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-columns: 50% 50%;
+}
+.filtercontentdivelement4 {
+    grid-row: 4;
+    font-size: 1em;
+    display: grid;
+    grid-template-rows: 25px 1fr;
+}
+
+    .filtercontentdivelement4 h2 {
+        margin: 0;
+    }
+.roastname {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.roastcontent {
+    grid-row: 2;
+    user-select: none;
+    display: grid;
+    grid-template-rows: 33% 33% 33%;
+}
+
+.catalog {
+    height: auto;
+    width: max-content;
+    max-width: 1603px;
+    background-color: #1B1924;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+    .shoppagesbtn:active {
+        filter: brightness(0.8);
+        background-color: #2e0d1b;
+    }
+
+
+.card {
+    width: 450px;
+    height: 300px;
+    border: solid 1px black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #FFF;
+    display: grid;
+    margin: 30px;
+    background-color: #9291A1;
+    grid-template-columns: 240px 210px;
+    grid-template-rows: 240px 60px;
+}
+
+.divtxt{
+    grid-column:2;
+    grid-row:1;
+    display:grid;
+    grid-template-columns:60% 40%;
+    grid-template-rows:20% 30% 50%;
+}
+.divnameprop {
+    grid-row: 2;
+    grid-column: 1;
+    border-right: 1px solid black;
+    margin-left: 3px;
+}
+.divdbvalue {
+    grid-row: 2;
+    grid-column: 2;
+    margin-left: 3px;
+}
+.divproductinf {
+    grid-row: 3;
+    grid-column:1/ span 2;
+    display: grid;
+    grid-template-rows: 55% 15% 30%;
+    
+}
+.divproductcost {
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: 45% 55%;
+}
+.divinf {
+    display: grid;
+    grid-column: 1;
+    grid-row: 2;
+    margin: 10px;
+    grid-template-columns: 20% 20% 30% 30%;
+    align-items: center;
+}
+.dbtext {
+    
+}
+h3 {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+}
+.textcard + .namecard + .dbtext {
+    font-size: 12px;
+    color: #F7F7F7;
+}
+
+.namecard {
+    grid-row: 1;
+    grid-column: 2;
+    text-align: center;
+    font-size: 20px;
+}
+
+.image {
+    width: 240px;
+    height: 240px;
+    border-radius: 10px 0px 10px 0px;
+    grid-column: 1;
+    grid-row: 1;
+    border:1px solid #391022;
+}
+
+.gradetext {
+    font-size: 20px;
+    grid-column: 2;
+    text-align:center;
+}
+
+
+.commentbtn {
+    width: 100px;
+    height: 35px;
+    margin-left: 10px;
+    grid-column: 3;
+    background-color: #9291A1;
+    border: 1px solid #391022;
+    cursor: pointer;
+}
+    .commentbtn:active {
+        background-color: #391022;
+        border-color: #9291A1;
+        transition: background-color 0.8s, border-color 0.8s, color 0.8s ease;
+    }
+
+.buttonbuy {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 15px 31px 15px 31px;
+    border-radius: 15px;
+    background-color: #6B617A;
+    border: 1px solid #391022;
+    cursor: pointer;
+}
+    .buttonbuy:active {
+        background-color: #391022;
+        border-color: #6B617A;
+        transition: background-color 0.4s, border-color 0.8s, color 0.8s ease;
+    }
+
+
+
+
+
+
+.favorite-btn {
+    display: inline-block;
+    font-size: 0;
+    white-space: nowrap;
+    grid-column: 1;
+    
+}
+
+    .favorite-btn input {
+        display: none;
+    }
+
+    .favorite-btn label {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 35px;
+        color: #F7F7F7;
+        user-select: none;
+    }
+
+    .favorite-btn input:checked + label {
+        color: #391022;
+        transition: background-color 0.4s, border-color 0.4s, color 0.4s ease;
+    }
