@@ -3,7 +3,64 @@
     ViewData["Title"] = "Избранное";
 }
 <link href="c:\users\user\source\repos\cofefe\cofefe\wwwroot\lib\bootstrap\dist\css\favoritestyle.css"/>
-
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/StyleSheet.css" />
 <div class="main">
-    <h1>ABOBA</h1>
+    <div class="filter">
+        <div class="filternamediv">
+            <h2>Фильтры</h2>
+        </div>
+        <div class="filtercontentdiv">
+            <div class="filtercontentdivelement1">
+                <div class="acidityname">
+                    <h2 style="height:20px">Кислотность</h2>
+                </div>
+                <div class="aciditycontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
+                </div>
+            </div>
+            <div class="filtercontentdivelement2">
+                <div class="densityname">
+                    <h2 style="height:20px">Плотность</h2>
+                </div>
+                <div class="densitycontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
+                </div>
+            </div>
+            <div class="filtercontentdivelement3">
+                <div class="growthname">
+                    <h2 style="height:20px">Страна произрастания</h2>
+                </div>
+                <div class="growthcontent">
+                    <label style="cursor:pointer; grid-row:1; grid-column:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Боливия</label>
+                    <label style="cursor:pointer; grid-row:2; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Бразилия</label>
+                    <label style="cursor:pointer; grid-row:3; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="High">Гватемала</label>
+                    <label style="cursor:pointer; grid-row:4; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Кения</label>
+                    <label style="cursor:pointer; grid-row:5; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Китай</label>
+                    <label style="cursor:pointer; grid-row:1; grid-column:2; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="High">Колумбия</label>
+                    <label style="cursor:pointer; grid-row:2; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Коста-Рика</label>
+                    <label style="cursor:pointer; grid-row:3; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Перу</label>
+                    <label style="cursor:pointer; grid-row:4; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Руанда</label>
+                    <label style="cursor:pointer; grid-row:5; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Эфиопия</label>
+                </div>
+            </div>
+            <div class="filtercontentdivelement4">
+                <div class="roastname">
+                    <h2 style="height:20px">Степень обжарки</h2>
+                </div>
+                <div class="roastcontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Светлая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Тёмная</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="catalog">
+        
+    </div>
 </div>

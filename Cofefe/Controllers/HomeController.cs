@@ -3,6 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace Cofefe.Controllers
 {
@@ -23,14 +26,12 @@ namespace Cofefe.Controllers
         }
         public ViewResult Favorite()
         {
-            
+
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -39,3 +40,4 @@ namespace Cofefe.Controllers
         }
     }
 }
+

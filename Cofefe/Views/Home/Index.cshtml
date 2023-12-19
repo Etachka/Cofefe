@@ -1,73 +1,83 @@
 ﻿@{
     ViewData["Title"] = "Cofefe";
+    int itemCount = 0;
 }
 @model List<Product>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/StyleSheet.css" />
 <div class="main">
-    <div class="main">
-        <div class="filter">
-            <div class="filternamediv">
-                <h2>Фильтры</h2>
+    <div class="filter">
+        <div class="filternamediv">
+            <h2>Фильтры</h2>
+        </div>
+        <div class="filtercontentdiv">
+            <div class="filtercontentdivelement1">
+                <div class="acidityname">
+                    <h2 style="height:20px">Кислотность</h2>
+                </div>
+                <div class="aciditycontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="aciditlow" value="Low">Низкая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="aciditymedium" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidityhigh" value="High">Высокая</label>
+                </div>
             </div>
-            <div class ="filtercontentdiv">
-                <div class="filtercontentdivelement1">
-                    <div class="acidityname">
-                        <h2 style="height:20px">Кислотность</h2>
-                    </div>
-                    <div class="aciditycontent">
-                        <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
-                        <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                        <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
-                    </div>
+            <div class="filtercontentdivelement2">
+                <div class="densityname">
+                    <h2 style="height:20px">Плотность</h2>
                 </div>
-                <div class="filtercontentdivelement2">
-                    <div class="densityname">
-                        <h2 style="height:20px">Плотность</h2>
-                    </div>
-                    <div class="densitycontent">
-                        <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
-                        <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                        <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
-                    </div>
+                <div class="densitycontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="densitylow" value="Low">Низкая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="densitymedium" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="densityhigh" value="High">Высокая</label>
                 </div>
-                <div class="filtercontentdivelement3">
-                    <div class="growthname">
-                        <h2 style="height:20px">Страна произрастания</h2>
-                    </div>
-                    <div class="growthcontent">
-                        <label style="cursor:pointer; grid-row:1; grid-column:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Боливия</label>
-                        <label style="cursor:pointer; grid-row:2; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Бразилия</label>
-                        <label style="cursor:pointer; grid-row:3; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="High">Гватемала</label>
-                        <label style="cursor:pointer; grid-row:4; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Кения</label>
-                        <label style="cursor:pointer; grid-row:5; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Китай</label>
-                        <label style="cursor:pointer; grid-row:1; grid-column:2; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="High">Колумбия</label>
-                        <label style="cursor:pointer; grid-row:2; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Коста-Рика</label>
-                        <label style="cursor:pointer; grid-row:3; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Перу</label>
-                        <label style="cursor:pointer; grid-row:4; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Руанда</label>
-                        <label style="cursor:pointer; grid-row:5; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Эфиопия</label>
-                    </div>
+            </div>
+            <div class="filtercontentdivelement3">
+                <div class="growthname">
+                    <h2 style="height:20px">Страна произрастания</h2>
                 </div>
-                <div class="filtercontentdivelement4">
-                    <div class="roastname">
-                        <h2 style="height:20px">Степень обжарки</h2>
-                    </div>
-                    <div class="roastcontent">
-                        <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Светлая</label>
-                        <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                        <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Тёмная</label>
-                    </div>
+                <div class="growthcontent">
+                    <label style="cursor:pointer; grid-row:1; grid-column:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="growthbolivia" value="Bolivia">Боливия</label>
+                    <label style="cursor:pointer; grid-row:2; grid-column:1; margin-left:20px"><input type="checkbox" name="growthbrazilia" value="Brazilia">Бразилия</label>
+                    <label style="cursor:pointer; grid-row:3; grid-column:1; margin-left:20px"><input type="checkbox" name="growthgvatemala" value="Gvatemala">Гватемала</label>
+                    <label style="cursor:pointer; grid-row:4; grid-column:1; margin-left:20px"><input type="checkbox" name="growthkenia" value="Kenia">Кения</label>
+                    <label style="cursor:pointer; grid-row:5; grid-column:1; margin-left:20px"><input type="checkbox" name="growthchina" value="China">Китай</label>
+                    <label style="cursor:pointer; grid-row:1; grid-column:2; margin-left:20px; margin-top:10px"><input type="checkbox" name="growthcolumbia" value="Columbia">Колумбия</label>
+                    <label style="cursor:pointer; grid-row:2; grid-column:2; margin-left:20px"><input type="checkbox" name="growthcostarica" value="Costarica">Коста-Рика</label>
+                    <label style="cursor:pointer; grid-row:3; grid-column:2; margin-left:20px"><input type="checkbox" name="growthperu" value="Peru">Перу</label>
+                    <label style="cursor:pointer; grid-row:4; grid-column:2; margin-left:20px"><input type="checkbox" name="growthruanda" value="Ruanda">Руанда</label>
+                    <label style="cursor:pointer; grid-row:5; grid-column:2; margin-left:20px"><input type="checkbox" name="growthefiopia" value="Efiopia">Эфиопия</label>
+                </div>
+            </div>
+            <div class="filtercontentdivelement4">
+                <div class="roastname">
+                    <h2 style="height:20px">Степень обжарки</h2>
+                </div>
+                <div class="roastcontent">
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="roastlow" value="Low">Светлая</label>
+                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="roastmedium" value="Medium">Средняя</label>
+                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="roasthigh" value="High">Тёмная</label>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="maincatalog">
+        <div class="searchdiv">
+            <div class="searchbardiv">
+                <input class="searchbar" type="text" id="myTextBox" name="myTextBox"">
+            </div>
+            <div class="itemcountdiv">
+                <div class="panelcount">
+                    <p id="itemCount" style="margin:0px;">@itemCount товаров</p>
+                </div>
+            </div>
+        </div>
         <div class="catalog">
-            @foreach(var product in Model)
+            @foreach (var product in Model)
             {
                 <div class="card">
                     <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
                     <h3 class="namecard">@product.Name</h3>
                     <div class="divtxt">
-                        
+
                         <div class="divnameprop">
                             <h3 class="textcard">Плотность</h3>
                             <h3 class="textcard">Кислотность</h3>
@@ -82,14 +92,14 @@
                         </div>
                         <div class="divproductinf">
                             <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
-                            <h3 style="grid-row:2; margin-left:5px;">Вес: @product.Weight г.</h3>
+                            <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
                             <div class="divproductcost">
-                                <h3 style="grid-column:1; margin-left:5px; font-size:20px">@product.Cost ₽</h3>
-                                <h3 style="grid-column:2; margin-left:5px;">На складе: @product.StockQuantity</h3>
+                                <h3 style="grid-column:1; margin-left:5px; font-size:20px;margin-top:10px;">@product.Cost ₽</h3>
+                                <h3 style="grid-column:2; margin-left:5px;margin-top:10px;">На складе: @product.StockQuantity</h3>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class="divinf">
                         <div class="favorite-btn">
@@ -99,11 +109,36 @@
                         <h3 class="gradetext">5.0</h3>
                         <button class="commentbtn">com</button>
                     </div>
-                    
-                    
+
+
                     <button class="buttonbuy">В корзину</button>
                 </div>
+                itemCount++;
+                
             }
         </div>
     </div>
+    
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var itemCountElement = document.getElementById('itemCount');
+        if (itemCountElement) {
+            var itemCount = @itemCount;
+            var lastDigit = itemCount % 10;
+            var wordForm = '';
+            if (itemCount >= 11 && itemCount <= 14) {
+                wordForm = 'товаров';
+            } else if (lastDigit === 1) {
+                wordForm = 'товар';
+            } else if (lastDigit >= 2 && lastDigit <= 4) {
+                wordForm = 'товара';
+            } else {
+                wordForm = 'товаров';
+            }
+            itemCountElement.innerText = itemCount + ' ' + wordForm;
+        }
+    });
+</script>
+
+

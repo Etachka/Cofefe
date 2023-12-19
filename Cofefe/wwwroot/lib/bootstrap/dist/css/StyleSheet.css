@@ -48,7 +48,7 @@
     width: auto;
     height: max-content;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 16% 84%;
     grid-row: 2;
 }
 
@@ -162,16 +162,59 @@
     display: grid;
     grid-template-rows: 33% 33% 33%;
 }
-
+.maincatalog{
+    display:grid;
+    grid-template-rows:75px 1fr;
+}
 .catalog {
+    grid-row:2;
     height: auto;
-    width: max-content;
-    max-width: 1603px;
     background-color: #1B1924;
     display: flex;
     flex-wrap: wrap;
 }
-
+.searchdiv {
+    grid-row: 1;
+    background-color: #1B1924;
+    display: grid;
+    grid-template-columns:85% 15%;
+}
+.searchbardiv {
+    grid-column: 1;
+    align-content: center;
+    justify-content: center;
+    display:flex;
+    flex-wrap:wrap;
+}
+.searchbar {
+    width: 1400px;
+    height: 45px;
+    margin: 10px 10px 10px 30px;
+    border-radius: 15px;
+    border: 0px;
+    font-size: 20px;
+}
+.itemcountdiv {
+    grid-column: 2;
+    align-content: center;
+    justify-content: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.panelcount {
+    margin: 10px;
+    background-color: #D9D9D9;
+    width:160px;
+    height:45px;
+    border-radius:25px;
+    border:0px;
+    align-content:center;
+    justify-content:center;
+    display:flex;
+    flex-wrap:wrap;
+}
 
     .shoppagesbtn:active {
         filter: brightness(0.8);
