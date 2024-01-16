@@ -1,7 +1,7 @@
 using Cofefe.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
+using Cofefe.ViewModels;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,12 +13,25 @@ namespace Cofefe.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationContext _context;
+        List<Product> products = new List<Product>();
+        List<User> users = new List<User>();
+
         public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
             _context = context;
         }
 
+        [HttpPost]
+        public IActionResult AdminView()
+        {
+            UserProductViewmodel VM = new UserProductViewmodel();
+            VM.Users = _context.Users.ToList();
+            VM.Products = _context.Products.ToList();
+            
+            return View(VM);
+        }
+        
         public ViewResult Index()
         {
             var product = _context.Products.ToList();
@@ -29,7 +42,12 @@ namespace Cofefe.Controllers
 
             return View();
         }
+        public ViewResult Cart()
+        {
 
+            return View();
+        }
+        
 
 
 

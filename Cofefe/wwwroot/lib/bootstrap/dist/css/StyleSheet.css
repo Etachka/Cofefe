@@ -216,10 +216,10 @@
     flex-wrap:wrap;
 }
 
-    .shoppagesbtn:active {
+.shoppagesbtn:active {
         filter: brightness(0.8);
         background-color: #2e0d1b;
-    }
+}
 
 
 .card {
@@ -299,7 +299,8 @@ h3 {
     border-radius: 10px 0px 10px 0px;
     grid-column: 1;
     grid-row: 1;
-    border:1px solid #391022;
+    border: 1px solid #391022;
+    user-select: none;
 }
 
 .gradetext {
@@ -336,6 +337,7 @@ h3 {
     .buttonbuy:active {
         background-color: #391022;
         border-color: #6B617A;
+        color:#F7F7F7;
         transition: background-color 0.4s, border-color 0.8s, color 0.8s ease;
     }
 

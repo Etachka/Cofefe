@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Чит-меню";
+}
+@using Cofefe.ViewModels
+@using Cofefe.Models
+
+@model UserProductViewmodel
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/AdminViewStyle.css" />
+
+<div class="main">
+    <div class="filter">
+        <form style="grid-row:1;" class="filtercatalog" method="post" action="/Home/GetUsers" id="userForm">
+            <button type="submit" class="btnproductcatalog">
+                <p id="catalog1">Каталог пользователей</p>
+            </button>
+        </form>
+        <form style="grid-row:2;" class="filtercatalog" method="post" action="/Home/GetProducts" id="catalogForm">
+            <button type="submit" class="btnproductcatalog" style="width:160px;">
+                <p id="catalog2">Каталог товаров</p>
+            </button>
+        </form>
+    </div>
+    @if (Model != null && Model.Products != null && Model.Products.Any())
+    {
+    <div class="catalogAdmin">
+        @foreach (var product in Model.Products)
+        {
+            <div class="card">
+                <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
+                <h3 class="namecard">@product.Name</h3>
+                <div class="divtxt">
+
+                    <div class="divnameprop">
+                        <h3 class="textcard">Плотность</h3>
+                        <h3 class="textcard">Кислотность</h3>
+                        <h3 class="textcard">Произрастание</h3>
+                        <h3 class="textcard">Степень обжарки</h3>
+                    </div>
+                    <div class="divdbvalue">
+                        <h3 class="textcard" alt="немало">немало</h3>
+                        <h3 class="textcard" alt="немного">немного</h3>
+                        <h3 class="textcard" alt="где-то">где-то</h3>
+                        <h3 class="textcard" alt="норм">норм</h3>
+                    </div>
+                    <div class="divproductinf">
+                        <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
+                        <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
+                        <div class="divproductcost">
+                            <h3 style="grid-column:1; margin-left:5px; font-size:20px;margin-top:10px;">@product.Cost ₽</h3>
+                            <h3 style="grid-column:2; margin-left:5px;margin-top:10px;">На складе: @product.StockQuantity</h3>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        }
+        @* @foreach (var user in Model.Users)
+        {
+            <div class="usercard" style="width:150px;height:300px; background-color:#9291A1">
+                    <h3 class="namecard">@user.FIO</h3>
+            </div>
+        } *@
+        </div>
+    }
+    else
+    {
+    <p>Нет доступных товаров.</p>
+    }
+</div>

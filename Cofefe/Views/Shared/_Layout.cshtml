@@ -15,11 +15,15 @@
             <form style="grid-column: 1; justify-content:center; display:flex;"asp-action="Index" asp-controller="Home">
                 <button class="shoppagesbtn">Каталог</button>
             </form>
-            <button class="shoppagesbtn" style="grid-column:2;">Корзина</button>
+            <form style="grid-column: 2; justify-content:center; display:flex;" asp-action="Cart" asp-controller="Home">
+                <button class="shoppagesbtn" style="grid-column:2;">Корзина</button>
+            </form>
             <form style="grid-column: 3; justify-content:center; display:flex;" asp-action="Favorite" asp-controller="Home">
                 <button type="submit" class="shoppagesbtn">Избранное</button>
             </form>
-            <button class="shoppagesbtn" style="grid-column:4;">Выход</button>
+            <form style="grid-column: 4; justify-content:center; display:flex;" asp-action="AdminView" asp-controller="Home">
+                <button class="shoppagesbtn">Выход</button>
+            </form>
         </div>
     </header>
     <div class="container">
