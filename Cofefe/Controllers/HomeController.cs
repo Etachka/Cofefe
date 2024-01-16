@@ -23,15 +23,24 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdminView()
+        public IActionResult GetProducts()
         {
             UserProductViewmodel VM = new UserProductViewmodel();
             VM.Users = _context.Users.ToList();
             VM.Products = _context.Products.ToList();
-            
-            return View(VM);
+            ViewBag.IsUsersCatalog = true;
+            return View("AdminView", VM);
         }
-        
+        [HttpPost]
+        public IActionResult GetUsers()
+        {
+            ViewBag.IsUsersCatalog = false;
+            UserProductViewmodel VM = new UserProductViewmodel();
+            VM.Users = _context.Users.ToList();
+            VM.Products = _context.Products.ToList();
+
+            return View("AdminView", VM);
+        }
         public ViewResult Index()
         {
             var product = _context.Products.ToList();
@@ -47,7 +56,11 @@ namespace Cofefe.Controllers
 
             return View();
         }
-        
+        public ViewResult AdminView()
+        {
+
+            return View();
+        }
 
 
 
