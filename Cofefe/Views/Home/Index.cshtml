@@ -2,7 +2,9 @@
     ViewData["Title"] = "Cofefe";
     int itemCount = 0;
 }
-@model List<Product>
+@using Cofefe.ViewModels
+@model ProductCategoryViewModel
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/StyleSheet.css" />
 <div class="main">
     <div class="filter">
@@ -71,31 +73,48 @@
             </div>
         </div>
         <div class="catalog">
-            @foreach (var product in Model)
+                @foreach (var product in Model.CategoryProducts
+            .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
+            .Join(Model.Products, x => x.cp.ProductID, p => p.Id, (x, p) => new { x.cp, x.c, p }))
             {
                 <div class="card">
-                    <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
-                    <h3 class="namecard">@product.Name</h3>
+                    <img class="image" alt="@product.p.Image" src="data:image/png;base64,@product.p.Image">
+                    <h3 class="namecard">@product.p.Name</h3>
                     <div class="divtxt">
 
                         <div class="divnameprop">
-                            <h3 class="textcard">Плотность</h3>
                             <h3 class="textcard">Кислотность</h3>
+                            <h3 class="textcard">Плотность</h3>
                             <h3 class="textcard">Произрастание</h3>
-                            <h3 class="textcard">Степень обжарки</h3>
-                        </div>
+                            <h3 class="textcard">Приготовление</h3>
+                        </div>  
                         <div class="divdbvalue">
-                            <h3 class="textcard" alt="немало">немало</h3>
-                            <h3 class="textcard" alt="немного">немного</h3>
-                            <h3 class="textcard" alt="где-то">где-то</h3>
-                            <h3 class="textcard" alt="норм">норм</h3>
+                                @if (product.c.Id == 1)
+                                {
+                                <h3 class="textcard" alt="кислотность">@product.cp.Value</h3>
+                                }
+                                else if (product.c.Id == 2)
+                                {
+                                <h3 class="textcard" alt="Плотность">@product.cp.Value</h3>
+                                }
+                                else if (product.c.Id == 3)
+                                {
+                                <h3 class="textcard" alt="Произрастание">@product.cp.Value</h3>
+                                }
+                                else if (product.c.Id == 4)
+                                {
+                                <h3 class="textcard" alt="Тип приготовления">@product.cp.Value</h3>
+                                }
+                            
+                            
+                           
                         </div>
                         <div class="divproductinf">
-                            <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
-                            <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
+                            <h3 style="grid-row:1; margin-left:5px;">@product.p.Description</h3>
+                            <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.p.Weight г.</h3>
                             <div class="divproductcost">
-                                <h3 style="grid-column:1; margin-left:5px; font-size:20px;margin-top:10px;">@product.Cost ₽</h3>
-                                <h3 style="grid-column:2; margin-left:5px;margin-top:10px;">На складе: @product.StockQuantity</h3>
+                                <h3 style="grid-column:1; margin-left:5px; font-size:20px;margin-top:10px;">@product.p.Cost ₽</h3>
+                                <h3 style="grid-column:2; margin-left:5px;margin-top:10px;">На складе: @product.p.StockQuantity</h3>
                             </div>
 
                         </div>
@@ -103,8 +122,8 @@
                     </div>
                     <div class="divinf">
                         <div class="favorite-btn">
-                            <input type="checkbox" id="favoriteStar_@product.Id" name="favorite">
-                            <label for="favoriteStar_@product.Id">&#9733;</label>
+                            <input type="checkbox" id="favoriteStar_@product.p.Id" name="favorite">
+                            <label for="favoriteStar_@product.p.Id">&#9733;</label>
                         </div>
                         <h3 class="gradetext">5.0</h3>
                         <button class="commentbtn">com</button>

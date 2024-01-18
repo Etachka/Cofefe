@@ -122,3 +122,72 @@ h3 {
     .btnproductcatalog:active {
         filter: brightness(0.8);
     }
+
+.usercard {
+    width: 350px;
+    height: 350px;
+    background-color: #9291A1;
+    display: grid;
+    grid-template-rows: 20% 30% 30% 20%;
+    border: solid 1px black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #FFF;
+    margin:20px;
+}
+.namediv {
+    grid-row: 1;
+    align-content:center;
+    justify-content:center;
+    display:flex;
+    flex-wrap:wrap;
+}
+.propdiv {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 25% 25% 25% 25%;
+}
+.deldiv {
+    grid-row: 4;
+    margin:10px;
+    display:grid;
+}
+.btndel {
+    margin: 5px 41px 15px 41px;
+    border-radius: 15px;
+    background-color: #391022;
+    color: #F7F7F7;
+    border:1px black solid;
+    cursor:pointer;
+}
+.btndel:active{
+    filter:brightness(0.9);
+}
+.emptycard {
+    width: 350px;
+    height: 350px;
+    border: solid 1px black;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 100%;
+    box-shadow: 0 4px 8px #FFF;
+    margin: 20px;
+    
+}
+.addbtn {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+    cursor: pointer;
+    grid-row: 1;
+    grid-column: 1;
+    background-color: #9291A1;
+    background-image: url("https://cdn.icon-icons.com/icons2/834/PNG/512/plus_icon-icons.com_66718.png") ;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:30%;
+}
+.addbtn:active{
+    filter:brightness(0.9);
+}

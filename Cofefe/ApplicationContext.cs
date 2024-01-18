@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 using Cofefe.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Cofefe
 {
     public class ApplicationContext: DbContext

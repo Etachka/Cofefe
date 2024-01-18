@@ -43,8 +43,14 @@ namespace Cofefe.Controllers
         }
         public ViewResult Index()
         {
-            var product = _context.Products.ToList();
-            return View(product);
+            ProductCategoryViewModel VM = new ProductCategoryViewModel
+            {
+                Products = _context.Products.ToList(),
+                CategoryProducts = _context.CategoryProducts.ToList(),
+                Categories = _context.Categoryes.ToList()
+            };
+
+            return View(VM);
         }
         public ViewResult Favorite()
         {
