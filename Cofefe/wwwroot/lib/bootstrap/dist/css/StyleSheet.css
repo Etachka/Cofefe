@@ -1,5 +1,5 @@
 ﻿body {
-    min-height: 100%;
+    min-height: 100vh;
     margin: 0;
     display: grid;
     grid-template-rows: auto 1fr auto
@@ -50,14 +50,16 @@
     display: grid;
     grid-template-columns: 16% 84%;
     grid-row: 2;
+    flex: 1;
 }
 
 .filter {
     grid-column: 1;
     height: auto;
     background-color: #9291A1;
-    display:grid;
-    grid-template-rows:50px 1fr;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    min-height:803px;
 }
 .filternamediv {
     display: flex;
@@ -183,16 +185,28 @@
     grid-column: 1;
     align-content: center;
     justify-content: center;
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
 }
 .searchbar {
-    width: 1400px;
+    width: 1000px;
     height: 45px;
-    margin: 10px 10px 10px 30px;
+    margin: 10px 20px 10px 10px;
     border-radius: 15px;
     border: 0px;
     font-size: 20px;
+    
+}
+.btnsrch {
+    background-color: #D9D9D9;
+    width: 160px;
+    height: 45px;
+    border-radius: 25px;
+    border: 0px;
+    margin: 10px 20px 10px 10px;
+    cursor:pointer;
 }
 .itemcountdiv {
     grid-column: 2;

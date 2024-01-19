@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 
 namespace Cofefe.Controllers
 {
@@ -41,11 +42,22 @@ namespace Cofefe.Controllers
 
             return View("AdminView", VM);
         }
-        public ViewResult Index()
+        public ViewResult Index(string searchString)
         {
+            List<Product> searchResults;
+            if (string.IsNullOrEmpty(searchString))
+            {
+                searchResults = _context.Products.ToList();
+            }
+            else
+            {
+                searchResults = _context.Products
+                    .Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString))
+                    .ToList();
+            }
             ProductCategoryViewModel VM = new ProductCategoryViewModel
             {
-                Products = _context.Products.ToList(),
+                Products = searchResults,
                 CategoryProducts = _context.CategoryProducts.ToList(),
                 Categories = _context.Categoryes.ToList()
             };
