@@ -1,1 +1,109 @@
-﻿
+﻿.main_cart {
+    width: auto;
+    height: max-content;
+    display: grid;
+    grid-template-rows: 5% 95%;
+    background-color: #1B1924;
+    min-height:803px;
+}
+.main_name{
+    grid-row:1;
+}
+    .main_name h1 {
+        color: #F7F7F7;
+        margin-left:20px;
+    }
+.main_catalog {
+    grid-row: 2;
+    display: grid;
+    
+}
+.catalog_products {
+    grid-column: 1;
+}
+
+
+.catalog_card {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    margin: 15px 75px 15px 75px;
+    border: 2px solid #391022;
+    height:150px;
+    border-radius: 10px;
+    background-color: #9291A1;
+}
+.card_image{
+    grid-column:1;
+}
+    .card_image img {
+        height: 150px;
+        height: 150px;
+        border-radius: 10px 0px 0px 10px;
+    }
+.card_main {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 60% 15% 25%;
+    grid-template-rows: 30% 70%;
+}
+.card_main_name {
+    grid-column: 1;
+    grid-row:1;
+}
+.card_main_description {
+    grid-column: 1;
+    grid-row: 2;
+}
+.card_main_weight {
+    grid-column: 2;
+    grid-row: 1;
+}
+.card_main_count {
+    grid-column: 2;
+    grid-row: 2;
+}
+.card_main_cost {
+    grid-column: 3;
+    grid-row: 1;
+}
+.card_main_btn {
+    grid-column: 3;
+    grid-row: 2;
+    align-content:center;
+    justify-content:center;
+    display:flex;
+    flex-wrap:wrap;
+    
+}
+.card_main_btn_style {
+    border: 1px solid #9291A1;
+    border-radius: 10px;
+    background-color: #391022;
+    color: #F7F7F7;
+    cursor: pointer;
+    width: 160px;
+    height: 45px;
+    transition: background-color 0.5s ease;
+    
+}
+    .card_main_btn_style:active {
+        background-color: #250a16;
+    }
+.cart_to_order {
+    display: flex;
+    justify-content: flex-end;
+}
+.cart_to_order_btn {
+    margin-right: 115px;
+    width: 150px;
+    height: 50px;
+    border: 1px solid #9291A1;
+    border-radius: 10px;
+    background-color: #391022;
+    color: #F7F7F7;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+.cart_to_order_btn:active {
+        background-color: #250a16;
+    }

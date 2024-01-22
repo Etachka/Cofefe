@@ -42,6 +42,8 @@ namespace Cofefe.Controllers
 
             return View("AdminView", VM);
         }
+
+       
         public ViewResult Index(string searchString)
         {
             List<Product> searchResults;
@@ -71,8 +73,13 @@ namespace Cofefe.Controllers
         }
         public ViewResult Cart()
         {
-
-            return View();
+            UserProductCartViewModel VM = new UserProductCartViewModel
+            {
+                users = _context.Users.ToList(),
+                products = _context.Products.ToList(),
+                shoppingCarts = _context.ShoppingCarts.ToList()
+            };
+            return View(VM);
         }
         public ViewResult AdminView()
         {

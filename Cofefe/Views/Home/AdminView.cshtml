@@ -3,7 +3,7 @@
 }
 @using Cofefe.ViewModels
 @using Cofefe.Models
-
+@using Cofefe.Controllers
 @model UserProductViewmodel
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/AdminViewStyle.css" />
@@ -86,7 +86,9 @@
 
                             <h3 class="namecard" style="grid-row:1; grid-column:2">@user.Login</h3>
                             <h3 class="namecard" style="grid-row:2; grid-column:2">@user.Password</h3>
-                            <h3 class="namecard" style="grid-row:3; grid-column:2">@user.PhoneNumber</h3>
+                            <h3 class="namecard" style="grid-row:3; grid-column:2">
+                                @($"8({user.PhoneNumber.Substring(1, 3)})-{user.PhoneNumber.Substring(4, 3)}-{user.PhoneNumber.Substring(7, 2)}-{user.PhoneNumber.Substring(9, 2)}")
+                            </h3>
                             <h3 class="namecard" style="grid-row:4; grid-column:2">@user.Address</h3>
                         </div>
                         <div class="deldiv">
@@ -99,6 +101,9 @@
     }
     else
     {
-    <p>Нет доступных товаров.</p>
+        <div style="background-color:#1B1924;">
+            <p style="color:#F7F7F7; margin-left:20px;">Нет доступных товаров.</p>
+        </div>
+        
     }
 </div>
