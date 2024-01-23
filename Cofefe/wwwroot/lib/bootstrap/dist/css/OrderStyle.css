@@ -1,0 +1,83 @@
+﻿.order_main {
+    width: auto;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    background-color: #1B1924;
+    min-height: 803px;
+}
+
+h2 {
+    text-align: right;
+    color: #F7F7F7;
+}
+
+.order_main_content{
+    grid-column:2;
+    display:grid;
+    grid-template-rows:10% 90%;
+}
+.order_main_content_name{
+    grid-row:1;
+    justify-content:center;
+    flex-wrap:wrap;
+    display:flex;
+}
+    .order_main_content_name h1 {
+        color: #F7F7F7;
+    }
+.order_main_content_values{
+    grid-row:2;
+    display:grid;
+    grid-template-columns:20% 60% 20%;
+}
+.order_main_content_values_check {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    border: 1px white solid;
+    margin-bottom:10px;
+}
+.values_check_names {
+    grid-column:1;
+    display: grid;
+    grid-template-rows: 25% 10% 10% 10% 10% 35%;
+}
+.check_names_count{
+    grid-row:2;
+}
+.check_names_sum {
+    grid-row: 3;
+}
+.check_names_deliv {
+    grid-row: 4;
+}
+.check_names_paid {
+    grid-row: 5;
+}
+.values_check_values {
+    grid-column: 2;
+    display: grid;
+    grid-template-rows: 25% 10% 10% 10% 10% 20% 15%;
+}
+.check_values_count {
+    grid-row: 2;
+}
+.check_values_sum {
+    grid-row: 3;
+}
+.check_values_deliv {
+    grid-row: 4;
+}
+
+.check_values_paid {
+    grid-row: 5;
+}
+.check_values_btn {
+    grid-row: 6;
+}
+.values_check_empty {
+    grid-column: 3;
+    display: grid;
+    grid-template-rows: 65% 35%;
+}

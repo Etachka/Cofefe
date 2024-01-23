@@ -86,6 +86,11 @@ namespace Cofefe.Controllers
 
             return View();
         }
+        public ViewResult Order()
+        {
+
+            return View();
+        }
 
 
 
