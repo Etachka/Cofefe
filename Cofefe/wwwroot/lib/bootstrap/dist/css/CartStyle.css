@@ -3,8 +3,9 @@
     height: max-content;
     display: grid;
     grid-template-rows: 5% 95%;
-    background-color: #1B1924;
-    min-height:803px;
+    /*background-color: #1B1924;*/
+    background-color: #653e34;
+    min-height: 803px;
 }
 .main_name{
     grid-row:1;
@@ -27,10 +28,11 @@
     display: grid;
     grid-template-columns: 10% 90%;
     margin: 15px 75px 15px 75px;
-    border: 2px solid #391022;
-    height:150px;
+    border: 2px solid #0e0f12;
+    height: 150px;
     border-radius: 10px;
-    background-color: #9291A1;
+    /*background-color: #9291A1;*/
+    background-color: #d1ad9d;
 }
 .card_image{
     grid-column:1;
@@ -76,18 +78,18 @@
     
 }
 .card_main_btn_style {
-    border: 1px solid #9291A1;
+    border: 0px solid #0e0f12;
     border-radius: 10px;
-    background-color: #391022;
-    color: #F7F7F7;
+    background-color: #fff;
+    color: #000;
     cursor: pointer;
     width: 160px;
     height: 45px;
     transition: background-color 0.5s ease;
-    
 }
     .card_main_btn_style:active {
-        background-color: #250a16;
+        background-color: #0e0f12;
+        color: #fff;
     }
 .cart_to_order {
     display: flex;
@@ -97,13 +99,14 @@
     margin-right: 115px;
     width: 150px;
     height: 50px;
-    border: 1px solid #9291A1;
+    border: 0px solid #0e0f12;
     border-radius: 10px;
-    background-color: #391022;
-    color: #F7F7F7;
+    background-color: #fff;
+    color: #000;
     cursor: pointer;
     transition: background-color 0.5s ease;
 }
-.cart_to_order_btn:active {
-        background-color: #250a16;
+    .cart_to_order_btn:active {
+        background-color: #0e0f12;
+        color: #fff;
     }

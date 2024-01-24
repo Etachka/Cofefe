@@ -50,7 +50,6 @@
 .divnameprop {
     grid-row: 2;
     grid-column: 1;
-    border-right: 1px solid black;
     margin-left: 3px;
 }
 
@@ -191,3 +190,4 @@ h3 {
 .addbtn:active{
     filter:brightness(0.9);
 }
+

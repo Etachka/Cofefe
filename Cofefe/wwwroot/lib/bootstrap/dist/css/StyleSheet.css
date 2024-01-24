@@ -4,6 +4,7 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
     scroll-behavior: smooth;
+    font-family: 'TaylorSansRegular';
 }
     body::-webkit-scrollbar {
         width: 12px; /* ширина scrollbar */
@@ -25,10 +26,12 @@
 .header {
     width: auto;
     height: 80px;
-    background-color: #391022;
+    /*background-color: #391022;*/
+    background-color: #0e0f12;
     grid-row: 1;
-    display:grid;
+    display: grid;
     grid-template-columns: 20% 50% 30%;
+    font-family: 'TaylorSansRegular';
 }
 
 .shopname {
@@ -47,18 +50,22 @@
 }
 
 .shoppagesbtn {
-    background-color: #391022;
+    /*background-color: #391022;*/
+    background-color: #0e0f12;
     border: 0px;
     color: #f7f7f7;
     height: 50px;
     cursor: pointer;
     transition: background-color 0.4s ease;
+    font-family: 'TaylorSansRegular'
 }
 .footer {
     width: auto;
     height: 80px;
     grid-row: 3;
-    background-color: #391022;
+    /*background-color: #391022;*/
+    background-color: #0e0f12;
+    font-family: 'TaylorSansRegular';
 }
 
 .main {
@@ -73,10 +80,11 @@
 .filter {
     grid-column: 1;
     height: auto;
-    background-color: #9291A1;
+    /*background-color: #9291A1;*/
+    background-color: #d1ad9d;
     display: grid;
     grid-template-rows: 50px 1fr;
-    min-height:803px;
+    min-height: 803px;
 }
 .filternamediv {
     display: flex;
@@ -186,17 +194,19 @@
     grid-template-rows:75px 1fr;
 }
 .catalog {
-    grid-row:2;
+    grid-row: 2;
     height: auto;
-    background-color: #1B1924;
+    /*background-color: #1B1924;*/
+    background-color: #653e34;
     display: flex;
     flex-wrap: wrap;
 }
 .searchdiv {
     grid-row: 1;
-    background-color: #1B1924;
+    /*background-color: #1B1924;*/
+    background-color: #653e34;
     display: grid;
-    grid-template-columns:85% 15%;
+    grid-template-columns: 85% 15%;
 }
 .searchbardiv {
     grid-column: 1;
@@ -214,16 +224,17 @@
     border-radius: 15px;
     border: 0px;
     font-size: 20px;
-    
+    font-family: 'TaylorSansRegular'
 }
 .btnsrch {
-    background-color: #D9D9D9;
+    background-color: #fff;
     width: 160px;
     height: 45px;
     border-radius: 25px;
     border: 0px;
     margin: 10px 20px 10px 10px;
-    cursor:pointer;
+    cursor: pointer;
+    font-family: 'TaylorSansRegular'
 }
 .itemcountdiv {
     grid-column: 2;
@@ -236,7 +247,7 @@
 }
 .panelcount {
     margin: 10px;
-    background-color: #D9D9D9;
+    background-color: #fff;
     width:160px;
     height:45px;
     border-radius:25px;
@@ -256,12 +267,13 @@
 .card {
     width: 450px;
     height: 300px;
-    border: solid 1px black;
+    border: solid 2px #0e0f12;
     border-radius: 10px;
-    box-shadow: 0 4px 8px #FFF;
+    box-shadow: 0 4px 8px #0e0f12;
     display: grid;
     margin: 30px;
-    background-color: #9291A1;
+    /*background-color: #9291A1;*/
+    background-color: #d1ad9d;
     grid-template-columns: 240px 210px;
     grid-template-rows: 240px 60px;
 }
@@ -271,12 +283,22 @@
     grid-row:1;
     display:grid;
     grid-template-columns:60% 40%;
-    grid-template-rows:20% 30% 50%;
+    grid-template-rows:30% 20% 50%;
+}
+.div-name {
+    grid-row: 1;
+    grid-column: 1/ span 2;
+    align-content:center;
+    justify-content:center;
+    display:flex;
+    flex-wrap:wrap;
+    text-align:center;
+    
 }
 .divnameprop {
     grid-row: 2;
     grid-column: 1;
-    border-right: 1px solid black;
+    
     margin-left: 3px;
 }
 .divdbvalue {
@@ -300,10 +322,37 @@
     display: grid;
     grid-column: 1;
     grid-row: 2;
-    margin: 10px;
-    grid-template-columns: 20% 20% 30% 30%;
+    grid-template-columns: 20% 20% 60%;
     align-items: center;
 }
+.divinf-button {
+    grid-column:3;
+    align-content: center;
+    justify-content:center;
+    flex-wrap:wrap;
+    display:flex;
+}
+.divinf-star {
+    grid-column: 1;
+    align-content: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    display: flex;
+}
+    .divinf-star input {
+        display: none;
+    }
+    .divinf-star label {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 35px;
+        color: #F7F7F7;
+        user-select: none;
+    }
+    .divinf-star input:checked + label {
+        color: #391022;
+        transition: background-color 0.4s, border-color 0.4s, color 0.4s ease;
+    }
 .dbtext {
     
 }
@@ -322,6 +371,8 @@ h3 {
     grid-column: 2;
     text-align: center;
     font-size: 20px;
+    margin-top:5px;
+    font-weight:bold;
 }
 
 .image {
@@ -330,49 +381,51 @@ h3 {
     border-radius: 10px 0px 10px 0px;
     grid-column: 1;
     grid-row: 1;
-    border: 1px solid #391022;
+    border: 1px solid #d1ad9d;
     user-select: none;
 }
 
 .gradetext {
-    font-size: 20px;
+    font-size: 25px;
     grid-column: 2;
     text-align:center;
+    margin-top:2px;
 }
 
 
 .commentbtn {
-    width: 100px;
-    height: 35px;
-    margin-left: 10px;
     grid-column: 3;
-    background-image: url(~/img/comm.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 1px solid #391022;
+    border: 0px solid #391022;
+    border-radius: 15px;
+    background-color: #fff;
     cursor: pointer;
+    height: 30px;
+    margin-top: 5px;
+    font-family: 'TaylorSansRegular';
 }
     .commentbtn:active {
-        background-color: #391022;
-        border-color: #9291A1;
-        transition: background-color 0.8s, border-color 0.8s, color 0.8s ease;
+        background-color: #0e0f12;
+        color: #fff;
+        transition: background-color 0.5s ease, border-color 0.8s ease, color 0.5s ease;
     }
 
 .buttonbuy {
     grid-column: 2;
     grid-row: 2;
-    margin: 15px 31px 15px 31px;
+    height: 30px;
     border-radius: 15px;
-    background-color: #6B617A;
-    border: 1px solid #391022;
+    background-color: #fff;
+    border: 0px solid #000;
     cursor: pointer;
+    margin-top: 17.5px;
+    margin-left: 33px;
+    margin-right: 33px;
+    font-family: 'TaylorSansRegular';
 }
     .buttonbuy:active {
-        background-color: #391022;
-        border-color: #6B617A;
-        color:#F7F7F7;
-        transition: background-color 0.4s, border-color 0.8s, color 0.8s ease;
+        background-color: #0e0f12;
+        color: #fff;
+        transition: background-color 0.5s ease, border-color 0.8s ease, color 0.5s ease;
     }
 
 
@@ -380,27 +433,10 @@ h3 {
 
 
 
-.favorite-btn {
-    display: inline-block;
-    font-size: 0;
-    white-space: nowrap;
-    grid-column: 1;
-    
+
+@font-face {
+    font-family: "TaylorSansRegular";
+    src: url("../fonts/RalewayRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
 }
-
-    .favorite-btn input {
-        display: none;
-    }
-
-    .favorite-btn label {
-        display: inline-block;
-        cursor: pointer;
-        font-size: 35px;
-        color: #F7F7F7;
-        user-select: none;
-    }
-
-    .favorite-btn input:checked + label {
-        color: #391022;
-        transition: background-color 0.4s, border-color 0.4s, color 0.4s ease;
-    }

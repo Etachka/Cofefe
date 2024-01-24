@@ -14,10 +14,10 @@
         <div class="filtercontentdiv">
             <div class="filtercontentdivelement1">
                 <div class="acidityname">
-                    <h2 style="height:20px">Кислотность</h2>
+                    <h2 style="height:20px; margin-bottom:20px;">Кислотность</h2>
                 </div>
                 <div class="aciditycontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="aciditlow" value="Low">Низкая</label>
+                    <label style="cursor:pointer; grid-row:1; margin-left:20px"><input type="checkbox" name="aciditlow" value="Low">Низкая</label>
                     <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="aciditymedium" value="Medium">Средняя</label>
                     <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidityhigh" value="High">Высокая</label>
                 </div>
@@ -79,20 +79,20 @@
             {
                 <div class="card">
                     <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
-                    <h3 class="namecard">@product.Name</h3>
+                    
                     <div class="divtxt">
-
+                        <div class="div-name">
+                            <h3 class="namecard">@product.Name</h3>
+                        </div>
                         <div class="divnameprop">
                             <h3 class="textcard">Кислотность</h3>
                             <h3 class="textcard">Плотность</h3>
-                            <h3 class="textcard">Произрастание</h3>
-                            <h3 class="textcard">Приготовление</h3>
                         </div>  
                         <div class="divdbvalue">
                                 @foreach (var inf in Model.CategoryProducts
                                .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
                                .Join(Model.Products, x => x.cp.ProductID, p => p.Id, (x, p) => new { x.cp, x.c, p }).Where(x => x.p.Id == product.Id))
-                                {
+                               {
                                     @if (inf.c.Id == 1)
                                     {
                                     <h3 class="textcard" alt="кислотность">@inf.cp.Value</h3>
@@ -101,29 +101,21 @@
                                     {
                                     <h3 class="textcard" alt="Плотность">@inf.cp.Value</h3>
                                     }
-                                    else if (inf.c.Id == 3)
-                                    {
-                                    <h3 class="textcard" alt="Произрастание">@inf.cp.Value</h3>
-                                    }
-                                    else if (inf.c.Id == 4)
-                                    {
-                                    <h3 class="textcard" alt="Тип приготовления">@inf.cp.Value</h3>
-                                    }
-                                }
+                                    
+                               }
                         </div>
                         <div class="divproductinf">
                             <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
                             <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
                             <div class="divproductcost">
-                                <h3 style="grid-column:1; margin-left:5px; font-size:20px;margin-top:10px;">@product.Cost ₽</h3>
-                                <h3 style="grid-column:2; margin-left:5px;margin-top:10px;">На складе: @product.StockQuantity</h3>
+                                <h3 style="grid-column:1; margin-left:5px; font-size:25px;margin-top:10px;">@product.Cost ₽</h3>
                             </div>
 
                         </div>
 
                     </div>
                     <div class="divinf">
-                        <div class="favorite-btn">
+                        <div class="divinf-star">
                             <input type="checkbox" id="favoriteStar_@product.Id" name="favorite">
                             <label for="favoriteStar_@product.Id">&#9733;</label>
                         </div>
@@ -133,11 +125,15 @@
                             {
                                 @if (inf.c.Id == 5)
                                 {
-                                <h3 class="gradetext">@inf.cp.Value</h3>
+                                <h3 class="gradetext" alt="0">@inf.cp.Value</h3>
+                                }
+                                @if (inf.c.Id == 6)
+                                {
+                                <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
                                 }
                             }
                         
-                        <button class="commentbtn">com</button>
+                        
                     </div>
 
 

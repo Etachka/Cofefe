@@ -1,0 +1,7 @@
+﻿.autorize_main {
+    width: auto;
+    height: max-content;
+    display: grid;
+    background-color: #653e34;
+    min-height: 803px;
+}

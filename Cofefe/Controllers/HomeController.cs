@@ -29,6 +29,8 @@ namespace Cofefe.Controllers
             UserProductViewmodel VM = new UserProductViewmodel();
             VM.Users = _context.Users.ToList();
             VM.Products = _context.Products.ToList();
+            VM.CategoryProducts = _context.CategoryProducts.ToList();
+            VM.Categories = _context.Categoryes.ToList();
             ViewBag.IsUsersCatalog = true;
             return View("AdminView", VM);
         }
@@ -39,7 +41,8 @@ namespace Cofefe.Controllers
             UserProductViewmodel VM = new UserProductViewmodel();
             VM.Users = _context.Users.ToList();
             VM.Products = _context.Products.ToList();
-
+            VM.CategoryProducts = _context.CategoryProducts.ToList();
+            VM.Categories = _context.Categoryes.ToList();
             return View("AdminView", VM);
         }
 
@@ -91,7 +94,11 @@ namespace Cofefe.Controllers
 
             return View();
         }
+        public ViewResult Login()
+        {
 
+            return View();
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
