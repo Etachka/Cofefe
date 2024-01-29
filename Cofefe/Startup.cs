@@ -1,4 +1,5 @@
 ﻿using Cofefe;
+using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,7 @@ public class Startup
         services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+        services.AddSession();
         services.AddControllersWithViews();
     }
 
@@ -38,7 +40,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
-
+        app.UseSession();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

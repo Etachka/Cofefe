@@ -11,30 +11,27 @@
     </div>
     <div class="main_catalog">
         <div class="catalog_products">
-            @foreach (var shoppingCartItem in Model.shoppingCarts
-            .Join(Model.users, cart => cart.UserID, user => user.Id, (cart, user) => new { cart, user })
-            .Join(Model.products, cartUser => cartUser.cart.ProductID, product => product.Id, (cartUser, product) => new { cartUser, product })
-            .Where(x => x.cartUser.user.Id == 2))
+            @foreach (var shoppingCartItem in Model.ShoppingCartItems)
             {
                 <div class="catalog_card">
                     <div class="card_image">
-                        <img alt="@shoppingCartItem.product.Image" src="data:image/png;base64,@shoppingCartItem.product.Image">
+                        <img alt="@shoppingCartItem.Product.Image" src="data:image/png;base64,@shoppingCartItem.Product.Image">
                     </div>
                     <div class="card_main">
                         <div class="card_main_name">
-                            <h3>@shoppingCartItem.product.Name</h3>
+                            <h3>@shoppingCartItem.Product.Name</h3>
                         </div>
                         <div class="card_main_description">
-                            <h3>@shoppingCartItem.product.Description</h3>
+                            <h3>@shoppingCartItem.Product.Description</h3>
                         </div>
                         <div class="card_main_weight">
-                            <h3>Вес: @shoppingCartItem.product.Weight</h3>
+                            <h3>Вес: @shoppingCartItem.Product.Weight</h3>
                         </div>
                         <div class="card_main_count">
-                            <h3>Количество: @shoppingCartItem.cartUser.cart.ProductCount</h3>
+                            <h3>Количество: @shoppingCartItem.ProductCount</h3>
                         </div>
                         <div class="card_main_cost">
-                            <h3>Цена: @shoppingCartItem.product.Cost</h3>
+                            <h3>Цена: @shoppingCartItem.Product.Cost</h3>
                         </div>
                         <div class="card_main_btn">
                             <button class="card_main_btn_style">Убрать из корзины</button>

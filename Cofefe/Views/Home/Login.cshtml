@@ -1,6 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Cofefe";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/LoginStyle.css" />
 <div class="autorize_main">
 
+    <form asp-action="Login" asp-controller="Home" method="post" class="autorize_main_cell">
+        <div class="autorize_main_cell_name">
+            <h1>Авторизация</h1>
+        </div>
+
+        <div class="autorize_main_cell_login">
+            <input type="text" id="login" name="login" style="grid-column: 2;border-radius: 35px; height:50px; width:350px;  border: 1px solid black; font-size:20px;" placeholder="Логин" autocomplete="off"/>
+        </div>
+
+        <div class="autorize_main_cell_pass">
+            <input type="password" id="password" name="password" style="grid-column: 2; height:50px; width:350px; border-radius: 35px; border: 1px solid black; font-size:20px;" placeholder="Пароль" />
+        </div>
+
+        <button type="submit" class="autorize_main_cell_btn">Войти</button>
+    </form>
 </div>

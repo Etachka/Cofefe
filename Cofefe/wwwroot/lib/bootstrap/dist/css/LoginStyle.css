@@ -4,4 +4,54 @@
     display: grid;
     background-color: #653e34;
     min-height: 803px;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-rows: 20% 70% 10%;
+}
+.autorize_main_cell {
+    grid-row: 2;
+    grid-column: 2;
+    background-color: #d1ad9d;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px black;
+    display:grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows:30% 15% 15% 40%;
+}
+
+
+.autorize_main_cell_name {
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.autorize_main_cell_login {
+    grid-row: 2;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    
+}
+.autorize_main_cell_pass {
+    grid-row: 3;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    
+}
+.autorize_main_cell_btn {
+    grid-row: 4;
+    grid-column: 2;
+    margin: 80px;
+    border-radius: 35px;
+    border: 1px solid black;
+    font-size: 20px;
 }

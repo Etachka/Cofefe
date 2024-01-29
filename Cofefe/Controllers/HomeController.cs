@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Cofefe.Data;
 
 namespace Cofefe.Controllers
 {
@@ -76,11 +77,14 @@ namespace Cofefe.Controllers
         }
         public ViewResult Cart()
         {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = _context.ShoppingCarts
+                .Where(cart => cart.UserID == userId)
+                .Include(cart => cart.Product)
+                .ToList();
             UserProductCartViewModel VM = new UserProductCartViewModel
             {
-                users = _context.Users.ToList(),
-                products = _context.Products.ToList(),
-                shoppingCarts = _context.ShoppingCarts.ToList()
+                ShoppingCartItems = cartItems,
             };
             return View(VM);
         }
@@ -94,11 +98,33 @@ namespace Cofefe.Controllers
 
             return View();
         }
-        public ViewResult Login()
+
+        [HttpGet]
+        public IActionResult Login()
         {
 
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Login(string login, string password)
+        {
+            var userService = new UserService(_context);
+            var user = userService.GetUser(login, password);
+
+            if (user != null)
+            {
+                HttpContext.Session.SetInt32("UserId", user.Id);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View();
+            }
+        }
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
