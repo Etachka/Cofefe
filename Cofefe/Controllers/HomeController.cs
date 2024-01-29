@@ -72,26 +72,38 @@ namespace Cofefe.Controllers
         }
         public ViewResult Favorite()
         {
-
-            return View();
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                return View();
+            }
+            else { return View("Login"); }
+            
         }
         public ViewResult Cart()
         {
-            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var cartItems = _context.ShoppingCarts
-                .Where(cart => cart.UserID == userId)
-                .Include(cart => cart.Product)
-                .ToList();
-            UserProductCartViewModel VM = new UserProductCartViewModel
+            if(HttpContext.Session.GetInt32("UserId") != null)
             {
-                ShoppingCartItems = cartItems,
-            };
-            return View(VM);
+                int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+                var cartItems = _context.ShoppingCarts
+                    .Where(cart => cart.UserID == userId)
+                    .Include(cart => cart.Product)
+                    .ToList();
+                UserProductCartViewModel VM = new UserProductCartViewModel
+                {
+                    ShoppingCartItems = cartItems,
+                };
+                return View(VM);
+            }
+            else { return View("Login"); }
+            
         }
         public ViewResult AdminView()
         {
-
-            return View();
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                return View();
+            }
+            else { return View("Login"); }
         }
         public ViewResult Order()
         {
@@ -102,8 +114,11 @@ namespace Cofefe.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-
-            return View();
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                return View("Cabinet");
+            }
+            else { return View("Login"); }
         }
 
         [HttpPost]
@@ -123,9 +138,18 @@ namespace Cofefe.Controllers
                 return View();
             }
         }
+        public ViewResult Cabinet()
+        {
 
+            return View();
+        }
 
-
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserId");
+            return RedirectToAction("Index", "Home");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
