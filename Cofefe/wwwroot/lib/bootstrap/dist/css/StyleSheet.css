@@ -436,7 +436,7 @@ h3 {
 
 @font-face {
     font-family: "TaylorSansRegular";
-    src: url("../fonts/RalewayRegular.ttf") format("truetype");
+    src: url("/fonts/TaylorSans-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }

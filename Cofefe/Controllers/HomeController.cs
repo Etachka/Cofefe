@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+
 using Cofefe.Data;
 
 namespace Cofefe.Controllers

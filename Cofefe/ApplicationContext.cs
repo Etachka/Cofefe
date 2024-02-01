@@ -9,9 +9,11 @@ using Cofefe.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Cofefe
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext : DbContext
     {
-        private readonly string _connection = "Data Source=DESKTOP-3FU748J;Database=DiplomCofefe;Integrated Security = sspi; Encrypt=False;";
+        //private readonly string _connection = "Data Source=DESKTOP-3FU748J;Database=DiplomCofefe;Integrated Security = sspi; Encrypt=False;";
+
+        private readonly string _connection = "Data Source=192.168.221.12;User ID = user04;Password=04;Database=DiplomCofefe 2;TrustServerCertificate=true";
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<User> Users { get; set; }
