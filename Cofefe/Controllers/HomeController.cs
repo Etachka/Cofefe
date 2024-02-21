@@ -95,7 +95,6 @@ namespace Cofefe.Controllers
                 return View(VM);
             }
             else { return View("Login"); }
-            
         }
         public ViewResult AdminView()
         {
