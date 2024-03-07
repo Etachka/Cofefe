@@ -9,5 +9,6 @@
         public int StockQuantity { get; set; }
         public int Cost { get; set; }
         public string Image { get; set; }
+        public bool IsHidden { get; set; }
     }
 }

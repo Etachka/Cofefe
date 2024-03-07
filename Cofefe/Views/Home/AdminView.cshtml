@@ -67,9 +67,20 @@
                             </div>
                             
                         </div>
-                        <div class="deldiv" style="grid-column:2;grid-row:2;">
-                            <button class="btndel" style=" margin: 5px 21px 5px 21px;">Удалить</button>
-                        </div>
+                        @if(product.IsHidden == true)
+                        {
+                            <form class="deldiv" style="grid-column:2;grid-row:2;" method="post" action="/Home/VisibleProduct">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <button type="submit" class="btndel">Показать</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form class="deldiv" style="grid-column:2;grid-row:2;" method="post" action="/Home/DeleteProduct">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <button type="submit" class="btndel">Скрыть</button>
+                            </form>
+                        }
                     </div>
                 }
             }
@@ -105,7 +116,7 @@
     else
     {
         <div style="background-color:#1B1924;">
-            <p style="color:#F7F7F7; margin-left:20px;">Нет доступных товаров.</p>
+            <p style="color:#F7F7F7; margin-left:20px;">Выберите один из каталогов</p>
         </div>
         
     }

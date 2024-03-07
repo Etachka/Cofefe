@@ -32,6 +32,7 @@ namespace Cofefe.Controllers
             VM.Products = _context.Products.ToList();
             VM.CategoryProducts = _context.CategoryProducts.ToList();
             VM.Categories = _context.Categoryes.ToList();
+
             ViewBag.IsUsersCatalog = true;
             return View("AdminView", VM);
         }
@@ -121,23 +122,69 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
+        public IActionResult DeleteProduct(int productId)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (product != null)
+            {
+                product.IsHidden = true;
+                _context.SaveChanges();
+                TempData["Message"] = "Product deleted successfully!";
+                return RedirectToAction("AdminView");
+            }
+            else
+            {
+                return Content("Product not found!");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult VisibleProduct(int productId)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (product != null)
+            {
+                product.IsHidden = false;
+                _context.SaveChanges();
+                TempData["Message"] = "Product visible successfully!";
+                return RedirectToAction("AdminView");
+            }
+            else
+            {
+                return Content("Product not found!");
+            }
+        }
+
+        [HttpPost]
         public IActionResult Login(string login, string password)
         {
             var userService = new UserService(_context);
             var user = userService.GetUser(login, password);
+			HttpContext.Session.SetInt32("UserId", user.Id);
 
-            if (user != null)
+			if (HttpContext.Session.GetInt32("UserId") != 1 && user != null)
             {
-                HttpContext.Session.SetInt32("UserId", user.Id);
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
+			else if (HttpContext.Session.GetInt32("UserId") == 1)
+			{
+				return View("AdminView");
+			}
+
+			else
+			{
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View();
             }
         }
         public ViewResult Cabinet()
+        {
+
+            return View();
+        }
+        public ViewResult Registration()
         {
 
             return View();

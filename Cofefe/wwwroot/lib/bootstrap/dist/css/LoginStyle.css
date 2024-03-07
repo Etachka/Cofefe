@@ -14,9 +14,9 @@
     border: 1px solid black;
     border-radius: 10px;
     box-shadow: 0 4px 8px black;
-    display:grid;
+    display: grid;
     grid-template-columns: 10% 80% 10%;
-    grid-template-rows:30% 15% 15% 40%;
+    grid-template-rows: 30% 15% 15% 5% 15% 15% 5%;
 }
 
 
@@ -36,8 +36,19 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    
 }
+.autorize_main_cell_login_input {
+    grid-column: 2;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+    .autorize_main_cell_login_input::placeholder {
+        padding-left:5px;
+    }
 .autorize_main_cell_pass {
     grid-row: 3;
     grid-column: 2;
@@ -45,12 +56,31 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    
 }
-.autorize_main_cell_btn {
-    grid-row: 4;
+.autorize_main_cell_pass_input {
     grid-column: 2;
-    margin: 80px;
+    height: 50px;
+    width: 350px;
+    border-radius: 35px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+    .autorize_main_cell_pass_input::placeholder {
+        padding-left: 5px;
+    }
+.autorize_main_cell_btn {
+    grid-row: 5;
+    grid-column: 2;
+    margin: 15px 45px 15px 45px;
+    border-radius: 35px;
+    border: 1px solid black;
+    font-size: 20px;
+}
+.autorize_main_cell_btn_reg {
+    grid-row: 6;
+    grid-column: 2;
+    margin: 15px 45px 15px 45px;
     border-radius: 35px;
     border: 1px solid black;
     font-size: 20px;

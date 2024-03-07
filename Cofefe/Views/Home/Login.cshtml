@@ -10,13 +10,15 @@
         </div>
 
         <div class="autorize_main_cell_login">
-            <input type="text" id="login" name="login" style="grid-column: 2;border-radius: 35px; height:50px; width:350px;  border: 1px solid black; font-size:20px;" placeholder="Логин" autocomplete="off"/>
+            <input class="autorize_main_cell_login_input" type="text" id="login" name="login" placeholder="Логин" autocomplete="off" />
         </div>
 
         <div class="autorize_main_cell_pass">
-            <input type="password" id="password" name="password" style="grid-column: 2; height:50px; width:350px; border-radius: 35px; border: 1px solid black; font-size:20px;" placeholder="Пароль" />
+            <input class="autorize_main_cell_pass_input" type="password" id="password" name="password" placeholder="Пароль" />
         </div>
 
-        <button type="submit" class="autorize_main_cell_btn">Войти</button>
+        <button type="submit" class="autorize_main_cell_btn">Вход</button>
+        
+        <button type="submit" formaction="/Home/Registration" class="autorize_main_cell_btn_reg">Регистрация</button>
     </form>
 </div>
