@@ -1,0 +1,280 @@
+﻿.create-user_main {
+    width: auto;
+    height: max-content;
+    display: grid;
+    background-color: #653e34;
+    min-height: 803px;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 5% 90% 5%;
+}
+
+.create-user_main_cell {
+    grid-row: 2;
+    grid-column: 2;
+    background-color: #d1ad9d;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px black;
+    display: grid;
+    grid-template-columns: 5% 30% 30% 30% 5%;
+    grid-template-rows: 15% 15% 15% 15% 15% 5% 15%;
+}
+.create-user_main_cell_name {
+    grid-row: 1;
+    grid-column: 2 / span 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.create-user_main_cell_firstn {
+    grid-row: 2;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_firstn_input {
+    grid-column: 2;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+.create-user_main_cell_firstn_input::placeholder {
+    padding-left: 5px;
+}
+
+.create-user_main_cell_secondn {
+    grid-row: 3;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_secondn_input {
+    grid-column: 2;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_secondn_input::placeholder {
+        padding-left: 5px;
+    }
+
+
+
+.create-user_main_cell_patronymic {
+    grid-row: 4;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_patronymic_input {
+    grid-column: 2;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_patronymic_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_pass {
+    grid-row: 2;
+    grid-column: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_pass_input {
+    grid-column: 4;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_pass_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_log {
+    grid-row: 3;
+    grid-column: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_log_input {
+    grid-column: 4;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_log_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_number {
+    grid-row: 4;
+    grid-column: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_number_input {
+    grid-column: 4;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_number_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_city {
+    grid-row: 2;
+    grid-column: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_city_input {
+    grid-column: 3;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_city_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_street {
+    grid-row: 3;
+    grid-column: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_street_input {
+    grid-column: 3;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_street_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_home {
+    grid-row: 4;
+    grid-column: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_home_input {
+    grid-column: 3;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_home_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_flat {
+    grid-row: 5;
+    grid-column: 3;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2px 0 2px;
+}
+
+.create-user_main_cell_flat_input{
+    grid-column: 3;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+    .create-user_main_cell_flat_input::placeholder {
+        padding-left: 5px;
+    }
+
+.create-user_main_cell_btn {
+    grid-row: 7;
+    grid-column: 2 / span 3;
+    margin: 15px 45px 15px 45px;
+    border-radius: 35px;
+    border: 1px solid black;
+    font-size: 20px;
+}

@@ -1,3 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Регистрация";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/RegistrationStyle.css" />
+<div class="registr_main">
+    <form asp-action="RegistrationUser" asp-controller="Home" method="post" class="autorize_main_cell">
+        <div class="autorize_main_cell_name">
+            <h1>Авторизация</h1>
+        </div>
+
+        <div class="autorize_main_cell_login">
+            <input class="autorize_main_cell_login_input" type="text" id="login" name="login" placeholder="Логин" autocomplete="off" />
+        </div>
+
+        <div class="autorize_main_cell_pass">
+            <input class="autorize_main_cell_pass_input" type="password" id="password" name="password" placeholder="Пароль" />
+        </div>
+
+        <button type="submit" class="autorize_main_cell_btn">Вход</button>
+
+        <button type="submit" formaction="/Home/Registration" class="autorize_main_cell_btn_reg">Регистрация</button>
+    </form>
+</div>

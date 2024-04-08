@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
     ViewData["Title"] = "Чит-меню";
 }
 @using Cofefe.ViewModels
@@ -26,9 +27,9 @@
     <div class="catalogAdmin">
             @if (ViewBag.IsUsersCatalog)
             {
-                <div class="emptycard" style="width: 450px;height: 300px; margin:30px;">
+                <form class="emptycard" style="width: 450px;height: 300px; margin:30px;" method="get" action="/Home/AddProduct" id="catalogForm">
                     <button class="addbtn" style="width: 450px;height: 300px;"></button>
-                </div>
+                </form>
                 @foreach (var product in Model.Products)
                 {
                     <div class="card">
@@ -86,9 +87,10 @@
             }
             else
             {
-                <div class="emptycard">
+                
+                <form class="emptycard" method="get" action="/Home/CreateTestUser" id="catalogForm">
                     <button class="addbtn"></button>
-                </div>
+                </form>
                 @foreach (var user in Model.Users.Where(x => x.role == 2))
                 {
                     <div class="usercard">

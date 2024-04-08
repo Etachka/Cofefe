@@ -1,0 +1,20 @@
+﻿.registr_main {
+    width: auto;
+    height: max-content;
+    display: grid;
+    background-color: #653e34;
+    min-height: 803px;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-rows: 20% 70% 10%;
+}
+.autorize_main_cell {
+    grid-row: 2;
+    grid-column: 2;
+    background-color: #d1ad9d;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px black;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 30% 15% 15% 5% 15% 15% 5%;
+}

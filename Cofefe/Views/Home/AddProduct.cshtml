@@ -1,3 +1,46 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
     ViewData["Title"] = "Добавление товара";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/AddProductStyle.css" />
+<div class="add-product_main">
+    <form asp-action="AddProduct" asp-controller="Home" method="post" class="add-product_main_cell">
+        <div class="add-product_main_cell_name">
+            <h1>Добавление товара</h1>
+        </div>
+
+        <div class="add-product_main_cell_title">
+            <input class="add-product_main_cell_title_input" type="text" id="title" name="title" placeholder="Наименование" autocomplete="off" />
+        </div>
+
+        <div class="add-product_main_cell_desc">
+            <input class="add-product_main_cell_desc_input" type="text" id="description" name="description" placeholder="Описание товара" />
+        </div>
+
+        <div class="add-product_main_cell_weight">
+            <input class="add-product_main_cell_weight_input" type="text" id="weight" name="weight" placeholder="Вес товара (г.)" />
+        </div>
+
+        <div class="add-product_main_cell_cost">
+            <input class="add-product_main_cell_cost_input" type="text" id="cost" name="cost" placeholder="цена товара (₽)" />
+        </div>
+
+        <div class="add-product_main_cell_acidity">
+            <input class="add-product_main_cell_acidity_input" type="text" id="acidity" name="acidity" placeholder="Кислотность" />
+        </div>
+
+        <div class="add-product_main_cell_density">
+            <input class="add-product_main_cell_density_input" type="text" id="density" name="density" placeholder="Плотность" />
+        </div>
+
+        <div class="add-product_main_cell_growth">
+            <input class="add-product_main_cell_growth_input" type="text" id="growth" name="growth" placeholder="Страна произрастания" />
+        </div>
+
+        <div class="add-product_main_cell_type">
+            <input class="add-product_main_cell_type_input" type="text" id="type" name="type" placeholder="Тип приготовления" />
+        </div>
+
+        <button type="submit" class="add-product_main_cell_btn">Добавить</button>
+    </form>
+</div>

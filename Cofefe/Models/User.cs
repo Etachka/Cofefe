@@ -2,7 +2,7 @@
 
 namespace Cofefe.Models
 {
-    public class User:IdentityUser
+    public class User
     {
         public int Id { get; set; }
         public string FIO { get; set; }

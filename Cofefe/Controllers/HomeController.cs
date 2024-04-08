@@ -111,15 +111,7 @@ namespace Cofefe.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            if (HttpContext.Session.GetInt32("UserId") != null)
-            {
-                return View("Cabinet");
-            }
-            else { return View("Login"); }
-        }
+        
 
         [HttpPost]
         public IActionResult DeleteProduct(int productId)
@@ -130,8 +122,7 @@ namespace Cofefe.Controllers
             {
                 product.IsHidden = true;
                 _context.SaveChanges();
-                TempData["Message"] = "Product deleted successfully!";
-                return RedirectToAction("AdminView");
+                return RedirectToAction("AdminView") ;
             }
             else
             {
@@ -157,6 +148,112 @@ namespace Cofefe.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddProduct(string title, string description, int weight, int cost, string acidity, string density, string growth,  string type)
+        {
+            if( title != null && description != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
+            {
+                using (var con = new ApplicationContext())
+                {
+                    con.Products.AddRange(new[]
+                    {
+                        new Product{
+                            Name = title,
+                            Description = description, 
+                            Cost = cost, 
+                            Weight = weight, 
+                            Image = "", 
+                            StockQuantity = 100},
+                    });
+                    con.SaveChanges();
+                    var prod = _context.Products.FirstOrDefault(x=>x.Name ==title);
+                    int prodID = prod.Id;
+                    con.CategoryProducts.AddRange(new[]
+                    {
+                        new CategoryProduct{
+                            CategoryID = 1,
+                            ProductID = prodID,
+                            Value = acidity
+                        },
+                        new CategoryProduct{
+                            CategoryID = 2,
+                            ProductID = prodID,
+                            Value = density
+                        },
+                        new CategoryProduct{
+                            CategoryID = 3,
+                            ProductID = prodID,
+                            Value = growth
+                        },
+                        new CategoryProduct{
+                            CategoryID = 4,
+                            ProductID = prodID,
+                            Value = type
+                        },
+                        new CategoryProduct{
+                            CategoryID = 5,
+                            ProductID = prodID,
+                            Value = 0.ToString()
+                        },
+                        new CategoryProduct{
+                            CategoryID = 6,
+                            ProductID = prodID,
+                            Value = 0.ToString()
+                        },
+                    });
+                    con.SaveChanges();
+                }
+            }
+
+            return View("AdminView");
+        }
+
+        [HttpGet]
+        public IActionResult CreateTestUser()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateTestUser(string firstn, string secondn, string patronymic, string pass, string log, string number, string city, string street, string home, string flat)
+        {
+            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null && city != null && street != null && home != null && flat != null)
+            {
+                using (var con = new ApplicationContext())
+                {
+                    con.Users.AddRange(new[]
+                    {
+                        new User{
+                            FIO = firstn + " " + secondn.Substring(0,1) + "." + patronymic.Substring(0,1) + ".",
+                            Password = pass,
+                            Login = log,
+                            Address = "г." + city + ", " + "ул." + street + ", " + "д." + home + ", " + "кв." + flat, 
+                            PhoneNumber = number, 
+                            role = 2, 
+                        }
+                    });
+                    con.SaveChanges();
+                }
+            }
+            return View("AdminView");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                return View("Cabinet");
+            }
+            else { return View("Login"); }
+        }
+
         [HttpPost]
         public IActionResult Login(string login, string password)
         {
@@ -175,7 +272,6 @@ namespace Cofefe.Controllers
 
 			else
 			{
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View();
             }
         }
@@ -191,12 +287,19 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
+        public IActionResult RegistrationUser()
+        {
+            return View("Index");
+        }
+
+        [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserId");
             return RedirectToAction("Index", "Home");
         }
 
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
