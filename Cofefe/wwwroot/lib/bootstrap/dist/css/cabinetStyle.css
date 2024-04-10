@@ -1,7 +1,51 @@
-﻿.Cabinet_body {
+﻿.сabinet_main {
     width: auto;
     height: max-content;
     display: grid;
     background-color: #653e34;
     min-height: 803px;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-rows: 20% 70% 10%;
+}
+.сabinet_main_cell {
+    grid-row: 2;
+    grid-column: 2;
+    background-color: #d1ad9d;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px black;
+    display: grid;
+    grid-template-rows: 10% 90%;
+}
+.сabinet_main_cell_name {
+    grid-row: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.сabinet_main_cell_content {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.сabinet_main_cell_content_buttons {
+    display: grid;
+    grid-template-rows: 33% 33% 33%;
+    grid-column: 1;
+}
+.сabinet_main_cell_content_button_orders {
+    grid-row: 1;
+}
+.сabinet_main_cell_content_button_update {
+    grid-row: 2;
+}
+.сabinet_main_cell_content_button_exit {
+    grid-row: 3;
+}
+.сabinet_main_cell_content_info {
+    display: grid;
+    /*grid-template-rows: 33% 33% 33%;*/
+    grid-column: 2;
 }

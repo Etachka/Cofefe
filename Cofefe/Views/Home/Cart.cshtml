@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Корзина";
+    bool check = true;
 }
 @using Cofefe.ViewModels
 @model UserProductCartViewModel
@@ -11,8 +12,19 @@
     </div>
     <div class="main_catalog">
         <div class="catalog_products">
+            @if (!Model.ShoppingCartItems.Any())
+            {
+                <h1>На данный момент в корзине нет продуктов</h1>
+            }
+            else
+            {
             @foreach (var shoppingCartItem in Model.ShoppingCartItems)
             {
+                if(shoppingCartItem == null)
+                {
+                    check = false;
+                    <h1>В корзине нет продуктов</h1>
+                }
                 <div class="catalog_card">
                     <div class="card_image">
                         <img alt="@shoppingCartItem.Product.Image" src="data:image/png;base64,@shoppingCartItem.Product.Image">
@@ -40,9 +52,10 @@
                     </div>
                 </div>
             }
-            <form class="cart_to_order" style="justify-content:flex-end; display:flex;" asp-action="Order" asp-controller="Home">
-                <button class="cart_to_order_btn">Сделать заказ</button>
+            <form class="cart_to_order" style="justify-content:flex-end; display:flex;" asp-action="CreateOrder" asp-controller="Home" method="post">
+                <button type="submit" class="cart_to_order_btn">Сделать заказ</button>
             </form>
+            }
         </div>
     </div>
     

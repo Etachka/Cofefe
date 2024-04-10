@@ -509,7 +509,56 @@ namespace Cofefe.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder()
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var cartItems = await _context.ShoppingCarts
+                .Where(item => item.UserID == userId)
+                .ToListAsync();
+
+            if (cartItems.Any())
+            {
+                int orderId = GenerateOrderId();
+
+                int statusId = 1; 
+
+                foreach (var item in cartItems)
+                {
+                    var order = new Order
+                    {
+                        UserID = userId.Value,
+                        ProductID = item.ProductID,
+                        StatusID = statusId,
+                        OrderId = orderId,
+                        ProductCount = item.ProductCount,
+                    };
+                    _context.Orders.Add(order);
+                }
+
+                await _context.SaveChangesAsync();
+
+                _context.ShoppingCarts.RemoveRange(cartItems);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Cart");
+        }
+
+        private int GenerateOrderId()
+        {
+            return (int)DateTime.Now.Ticks;
+        }
+
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
