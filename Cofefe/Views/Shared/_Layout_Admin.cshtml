@@ -12,9 +12,10 @@
     <header class="header">
         <h1 class="shopname">Cofefe</h1>
         <div class="shoppages">
-            <form id="loginForm" style="grid-column: 3; justify-content:center; display:flex;" asp-action="Login" asp-controller="Home" method="get">
-                <button class="shoppagesbtn">Личный кабинет</button>
+            <form id="loginForm" style="grid-column: 3; justify-content:center; display:flex;" asp-action="Logout" asp-controller="Home" method="post">
+                <button class="shoppagesbtn">Выход</button>
             </form>
+            
             <form style="grid-column: 4; justify-content:center; display:flex;" asp-action="AdminView" asp-controller="Home">
                 <button class="shoppagesbtn">Панель администратора</button>
             </form>

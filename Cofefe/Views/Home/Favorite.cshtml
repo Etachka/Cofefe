@@ -1,8 +1,10 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Избранное";
+    int itemCount = 0;
 }
-<link href="c:\users\user\source\repos\cofefe\cofefe\wwwroot\lib\bootstrap\dist\css\favoritestyle.css"/>
+@using Cofefe.ViewModels
+@model ProductCategoryViewModel
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/StyleSheet.css" />
 <div class="main">
     <div class="filter">
@@ -10,57 +12,193 @@
             <h2>Фильтры</h2>
         </div>
         <div class="filtercontentdiv">
-            <div class="filtercontentdivelement1">
-                <div class="acidityname">
-                    <h2 style="height:20px">Кислотность</h2>
+            <form asp-action="Favorite" asp-controller="Home" method="get">
+                <div class="filtercontentdivelement1">
+                    <div class="acidityname">
+                        <h2 style="height:20px; margin-bottom:20px;">Кислотность</h2>
+                    </div>
+
+                    <div class="aciditycontent">
+
+                        <select class="select-css" style="grid-row:1/span 3" name="acidity">
+                            <option></option>
+                            <option>Низкая</option>
+                            <option>Средняя</option>
+                            <option>Высокая</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="aciditycontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
+                <div class="filtercontentdivelement2">
+                    <div class="densityname">
+                        <h2 style="height:20px">Плотность</h2>
+                    </div>
+                    <div class="densitycontent">
+
+                        <select class="select-css" style="grid-row:1/span 3" name="density">
+                            <option></option>
+                            <option>Низкая</option>
+                            <option>Средняя</option>
+                            <option>Высокая</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="filtercontentdivelement2">
-                <div class="densityname">
-                    <h2 style="height:20px">Плотность</h2>
+                <div class="filtercontentdivelement3">
+                    <div class="growthname">
+                        <h2 style="height:20px">Страна произрастания</h2>
+                    </div>
+                    <div class="growthcontent">
+
+                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth">
+                            <option></option>
+                            <option>Боливия</option>
+                            <option>Бразилия</option>
+                            <option>Гватемала</option>
+                            <option>Кения</option>
+                            <option>Китай</option>
+                            <option>Коста-Рика</option>
+                            <option>Перу</option>
+                            <option>Руанда</option>
+                            <option>Эфиопия</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="densitycontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Низкая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Высокая</label>
+                <div class="filtercontentdivelement4">
+                    <div class="roastname">
+                        <h2 style="height:20px">Тип приготовления</h2>
+                    </div>
+                    <div class="roastcontent">
+
+                        <select class="select-css" style="grid-row:1/span 3" name="type">
+                            <option></option>
+                            <option>Milk</option>
+                            <option>Espresso</option>
+                            <option>Filter</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="filtercontentdivelement3">
-                <div class="growthname">
-                    <h2 style="height:20px">Страна произрастания</h2>
-                </div>
-                <div class="growthcontent">
-                    <label style="cursor:pointer; grid-row:1; grid-column:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Боливия</label>
-                    <label style="cursor:pointer; grid-row:2; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Бразилия</label>
-                    <label style="cursor:pointer; grid-row:3; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="High">Гватемала</label>
-                    <label style="cursor:pointer; grid-row:4; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Кения</label>
-                    <label style="cursor:pointer; grid-row:5; grid-column:1; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Китай</label>
-                    <label style="cursor:pointer; grid-row:1; grid-column:2; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="High">Колумбия</label>
-                    <label style="cursor:pointer; grid-row:2; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Low">Коста-Рика</label>
-                    <label style="cursor:pointer; grid-row:3; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Перу</label>
-                    <label style="cursor:pointer; grid-row:4; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Руанда</label>
-                    <label style="cursor:pointer; grid-row:5; grid-column:2; margin-left:20px"><input type="checkbox" name="acidity" value="High">Эфиопия</label>
-                </div>
-            </div>
-            <div class="filtercontentdivelement4">
-                <div class="roastname">
-                    <h2 style="height:20px">Степень обжарки</h2>
-                </div>
-                <div class="roastcontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="acidity" value="Low">Светлая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="acidity" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidity" value="High">Тёмная</label>
+                <button class="btnsrch" type="submit">Применить</button>
+            </form>
+        </div>
+    </div>
+    <div class="maincatalog">
+        <div class="searchdiv">
+            <form method="get" action="/Home/Favorite" class="searchbardiv" style="display:flex;">
+                <input class="searchbar" type="text" id="myTextBox" placeholder="Поиск" name="searchString">
+                <button class="btnsrch" type="submit">Искать</button>
+            </form>
+
+            <div class="itemcountdiv">
+                <div class="panelcount">
+                    <p id="itemCount" style="margin:0px;">@itemCount товаров</p>
                 </div>
             </div>
         </div>
+        <div class="catalog">
+            @foreach (var product in Model.Products.Where(x => x.IsHidden == false))
+            {
+                bool isFavorite = Model.FavoriteProductIDs.Contains(product.Id);
+                <div class="card">
+                    <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
+
+                    <div class="divtxt">
+                        <div class="div-name">
+                            <h3 class="namecard">@product.Name</h3>
+                        </div>
+                        <div class="divnameprop">
+                            <h3 class="textcard">Кислотность</h3>
+                            <h3 class="textcard">Плотность</h3>
+                        </div>
+                        <div class="divdbvalue">
+                            @foreach (var inf in Model.CategoryProducts
+                           .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
+                           .Join(Model.Products, x => x.cp.ProductID, p => p.Id, (x, p) => new { x.cp, x.c, p }).Where(x => x.p.Id == product.Id))
+                            {
+                                @if (inf.c.Id == 1)
+                                {
+                                    <h3 class="textcard" alt="кислотность">@inf.cp.Value</h3>
+                                }
+                                else if (inf.c.Id == 2)
+                                {
+                                    <h3 class="textcard" alt="Плотность">@inf.cp.Value</h3>
+                                }
+
+                            }
+                        </div>
+                        <div class="divproductinf">
+                            <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
+                            <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
+                            <div class="divproductcost">
+                                <h3 style="grid-column:1; margin-left:5px; font-size:25px;margin-top:10px;">@product.Cost ₽</h3>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="divinf">
+                        <style>
+                            /* Стили для кнопки при наведении */
+                            #favoriteButton_@product.Id:hover {
+                            cursor: pointer; /* Изменяем указатель мыши на указатель */
+                            }
+                            </style>
+                        <form asp-action="AddOrRemoveFavorite" asp-controller="Home" method="post">
+                            <div class="divinf-star">
+                                <button type="submit" id="favoriteButton_@product.Id" name="isFavorite" value="@isFavorite" style="background: none; border: none; padding: 0;">
+                                    @if(isFavorite)
+                                    {
+                                        <span style="font-size: 34px;">&#9733;</span> <!-- Звезда -->
+                                    }
+                                    else
+                                    {
+                                        <span style="font-size: 34px;">&#9734;</span> <!-- Пустая звезда -->
+                                    }
+                                </button>
+                            </div>
+                            <input type="hidden" name="productId" value="@product.Id">
+                        </form>
+                        @foreach (var inf in Model.CategoryProducts
+                       .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
+                       .Join(Model.Products, x => x.cp.ProductID, p => p.Id, (x, p) => new { x.cp, x.c, p }).Where(x => x.p.Id == product.Id))
+                        {
+                            @if (inf.c.Id == 5)
+                            {
+                                <h3 class="gradetext" alt="0">@inf.cp.Value</h3>
+                            }
+                            @if (inf.c.Id == 6)
+                            {
+                                <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
+                            }
+                        }
+
+
+                    </div>
+
+
+                    <button class="buttonbuy">В корзину</button>
+                </div>
+                itemCount++;
+            }
+        </div>
     </div>
 
-    <div class="catalog">
-        
-    </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var itemCountElement = document.getElementById('itemCount');
+        if (itemCountElement) {
+            var itemCount = @itemCount;
+            var lastDigit = itemCount % 10;
+            var wordForm = '';
+            if (itemCount >= 11 && itemCount <= 14) {
+                wordForm = 'товаров';
+            } else if (lastDigit === 1) {
+                wordForm = 'товар';
+            } else if (lastDigit >= 2 && lastDigit <= 4) {
+                wordForm = 'товара';
+            } else {
+                wordForm = 'товаров';
+            }
+            itemCountElement.innerText = itemCount + ' ' + wordForm;
+        }
+    });
+</script>

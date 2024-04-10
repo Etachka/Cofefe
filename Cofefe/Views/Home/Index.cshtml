@@ -12,53 +12,72 @@
             <h2>Фильтры</h2>
         </div>
         <div class="filtercontentdiv">
-            <div class="filtercontentdivelement1">
-                <div class="acidityname">
-                    <h2 style="height:20px; margin-bottom:20px;">Кислотность</h2>
+            <form asp-action="Index" asp-controller="Home" method="get">
+                <div class="filtercontentdivelement1">
+                    <div class="acidityname">
+                        <h2 style="height:20px; margin-bottom:20px;">Кислотность</h2>
+                    </div>
+
+                    <div class="aciditycontent">
+                        
+                        <select class="select-css" style="grid-row:1/span 3" name="acidity">
+                            <option></option>
+                            <option>Низкая</option>
+                            <option>Средняя</option>
+                            <option>Высокая</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="aciditycontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px"><input type="checkbox" name="aciditlow" value="Low">Низкая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="aciditymedium" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="acidityhigh" value="High">Высокая</label>
+                <div class="filtercontentdivelement2">
+                    <div class="densityname">
+                        <h2 style="height:20px">Плотность</h2>
+                    </div>
+                    <div class="densitycontent">
+                       
+                        <select class="select-css" style="grid-row:1/span 3" name="density">
+                            <option></option>
+                            <option>Низкая</option>
+                            <option>Средняя</option>
+                            <option>Высокая</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="filtercontentdivelement2">
-                <div class="densityname">
-                    <h2 style="height:20px">Плотность</h2>
+                <div class="filtercontentdivelement3">
+                    <div class="growthname">
+                        <h2 style="height:20px">Страна произрастания</h2>
+                    </div>
+                    <div class="growthcontent">
+                        
+                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth">
+                            <option></option>
+                            <option>Боливия</option>
+                            <option>Бразилия</option>
+                            <option>Гватемала</option>
+                            <option>Кения</option>
+                            <option>Китай</option>
+                            <option>Коста-Рика</option>
+                            <option>Перу</option>
+                            <option>Руанда</option>
+                            <option>Эфиопия</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="densitycontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="densitylow" value="Low">Низкая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="densitymedium" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="densityhigh" value="High">Высокая</label>
+                <div class="filtercontentdivelement4">
+                    <div class="roastname">
+                        <h2 style="height:20px">Тип приготовления</h2>
+                    </div>
+                    <div class="roastcontent">
+                       
+                        <select class="select-css" style="grid-row:1/span 3" name="type">
+                            <option></option>
+                            <option>Milk</option>
+                            <option>Espresso</option>
+                            <option>Filter</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="filtercontentdivelement3">
-                <div class="growthname">
-                    <h2 style="height:20px">Страна произрастания</h2>
-                </div>
-                <div class="growthcontent">
-                    <label style="cursor:pointer; grid-row:1; grid-column:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="growthbolivia" value="Bolivia">Боливия</label>
-                    <label style="cursor:pointer; grid-row:2; grid-column:1; margin-left:20px"><input type="checkbox" name="growthbrazilia" value="Brazilia">Бразилия</label>
-                    <label style="cursor:pointer; grid-row:3; grid-column:1; margin-left:20px"><input type="checkbox" name="growthgvatemala" value="Gvatemala">Гватемала</label>
-                    <label style="cursor:pointer; grid-row:4; grid-column:1; margin-left:20px"><input type="checkbox" name="growthkenia" value="Kenia">Кения</label>
-                    <label style="cursor:pointer; grid-row:5; grid-column:1; margin-left:20px"><input type="checkbox" name="growthchina" value="China">Китай</label>
-                    <label style="cursor:pointer; grid-row:1; grid-column:2; margin-left:20px; margin-top:10px"><input type="checkbox" name="growthcolumbia" value="Columbia">Колумбия</label>
-                    <label style="cursor:pointer; grid-row:2; grid-column:2; margin-left:20px"><input type="checkbox" name="growthcostarica" value="Costarica">Коста-Рика</label>
-                    <label style="cursor:pointer; grid-row:3; grid-column:2; margin-left:20px"><input type="checkbox" name="growthperu" value="Peru">Перу</label>
-                    <label style="cursor:pointer; grid-row:4; grid-column:2; margin-left:20px"><input type="checkbox" name="growthruanda" value="Ruanda">Руанда</label>
-                    <label style="cursor:pointer; grid-row:5; grid-column:2; margin-left:20px"><input type="checkbox" name="growthefiopia" value="Efiopia">Эфиопия</label>
-                </div>
-            </div>
-            <div class="filtercontentdivelement4">
-                <div class="roastname">
-                    <h2 style="height:20px">Степень обжарки</h2>
-                </div>
-                <div class="roastcontent">
-                    <label style="cursor:pointer; grid-row:1; margin-left:20px; margin-top:10px"><input type="checkbox" name="roastlow" value="Low">Светлая</label>
-                    <label style="cursor:pointer; grid-row:2; margin-left:20px"><input type="checkbox" name="roastmedium" value="Medium">Средняя</label>
-                    <label style="cursor:pointer; grid-row:3; margin-left:20px"><input type="checkbox" name="roasthigh" value="High">Тёмная</label>
-                </div>
-            </div>
+                <button class="btnsrch" type="submit">Применить</button>
+            </form>
         </div>
     </div>
     <div class="maincatalog">
@@ -77,6 +96,7 @@
         <div class="catalog">
             @foreach (var product in Model.Products.Where(x => x.IsHidden == false))
             {
+                bool isFavorite = Model.FavoriteProductIDs.Contains(product.Id);
                 <div class="card">
                     <img class="image" alt="@product.Image" src="data:image/png;base64,@product.Image">
                     
@@ -115,11 +135,28 @@
 
                     </div>
                     <div class="divinf">
-                        <div class="divinf-star">
-                            <input type="checkbox" id="favoriteStar_@product.Id" name="favorite">
-                            <label for="favoriteStar_@product.Id">&#9733;</label>
-                        </div>
-                            @foreach (var inf in Model.CategoryProducts
+                        <style>
+                            /* Стили для кнопки при наведении */
+                            #favoriteButton_@product.Id:hover {
+                            cursor: pointer; /* Изменяем указатель мыши на указатель */
+                        }
+                        </style>
+                        <form asp-action="AddOrRemoveFavorite" asp-controller="Home" method="post">
+                            <div class="divinf-star">
+                                <button type="submit" id="favoriteButton_@product.Id" name="isFavorite" value="@isFavorite" style="background: none; border: none; padding: 0;">
+                                    @if(isFavorite)
+                                    {
+                                        <span style="font-size: 34px;">&#9733;</span> <!-- Звезда -->
+                                    }
+                                    else
+                                    {
+                                        <span style="font-size: 34px;">&#9734;</span> <!-- Пустая звезда -->
+                                    }
+                            </button>
+                            </div>
+                            <input type="hidden" name="productId" value="@product.Id">
+                        </form>
+                        @foreach (var inf in Model.CategoryProducts
                            .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
                            .Join(Model.Products, x => x.cp.ProductID, p => p.Id, (x, p) => new { x.cp, x.c, p }).Where(x => x.p.Id == product.Id))
                             {
@@ -132,8 +169,6 @@
                                 <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
                                 }
                             }
-                        
-                        
                     </div>
 
 

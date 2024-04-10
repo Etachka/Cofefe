@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 using Cofefe.Data;
+using Microsoft.Extensions.Hosting;
 
 namespace Cofefe.Controllers
 {
@@ -49,36 +50,170 @@ namespace Cofefe.Controllers
         }
 
        
-        public ViewResult Index(string searchString)
+        public ViewResult Index(string searchString, string acidity, string density, string growth, string type)
         {
-            List<Product> searchResults;
-            if (string.IsNullOrEmpty(searchString))
+            
+
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            List<int> favoriteProductIds = _context.FavoriteProducts
+                .Where(fp => fp.UserID == userId)
+                .Select(fp => fp.ProductID)
+                .ToList();
+
+            IQueryable<Product> query = _context.Products;
+            if (!string.IsNullOrEmpty(searchString))
             {
-                searchResults = _context.Products.ToList();
+                query = query.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
             }
-            else
+
+            if (!string.IsNullOrEmpty(acidity))
             {
-                searchResults = _context.Products
-                    .Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString))
+                var acidityProductIds = _context.CategoryProducts
+                    .Where(cp => cp.CategoryID == 1 && cp.Value == acidity)
+                    .Select(cp => cp.ProductID)
                     .ToList();
+
+                if (acidityProductIds.Any())
+                {
+                    query = query.Where(p => acidityProductIds.Contains(p.Id));
+                }
             }
+
+            var densityProductIds = _context.CategoryProducts
+                .Where(cp => cp.CategoryID == 2 && cp.Value == density)
+                .Select(cp => cp.ProductID)
+                .ToList();
+
+            if (densityProductIds.Any())
+            {
+                query = query.Where(p => densityProductIds.Contains(p.Id));
+            }
+
+            var growthProductIds = _context.CategoryProducts
+                .Where(cp => cp.CategoryID == 3 && cp.Value == growth)
+                .Select(cp => cp.ProductID)
+                .ToList();
+
+            if (growthProductIds.Any())
+            {
+                query = query.Where(p => growthProductIds.Contains(p.Id));
+            }
+
+            var roastProductIds = _context.CategoryProducts
+                .Where(cp => cp.CategoryID == 4 && cp.Value == type)
+                .Select(cp => cp.ProductID)
+                .ToList();
+
+            if (roastProductIds.Any())
+            {
+                query = query.Where(p => roastProductIds.Contains(p.Id));
+            }
+
+            List<Product> searchResults = query.ToList();
+
             ProductCategoryViewModel VM = new ProductCategoryViewModel
             {
                 Products = searchResults,
                 CategoryProducts = _context.CategoryProducts.ToList(),
-                Categories = _context.Categoryes.ToList()
+                Categories = _context.Categoryes.ToList(),
+                FavoriteProductIDs = favoriteProductIds.ToList(),
             };
 
             return View(VM);
         }
-        public ViewResult Favorite()
+
+        [HttpPost]
+        public async Task<IActionResult> AddOrRemoveFavorite(int productId, bool isFavorite)
+        {
+            // Получаем текущего пользователя из сессии
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Если пользователь не аутентифицирован, возвращаем ошибку или перенаправляем на страницу входа
+                return RedirectToAction("Login");
+            }
+
+                // Удаляем продукт из избранного, если он там есть
+                var favoriteProduct = await _context.FavoriteProducts.FirstOrDefaultAsync(fp => fp.ProductID == productId && fp.UserID == userId);
+                if (favoriteProduct != null)
+                {
+                    _context.FavoriteProducts.Remove(favoriteProduct);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    _context.FavoriteProducts.Add(new FavoriteProduct { ProductID = productId, UserID = userId.Value });
+                    await _context.SaveChangesAsync();
+                }
+
+            return RedirectToAction("Index");
+        }
+
+
+
+        public ViewResult Favorite(string searchString, string acidity, string density, string growth, string type)
         {
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
-                return View();
+                int userId = HttpContext.Session.GetInt32("UserId").Value;
+
+                var favoriteProductIds = _context.FavoriteProducts
+                    .Where(fp => fp.UserID == userId)
+                    .Select(fp => fp.ProductID)
+                    .ToList();
+
+                var favoriteProducts = _context.Products
+                    .Where(p => favoriteProductIds.Contains(p.Id))
+                    .ToList();
+
+                IQueryable<Product> query = favoriteProducts.AsQueryable();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    query = query.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
+                }
+
+                if (!string.IsNullOrEmpty(acidity))
+                {
+                    query = query.Where(p => _context.CategoryProducts
+                        .Any(cp => cp.CategoryID == 1 && cp.ProductID == p.Id && cp.Value == acidity));
+                }
+
+                if (!string.IsNullOrEmpty(density))
+                {
+                    query = query.Where(p => _context.CategoryProducts
+                        .Any(cp => cp.CategoryID == 2 && cp.ProductID == p.Id && cp.Value == density));
+                }
+
+                if (!string.IsNullOrEmpty(growth))
+                {
+                    query = query.Where(p => _context.CategoryProducts
+                        .Any(cp => cp.CategoryID == 3 && cp.ProductID == p.Id && cp.Value == growth));
+                }
+
+                if (!string.IsNullOrEmpty(type))
+                {
+                    query = query.Where(p => _context.CategoryProducts
+                        .Any(cp => cp.CategoryID == 4 && cp.ProductID == p.Id && cp.Value == type));
+                }
+
+                List<Product> searchResults = query.ToList();
+
+                ProductCategoryViewModel VM = new ProductCategoryViewModel
+                {
+                    Products = searchResults,
+                    CategoryProducts = _context.CategoryProducts.ToList(),
+                    Categories = _context.Categoryes.ToList(),
+                    FavoriteProductIDs = favoriteProductIds.ToList(),
+                };
+
+                return View(VM);
             }
-            else { return View("Login"); }
-            
+            else
+            {
+                return View("Login");
+            }
+
         }
         public ViewResult Cart()
         {
@@ -243,6 +378,9 @@ namespace Cofefe.Controllers
             }
             return View("AdminView");
         }
+
+
+
 
         [HttpGet]
         public IActionResult Login()

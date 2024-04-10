@@ -1,23 +1,52 @@
 ﻿@{
     ViewData["Title"] = "Регистрация";
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/RegistrationStyle.css" />
-<div class="registr_main">
-    <form asp-action="RegistrationUser" asp-controller="Home" method="post" class="autorize_main_cell">
-        <div class="autorize_main_cell_name">
-            <h1>Авторизация</h1>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/CreateTestUserStyle.css" />
+<div class="create-user_main">
+    <form asp-action="CreateTestUser" asp-controller="Home" method="post" class="create-user_main_cell">
+        <div class="create-user_main_cell_name">
+            <h1>Регистрация</h1>
         </div>
 
-        <div class="autorize_main_cell_login">
-            <input class="autorize_main_cell_login_input" type="text" id="login" name="login" placeholder="Логин" autocomplete="off" />
+        <div class="create-user_main_cell_firstn">
+            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" />
         </div>
 
-        <div class="autorize_main_cell_pass">
-            <input class="autorize_main_cell_pass_input" type="password" id="password" name="password" placeholder="Пароль" />
+        <div class="create-user_main_cell_secondn">
+            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" autocomplete="off" />
         </div>
 
-        <button type="submit" class="autorize_main_cell_btn">Вход</button>
+        <div class="create-user_main_cell_patronymic">
+            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" autocomplete="off" />
+        </div>
 
-        <button type="submit" formaction="/Home/Registration" class="autorize_main_cell_btn_reg">Регистрация</button>
+        <div class="create-user_main_cell_log">
+            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_pass">
+            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_number">
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_city">
+            <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_street">
+            <input class="create-user_main_cell_street_input" type="text" id="street" name="street" placeholder="Улица" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_home">
+            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" autocomplete="off" />
+        </div>
+
+        <div class="create-user_main_cell_flat">
+            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" autocomplete="off" />
+        </div>
+        <button type="submit" class="create-user_main_cell_btn">Добавить</button>
     </form>
 </div>
