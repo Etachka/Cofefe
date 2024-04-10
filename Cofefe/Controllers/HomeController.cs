@@ -379,7 +379,79 @@ namespace Cofefe.Controllers
             return View("AdminView");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
 
+            var existingItem = await _context.ShoppingCarts.FirstOrDefaultAsync(item => item.ProductID == productId && item.UserID == userId);
+
+            if (existingItem != null)
+            {
+                existingItem.ProductCount++;
+                _context.Update(existingItem);
+            }
+            else
+            {
+                ShoppingCart newItem = new ShoppingCart
+                {
+                    ProductID = productId,
+                    UserID = userId.Value,
+                    ProductCount = 1 
+                };
+                _context.Add(newItem);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int productId)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var cartItem = await _context.ShoppingCarts.FirstOrDefaultAsync(item => item.ProductID == productId && item.UserID == userId);
+            if (cartItem != null)
+            {
+                _context.ShoppingCarts.Remove(cartItem);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Cart");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var ordersCount = await _context.Orders.CountAsync(o => o.UserID == userId);
+            if (ordersCount == 0)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AdminView");
+            }
+            else
+            {
+                return RedirectToAction("AdminView");
+            }
+        }
 
 
         [HttpGet]

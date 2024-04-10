@@ -410,16 +410,13 @@ h3 {
     }
 
 .buttonbuy {
-    grid-column: 2;
-    grid-row: 2;
-    height: 30px;
+    width:60%;
+    height: 40%;
     border-radius: 15px;
     background-color: #fff;
     border: 0px solid #000;
     cursor: pointer;
-    margin-top: 17.5px;
-    margin-left: 33px;
-    margin-right: 33px;
+
     font-family: 'TaylorSansRegular';
 }
     .buttonbuy:active {

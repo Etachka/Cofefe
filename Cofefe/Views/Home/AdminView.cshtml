@@ -107,9 +107,10 @@
                             </h3>
                             <h3 class="namecard" style="grid-row:4; grid-column:2">@user.Address</h3>
                         </div>
-                        <div class="deldiv">
-                            <button class="btndel">Удалить</button>
-                        </div>
+                        <form asp-action="DeleteUser" class="deldiv" asp-controller="Home" method="post">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btndel">Удалить</button>
+                        </form>
                     </div>
                 }
             }

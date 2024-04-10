@@ -164,15 +164,18 @@
                                 {
                                 <h3 class="gradetext" alt="0">@inf.cp.Value</h3>
                                 }
-                                @if (inf.c.Id == 6)
+                                @* @if (inf.c.Id == 6)
                                 {
                                 <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
-                                }
+                                } *@
                             }
                     </div>
 
 
-                    <button class="buttonbuy">В корзину</button>
+                    <form asp-action="AddToCart" style="grid-column: 2;grid-row: 2; align-content: center;justify-content:center;flex-wrap:wrap;display:flex;" asp-controller="Home" method="post">
+                        <input type="hidden" name="productId" value="@product.Id">
+                        <button type="submit" class="buttonbuy">В корзину</button>
+                    </form>
                 </div>
                 itemCount++;
             }
