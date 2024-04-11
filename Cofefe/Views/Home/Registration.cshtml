@@ -9,43 +9,43 @@
         </div>
 
         <div class="create-user_main_cell_firstn">
-            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" />
+            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_secondn">
-            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" autocomplete="off" />
+            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_patronymic">
-            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" autocomplete="off" />
+            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_log">
-            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" autocomplete="off" />
+            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_pass">
-            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" autocomplete="off" />
+            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" autocomplete="off" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_city">
-            <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" autocomplete="off" />
+            <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_street">
-            <input class="create-user_main_cell_street_input" type="text" id="street" name="street" placeholder="Улица" autocomplete="off" />
+            <input class="create-user_main_cell_street_input" type="text" id="street" name="street" placeholder="Улица" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_home">
-            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" autocomplete="off" />
+            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_flat">
-            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" autocomplete="off" />
+            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
         </div>
         <button type="submit" class="create-user_main_cell_btn">Добавить</button>
     </form>

@@ -215,6 +215,17 @@ namespace Cofefe.Controllers
             }
 
         }
+
+        public IActionResult OrderList()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var orders = _context.Orders
+                    .Where(o => o.UserID == userId)
+                    .Include(o => o.Product)
+                    .ToList();
+            return View(orders);
+        }
+
         public ViewResult Cart()
         {
             if(HttpContext.Session.GetInt32("UserId") != null)
@@ -245,8 +256,8 @@ namespace Cofefe.Controllers
 
             return View();
         }
-
         
+
 
         [HttpPost]
         public IActionResult DeleteProduct(int productId)
@@ -292,7 +303,7 @@ namespace Cofefe.Controllers
         [HttpPost]
         public IActionResult AddProduct(string title, string description, int weight, int cost, string acidity, string density, string growth,  string type)
         {
-            if( title != null && description != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
+            if (title != null && description != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
             {
                 using (var con = new ApplicationContext())
                 {
@@ -300,14 +311,14 @@ namespace Cofefe.Controllers
                     {
                         new Product{
                             Name = title,
-                            Description = description, 
-                            Cost = cost, 
-                            Weight = weight, 
-                            Image = "", 
+                            Description = description,
+                            Cost = cost,
+                            Weight = weight,
+                            Image = "",
                             StockQuantity = 100},
                     });
                     con.SaveChanges();
-                    var prod = _context.Products.FirstOrDefault(x=>x.Name ==title);
+                    var prod = _context.Products.FirstOrDefault(x => x.Name == title);
                     int prodID = prod.Id;
                     con.CategoryProducts.AddRange(new[]
                     {
@@ -344,9 +355,9 @@ namespace Cofefe.Controllers
                     });
                     con.SaveChanges();
                 }
+                return View("AdminView");
             }
-
-            return View("AdminView");
+            else return View();
         }
 
         [HttpGet]
@@ -380,7 +391,7 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId)
+        public async Task<IActionResult> AddToCart(int productId, string returnUrl)
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
@@ -408,7 +419,7 @@ namespace Cofefe.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(returnUrl);
         }
 
         [HttpPost]
@@ -459,7 +470,9 @@ namespace Cofefe.Controllers
         {
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
-                return View("Cabinet");
+                int UID = HttpContext.Session.GetInt32("UserId").Value;
+                var User = _context.Users.Where(u => u.Id == UID);
+                return View("Cabinet", User);
             }
             else { return View("Login"); }
         }
@@ -469,7 +482,11 @@ namespace Cofefe.Controllers
         {
             var userService = new UserService(_context);
             var user = userService.GetUser(login, password);
-			HttpContext.Session.SetInt32("UserId", user.Id);
+            if(user != null)
+            {
+                HttpContext.Session.SetInt32("UserId", user.Id);
+            }
+			
 
 			if (HttpContext.Session.GetInt32("UserId") != 1 && user != null)
             {
@@ -485,9 +502,38 @@ namespace Cofefe.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public IActionResult UpdateUser()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId").Value;
+            var user = _context.Users.Find(userId);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUser(User updatedUser, string OldPassword)
+        {
+            // ѕроверка наличи€ пользовател€ и обновление данных
+            //if (ModelState.IsValid)
+            //{
+                var existingUser = _context.Users.Find(updatedUser.Id);
+                if (existingUser != null && existingUser.Password == OldPassword)
+                {
+                    existingUser.PhoneNumber = updatedUser.PhoneNumber;
+                    existingUser.Login = updatedUser.Login;
+                    existingUser.Password = updatedUser.Password; // ѕомните о безопасности хранени€ паролей!
+
+                    _context.SaveChanges();
+                return RedirectToAction("Index"); // ѕеренаправл€ем пользовател€ на другую страницу после успешного обновлени€
+                }
+            //}
+            return View(updatedUser); // ≈сли возникла ошибка, возвращаем пользовател€ на страницу редактировани€ с введенными данными
+        }
+
         public ViewResult Cabinet()
         {
-
+            
             return View();
         }
         public ViewResult Registration()

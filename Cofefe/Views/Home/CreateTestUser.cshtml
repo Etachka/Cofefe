@@ -9,43 +9,43 @@
         </div>
 
         <div class="create-user_main_cell_firstn">
-            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" />
+            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_secondn">
-            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" />
+            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" required min="1" />
         </div>
 
         <div class="create-user_main_cell_patronymic">
-            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" />
+            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" required min="1" />
         </div>
 
         <div class="create-user_main_cell_log">
-            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" />
+            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" required min="1" />
         </div>
 
         <div class="create-user_main_cell_pass">
-            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" />
+            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" required min="1" />
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" required min="1" />
         </div>
 
         <div class="create-user_main_cell_city">
-            <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" />
+            <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" required min="1" />
         </div>
 
         <div class="create-user_main_cell_street">
-            <input class="create-user_main_cell_street_input" type="text" id="street" name="street" placeholder="Улица" />
+            <input class="create-user_main_cell_street_input" type="text" id="street" name="street" placeholder="Улица" required min="1" />
         </div>
 
         <div class="create-user_main_cell_home">
-            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" />
+            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" pattern="[0-9]+" title="Введите только цифры" placeholder="Номер дома" required min="1" />
         </div>
 
         <div class="create-user_main_cell_flat">
-            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" />
+            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" pattern="[0-9]+" title="Введите только цифры" placeholder="Номер квартиры" required min="1" />
         </div>
         <button type="submit" class="create-user_main_cell_btn">Добавить</button>
     </form>

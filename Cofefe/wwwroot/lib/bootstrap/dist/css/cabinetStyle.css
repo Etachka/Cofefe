@@ -5,7 +5,7 @@
     background-color: #653e34;
     min-height: 803px;
     grid-template-columns: 30% 40% 30%;
-    grid-template-rows: 20% 70% 10%;
+    grid-template-rows: 20% 50% 30%;
 }
 .сabinet_main_cell {
     grid-row: 2;
@@ -36,16 +36,35 @@
     grid-column: 1;
 }
 .сabinet_main_cell_content_button_orders {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
     grid-row: 1;
 }
 .сabinet_main_cell_content_button_update {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
     grid-row: 2;
 }
 .сabinet_main_cell_content_button_exit {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
     grid-row: 3;
 }
 .сabinet_main_cell_content_info {
     display: grid;
     /*grid-template-rows: 33% 33% 33%;*/
     grid-column: 2;
+}
+.btn {
+    background-color: #fff;
+    width: 160px;
+    height: 45px;
+    border-radius: 25px;
+    border: 0px;
+    margin: 10px 20px 10px 10px;
+    cursor: pointer;
+    font-family: 'TaylorSansRegular'
 }

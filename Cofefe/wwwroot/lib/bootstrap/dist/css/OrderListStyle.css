@@ -1,0 +1,93 @@
+﻿.main_order {
+    width: auto;
+    height: max-content;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    /*background-color: #1B1924;*/
+    background-color: #653e34;
+    min-height: 803px;
+}
+.main_name_order {
+    grid-row: 1;
+}
+
+    .main_name_order h1 {
+        color: #F7F7F7;
+        margin-left: 20px;
+    }
+
+.main_catalog_order {
+    grid-row: 2;
+    display: grid;
+}
+.catalog_products_order {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.catalog_card_order {
+    margin: 15px 75px 15px 75px;
+    border: 2px solid #0e0f12;
+    width: 320px;
+    max-height: 350px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    border-radius: 10px;
+    background-color: #d1ad9d;
+}
+    .catalog_card_order::-webkit-scrollbar {
+        width: 8px; /* ширина scrollbar */
+    }
+    .catalog_card_order::-webkit-scrollbar-track {
+        background: #d1ad9d; /* цвет дорожки */
+    }   
+    .catalog_card_order::-webkit-scrollbar-thumb {
+        background-color: #d1ad9d; /* цвет плашки */
+        border-radius: 20px; /* закругления плашки */
+        border: 2px solid #653e34; /* padding вокруг плашки */
+    }
+        .catalog_card_order::-webkit-scrollbar-thumb:hover {
+            background-color: #0e0f12; /* Цвет при наведении курсора */
+        }
+
+.card_main_order {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 30% 70%;
+}
+
+.card_main_name {
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.card_main_name_title {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.card_main_description {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.card_main_weight {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.card_main_count {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.card_main_cost {
+    grid-column: 3;
+    grid-row: 1;
+}

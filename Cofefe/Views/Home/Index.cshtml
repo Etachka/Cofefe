@@ -136,9 +136,8 @@
                     </div>
                     <div class="divinf">
                         <style>
-                            /* Стили для кнопки при наведении */
                             #favoriteButton_@product.Id:hover {
-                            cursor: pointer; /* Изменяем указатель мыши на указатель */
+                            cursor: pointer;
                         }
                         </style>
                         <form asp-action="AddOrRemoveFavorite" asp-controller="Home" method="post">
@@ -173,6 +172,7 @@
 
 
                     <form asp-action="AddToCart" style="grid-column: 2;grid-row: 2; align-content: center;justify-content:center;flex-wrap:wrap;display:flex;" asp-controller="Home" method="post">
+                        <input type="hidden" name="returnUrl" value="Index">
                         <input type="hidden" name="productId" value="@product.Id">
                         <button type="submit" class="buttonbuy">В корзину</button>
                     </form>

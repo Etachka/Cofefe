@@ -1,0 +1,35 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Редактирование профиля";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/CreateTestUserStyle.css" />
+
+<form asp-action="UpdateUser" asp-controller="Home" method="post" style="grid-template-rows: 15% 70% 15%;grid-template-columns: 25% 50% 25%;" class="create-user_main">
+    <div class="create-user_main_cell">
+        <div class="create-user_main_cell_name">
+            <h1>Редактирование информации</h1>
+        </div>
+
+        <div style="grid-column:3; grid-row:2" class="create-user_main_cell_number">
+            <input style="grid-column:3;" class="create-user_main_cell_number_input" type="text" id="number" name="PhoneNumber" placeholder="Номер телефона" autocomplete="off" value="@Model.PhoneNumber" required min="1" />
+        </div>
+
+        <div style="grid-column:3; grid-row:3" class="create-user_main_cell_log">
+            <input style="grid-column:3;" class="create-user_main_cell_log_input" type="text" id="log" name="Login" placeholder="Логин" autocomplete="off" value="@Model.Login" required min="1" />
+        </div>
+
+        <div style="grid-column:3; grid-row:4" class="create-user_main_cell_pass">
+            <input style="grid-column:3;" class="create-user_main_cell_pass_input" type="password" id="oldPass" name="OldPassword" placeholder="Старый пароль" autocomplete="off" required min="1" />
+        </div>
+
+        <div style="grid-column:3; grid-row:5" class="create-user_main_cell_pass">
+            <input style="grid-column:3;" class="create-user_main_cell_pass_input" type="password" id="newPass" name="Password" placeholder="Новый пароль" autocomplete="off" required min="1" />
+        </div>
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <button type="submit" class="create-user_main_cell_btn">Сохранить</button>
+    </div>
+</form>

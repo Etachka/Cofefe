@@ -17,9 +17,6 @@
 
         public int ProductCount { get; set; }
 
-        //public int SumCost { get; set; }
-        //public int DeliveryCost { get; set; }
-        //public int TotalCost { get; set; }
-        //public DateTime DispatchDate { get; set; }
+        
     }
 }

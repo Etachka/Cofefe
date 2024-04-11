@@ -20,11 +20,6 @@
             {
             @foreach (var shoppingCartItem in Model.ShoppingCartItems)
             {
-                if(shoppingCartItem == null)
-                {
-                    check = false;
-                    <h1>В корзине нет продуктов</h1>
-                }
                 <div class="catalog_card">
                     <div class="card_image">
                         <img alt="@shoppingCartItem.Product.Image" src="data:image/png;base64,@shoppingCartItem.Product.Image">
