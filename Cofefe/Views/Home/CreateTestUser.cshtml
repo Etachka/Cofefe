@@ -29,7 +29,7 @@
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" required min="1" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" maxlength="11" placeholder="Номер телефона" pattern="[0-9]+" title="Введите только цифры" required minlength="11" />
         </div>
 
         <div class="create-user_main_cell_city">
@@ -41,11 +41,11 @@
         </div>
 
         <div class="create-user_main_cell_home">
-            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" pattern="[0-9]+" title="Введите только цифры" placeholder="Номер дома" required min="1" />
+            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" pattern="[0-9]+" maxlength="4" title="Введите только цифры" placeholder="Номер дома" required min="1" />
         </div>
 
         <div class="create-user_main_cell_flat">
-            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" pattern="[0-9]+" title="Введите только цифры" placeholder="Номер квартиры" required min="1" />
+            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" pattern="[0-9]+" maxlength="4" title="Введите только цифры" placeholder="Номер квартиры" required min="1" />
         </div>
         <button type="submit" class="create-user_main_cell_btn">Добавить</button>
     </form>

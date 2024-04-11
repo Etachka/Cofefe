@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 using Cofefe.Data;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cofefe.Controllers
 {
@@ -514,21 +515,21 @@ namespace Cofefe.Controllers
         [HttpPost]
         public IActionResult UpdateUser(User updatedUser, string OldPassword)
         {
-            // ѕроверка наличи€ пользовател€ и обновление данных
-            //if (ModelState.IsValid)
-            //{
-                var existingUser = _context.Users.Find(updatedUser.Id);
-                if (existingUser != null && existingUser.Password == OldPassword)
-                {
-                    existingUser.PhoneNumber = updatedUser.PhoneNumber;
-                    existingUser.Login = updatedUser.Login;
-                    existingUser.Password = updatedUser.Password; // ѕомните о безопасности хранени€ паролей!
+            var existingUser = _context.Users.Find(updatedUser.Id);
+            if (existingUser != null)
+            {
+                existingUser.PhoneNumber = updatedUser.PhoneNumber;
+                existingUser.Login = updatedUser.Login;
 
-                    _context.SaveChanges();
-                return RedirectToAction("Index"); // ѕеренаправл€ем пользовател€ на другую страницу после успешного обновлени€
+                if (!string.IsNullOrEmpty(updatedUser.Password))
+                {
+                    existingUser.Password = updatedUser.Password; 
                 }
-            //}
-            return View(updatedUser); // ≈сли возникла ошибка, возвращаем пользовател€ на страницу редактировани€ с введенными данными
+
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(updatedUser); 
         }
 
         public ViewResult Cabinet()
@@ -536,10 +537,37 @@ namespace Cofefe.Controllers
             
             return View();
         }
+        [HttpGet]
         public ViewResult Registration()
         {
 
             return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Registration(string firstn, string secondn, string patronymic, string pass, string log, string number, string city, string street, string home, string flat)
+        {
+            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null && city != null && street != null && home != null && flat != null && number.Length == 11)
+            {
+                using (var con = new ApplicationContext())
+                {
+                    con.Users.AddRange(new[]
+                    {
+                        new User{
+                            FIO = firstn + " " + secondn.Substring(0,1) + "." + patronymic.Substring(0,1) + ".",
+                            Password = pass,
+                            Login = log,
+                            Address = "г." + city + ", " + "ул." + street + ", " + "д." + home + ", " + "кв." + flat,
+                            PhoneNumber = number,
+                            role = 2,
+                        }
+                    });
+                    con.SaveChanges();
+                }
+                return View("Login");
+            }
+            else return View();
         }
 
         [HttpPost]

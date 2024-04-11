@@ -3,7 +3,7 @@
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/CreateTestUserStyle.css" />
 <div class="create-user_main">
-    <form asp-action="CreateTestUser" asp-controller="Home" method="post" class="create-user_main_cell">
+    <form asp-action="Registration" asp-controller="Home" method="post" class="create-user_main_cell">
         <div class="create-user_main_cell_name">
             <h1>Регистрация</h1>
         </div>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" pattern="[0-9]+" title="Введите только цифры" maxlength="11" autocomplete="off" required minlength="11" />
         </div>
 
         <div class="create-user_main_cell_city">
@@ -41,12 +41,12 @@
         </div>
 
         <div class="create-user_main_cell_home">
-            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_home_input" type="text" id="home" name="home" placeholder="Номер дома" maxlength="4" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_flat">
-            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" maxlength="4" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
         </div>
-        <button type="submit" class="create-user_main_cell_btn">Добавить</button>
+        <button type="submit" class="create-user_main_cell_btn">Зарегистрироваться</button>
     </form>
 </div>
