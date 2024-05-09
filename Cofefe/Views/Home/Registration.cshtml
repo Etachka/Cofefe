@@ -9,15 +9,15 @@
         </div>
 
         <div class="create-user_main_cell_firstn">
-            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_firstn_input" type="text" id="firstn" name="firstn" placeholder="Имя" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_secondn">
-            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_secondn_input" type="text" id="secondn" name="secondn" placeholder="Фамилия" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_patronymic">
-            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
         </div>
 
         <div class="create-user_main_cell_log">
@@ -32,7 +32,7 @@
             <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" pattern="[0-9]+" title="Введите только цифры" maxlength="11" autocomplete="off" required minlength="11" />
         </div>
 
-        <div class="create-user_main_cell_city">
+        @* <div class="create-user_main_cell_city">
             <input class="create-user_main_cell_city_input" type="text" id="city" name="city" placeholder="Город" autocomplete="off" required min="1" />
         </div>
 
@@ -46,7 +46,14 @@
 
         <div class="create-user_main_cell_flat">
             <input class="create-user_main_cell_flat_input" type="text" id="flat" name="flat" placeholder="Номер квартиры" maxlength="4" pattern="[0-9]+" title="Введите только цифры" autocomplete="off" required min="1" />
-        </div>
+        </div> *@
         <button type="submit" class="create-user_main_cell_btn">Зарегистрироваться</button>
     </form>
 </div>
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+        alert(errorMessage);
+    </script>
+}

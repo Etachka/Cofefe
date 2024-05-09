@@ -4,7 +4,7 @@
     display: grid;
     background-color: #653e34;
     min-height: 803px;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 30% 40% 30%;
     grid-template-rows: 5% 90% 5%;
 }
 
@@ -16,9 +16,10 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px black;
     display: grid;
-    grid-template-columns: 5% 30% 30% 30% 5%;
+    grid-template-columns: 15% 30% 10% 30% 15%;
     grid-template-rows: 15% 15% 15% 15% 15% 5% 15%;
 }
+
 .create-user_main_cell_name {
     grid-row: 1;
     grid-column: 2 / span 3;
