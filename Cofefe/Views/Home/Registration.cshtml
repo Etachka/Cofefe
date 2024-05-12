@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Регистрация";
 }
+<script src="https://unpkg.com/imask"></script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/CreateTestUserStyle.css" />
 <div class="create-user_main">
     <form asp-action="Registration" asp-controller="Home" method="post" class="create-user_main_cell">
@@ -29,7 +30,7 @@
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" pattern="[0-9]+" title="Введите только цифры" maxlength="11" autocomplete="off" required minlength="11" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="8 (___) ___-__-__" autocomplete="off" required minlength="18" />
         </div>
 
         @* <div class="create-user_main_cell_city">
@@ -57,3 +58,11 @@
         alert(errorMessage);
     </script>
 }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var numberInput = document.getElementById('number');
+        var numberMask = IMask(numberInput, {
+            mask: '8 (000) 000-00-00'
+        });
+    });
+</script>

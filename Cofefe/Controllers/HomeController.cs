@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Cofefe.Data;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.RegularExpressions;
 
 namespace Cofefe.Controllers
 {
@@ -370,19 +371,25 @@ namespace Cofefe.Controllers
         [HttpPost]
         public IActionResult CreateTestUser(string firstn, string secondn, string patronymic, string pass, string log, string number, string city, string street, string home, string flat)
         {
-            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null && city != null && street != null && home != null && flat != null)
+            string phone = Regex.Replace(number, @"[^\d]", "");
+            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && phone != null && phone.Length == 11)
             {
                 using (var con = new ApplicationContext())
                 {
+                    string address = "";
+                    if (city != null || street != null || home != null || flat != null)
+                    {
+                        address = "г." + city + ", " + "ул." + street + ", " + "д." + home + ", " + "кв." + flat;
+                    }
                     con.Users.AddRange(new[]
                     {
                         new User{
                             FIO = firstn + " " + secondn.Substring(0,1) + "." + patronymic.Substring(0,1) + ".",
                             Password = pass,
                             Login = log,
-                            Address = "г." + city + ", " + "ул." + street + ", " + "д." + home + ", " + "кв." + flat, 
-                            PhoneNumber = number, 
-                            role = 2, 
+                            Address = address,
+                            PhoneNumber = phone,
+                            role = 2,
                         }
                     });
                     con.SaveChanges();
@@ -551,7 +558,7 @@ namespace Cofefe.Controllers
         [HttpPost]
         public IActionResult Registration(string firstn, string secondn, string patronymic, string pass, string log, string number, string city, string street, string home, string flat)
         {
-            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null /*&& city != null && street != null && home != null && flat != null*/ && number.Length == 11)
+            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null && number.Length == 11)
             {
                 using (var con = new ApplicationContext())
                 {
