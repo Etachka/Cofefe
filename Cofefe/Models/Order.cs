@@ -17,6 +17,9 @@
 
         public int ProductCount { get; set; }
 
-        
+        public int ProductCostAtTimeOrder { get; set; } 
+
+
+
     }
 }

@@ -468,8 +468,10 @@ namespace Cofefe.Controllers
             }
             else
             {
+                TempData["ErrorMessage"] = "У пользователя ";
                 return RedirectToAction("AdminView");
             }
+            
         }
 
 
@@ -624,9 +626,11 @@ namespace Cofefe.Controllers
                 int orderId = GenerateOrderId();
 
                 int statusId = 1; 
-
+                
                 foreach (var item in cartItems)
                 {
+                    var cartItem = _context.Products.FirstOrDefault(x => x.Id == item.ProductID);
+                    int PCATO = cartItem.Cost;
                     var order = new Order
                     {
                         UserID = userId.Value,
@@ -634,6 +638,7 @@ namespace Cofefe.Controllers
                         StatusID = statusId,
                         OrderId = orderId,
                         ProductCount = item.ProductCount,
+                        ProductCostAtTimeOrder = PCATO,
                     };
                     _context.Orders.Add(order);
                 }
@@ -653,6 +658,35 @@ namespace Cofefe.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult DecreaseProductCount(int productID)
+        {
+            var shoppingCartItem = _context.ShoppingCarts
+                .FirstOrDefault(item => item.ProductID == productID);
+
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.ProductCount--;
+
+                _context.SaveChanges();
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult IncreaseProductCount(int productID)
+        {
+            var shoppingCartItem = _context.ShoppingCarts
+                .FirstOrDefault(item => item.ProductID == productID);
+
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.ProductCount++;
+
+                _context.SaveChanges();
+            }
+            return Ok();
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

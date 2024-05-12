@@ -124,3 +124,10 @@
         
     }
 </div>
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+        alert(errorMessage);
+    </script>
+}

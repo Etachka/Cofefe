@@ -29,9 +29,9 @@
                                     <h3>@order.Product.Name X @order.ProductCount</h3>
                                 </div>
                                 <div style="margin-bottom:3px;" class="card_main_cost">
-                                    <h3>Цена: @(order.Product.Cost * order.ProductCount)</h3>
+                                    <h3>Цена: @(order.ProductCostAtTimeOrder * order.ProductCount)</h3>
                                     @{
-                                        summ += order.Product.Cost * order.ProductCount;
+                                            summ += order.ProductCostAtTimeOrder * order.ProductCount;
                                     }
                                 </div>
                             </div>
