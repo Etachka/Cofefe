@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Регистрация";
 }
-<script src="https://unpkg.com/imask"></script>
+@* <script src="https://unpkg.com/imask"></script> *@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/CreateTestUserStyle.css" />
 <div class="create-user_main">
     <form asp-action="Registration" asp-controller="Home" method="post" class="create-user_main_cell">
@@ -22,15 +22,15 @@
         </div>
 
         <div class="create-user_main_cell_log">
-            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_log_input" type="text" id="log" name="log" placeholder="Логин" autocomplete="off" pattern="[^\s]+" required min="1" />
         </div>
 
         <div class="create-user_main_cell_pass">
-            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_pass_input" type="password" id="pass" name="pass" placeholder="Пароль" autocomplete="off" pattern="[^\s]+" required min="1" />
         </div>
 
         <div class="create-user_main_cell_number">
-            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="8 (___) ___-__-__" autocomplete="off" required minlength="18" />
+            <input class="create-user_main_cell_number_input" type="text" id="number" name="number" placeholder="Номер телефона" autocomplete="off" pattern="[0-9]+" required minlength="11" maxlength="11" />
         </div>
 
         @* <div class="create-user_main_cell_city">
@@ -58,11 +58,11 @@
         alert(errorMessage);
     </script>
 }
-<script>
+@* <script>
     document.addEventListener('DOMContentLoaded', function () {
         var numberInput = document.getElementById('number');
         var numberMask = IMask(numberInput, {
             mask: '8 (000) 000-00-00'
         });
     });
-</script>
+</script> *@

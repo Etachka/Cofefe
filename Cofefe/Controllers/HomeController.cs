@@ -544,13 +544,13 @@ namespace Cofefe.Controllers
             return View(updatedUser); 
         }
 
-        public ViewResult Cabinet()
+        public IActionResult Cabinet()
         {
             
             return View();
         }
         [HttpGet]
-        public ViewResult Registration()
+        public IActionResult Registration()
         {
 
             return View();
