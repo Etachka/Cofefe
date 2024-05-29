@@ -1,8 +1,8 @@
 ﻿.main_cart {
     width: auto;
-    height: max-content;
+    height: 100%;
     display: grid;
-    grid-template-rows:70px auto 70px;
+    grid-template-rows: 70px auto 70px;
     /*background-color: #1B1924;*/
     background-color: #653e34;
     min-height: 803px;
@@ -127,3 +127,23 @@
         background-color: #0e0f12;
         color: #fff;
     }
+
+
+.summary_and_order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.panelcount1 {
+    margin-right: 4px;
+    background-color: #fff;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

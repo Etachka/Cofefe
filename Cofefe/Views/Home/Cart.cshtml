@@ -34,7 +34,7 @@
                             <h3>Вес: @shoppingCartItem.Product.Weight</h3>
                         </div>
                         <div class="card_main_count">
-                            <h3>Количество: <span id="productCount">@shoppingCartItem.ProductCount</span></h3>
+                            <h3>Количество: <span id="productCount-@shoppingCartItem.ProductID">@shoppingCartItem.ProductCount</span></h3>
                             <div class="card_main_count_str">
                                 <button class="card_main_count_btn" onclick="decreaseCount('@shoppingCartItem.ProductID')">-</button>
                                 <button class="card_main_count_btn" onclick="increaseCount('@shoppingCartItem.ProductID')">+</button>
@@ -52,47 +52,66 @@
             }
         }
     </div>
-    <form class="cart_to_order" style="justify-content:flex-end; display:flex;" asp-action="CreateOrder" asp-controller="Home" method="post">
-        <button type="submit" class="cart_to_order_btn">Сделать заказ</button>
-    </form>
+    <div class="cart_to_order">
+        <div class="panelcount1">
+            <span id="totalCost">Суммарная цена: 0</span>
+        </div>
+        <form asp-action="CreateOrder" asp-controller="Home" method="post" id="orderForm">
+            <button type="button" class="cart_to_order_btn" onclick="confirmOrder()">Сделать заказ</button>
+        </form>
+    </div>
 
 </div>
 <script>
-    function decreaseCount(productId) {
-        var countElement = document.getElementById("productCount");
+    function updateTotalCost() {
+        var totalCost = 0;
+        document.querySelectorAll('.catalog_card').forEach(function (card) {
+            var count = parseInt(card.querySelector('span[id^="productCount-"]').textContent);
+            var cost = parseFloat(card.querySelector('.card_main_cost h3').textContent.replace('Цена: ', ''));
+            totalCost += count * cost;
+        });
+        document.getElementById('totalCost').textContent = 'Суммарная цена: ' + totalCost.toFixed(2);
+    }
+
+    function decreaseCount(productId, productCost) {
+        var countElement = document.getElementById("productCount-" + productId);
         var currentCount = parseInt(countElement.textContent);
         if (currentCount > 1) {
             countElement.textContent = currentCount - 1;
-            // Выполняем AJAX-запрос на сервер для уменьшения количества товаров
+            updateTotalCost();
             $.ajax({
                 type: 'POST',
-                url: '/Home/DecreaseProductCount', // URL вашего контроллера и метода
-                data: { productId: productId }, // передаем productId на сервер
+                url: '/Home/DecreaseProductCount',
+                data: { productId: productId },
                 success: function (response) {
-                    // обработка успешного ответа от сервера (если необходимо)
                 },
                 error: function (xhr, status, error) {
-                    // обработка ошибки (если необходимо)
                 }
             });
         }
     }
 
-    function increaseCount(productId) {
-        var countElement = document.getElementById("productCount");
+    function increaseCount(productId, productCost) {
+        var countElement = document.getElementById("productCount-" + productId);
         var currentCount = parseInt(countElement.textContent);
         countElement.textContent = currentCount + 1;
-        // Выполняем AJAX-запрос на сервер для увеличения количества товаров
+        updateTotalCost();
         $.ajax({
             type: 'POST',
-            url: '/Home/IncreaseProductCount', // URL вашего контроллера и метода
-            data: { productId: productId }, // передаем productId на сервер
+            url: '/Home/IncreaseProductCount',
+            data: { productId: productId },
             success: function (response) {
-                // обработка успешного ответа от сервера (если необходимо)
             },
             error: function (xhr, status, error) {
-                // обработка ошибки (если необходимо)
             }
         });
     }
+    function confirmOrder() {
+        if (confirm("Вы точно хотите оформить заказ? Проверьте адрес доставки у себя в профиле.")) {
+            document.getElementById("orderForm").submit();
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        updateTotalCost();
+    });
 </script>

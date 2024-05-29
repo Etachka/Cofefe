@@ -1,6 +1,6 @@
 ﻿.order_main {
     width: auto;
-    height: max-content;
+    height: 100%;
     display: grid;
     grid-template-columns: 10% 80% 10%;
     background-color: #653e34;

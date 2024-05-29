@@ -1,12 +1,12 @@
 ﻿.main {
     width: auto;
-    height: max-content;
+    height: 100%;
     display: grid;
     grid-template-columns: 16% 84%;
 }
 .filter {
-    grid-column:1;
-    background-color: #9291A1;
+    grid-column: 1;
+    background-color: #b2b2bd;
     display: grid;
     grid-template-rows: 50px 50px 1000px;
 }
@@ -20,9 +20,9 @@
         transition: border-bottom 0.6s ease, font-weight 0.6s ease;
     }
 .catalogAdmin {
-    grid-column:2;
+    grid-column: 2;
     height: auto;
-    background-color: #1B1924;
+    background-color: #121119;
     display: flex;
     flex-wrap: wrap;
 }
@@ -34,7 +34,7 @@
     box-shadow: 0 4px 8px #FFF;
     display: grid;
     margin: 30px;
-    background-color: #9291A1;
+    background-color: #b2b2bd;
     grid-template-columns: 240px 210px;
     grid-template-rows: 240px 60px;
 }
@@ -114,9 +114,9 @@ h3 {
 
 .btnproductcatalog {
     cursor: pointer;
-    background-color: #9291A1;
+    background-color: #b2b2bd;
     transition: background-color 0.5s ease;
-    border:0px;
+    border: 0px;
 }
     .btnproductcatalog:active {
         filter: brightness(0.8);
@@ -172,7 +172,7 @@ h3 {
     grid-template-columns: 100%;
     box-shadow: 0 4px 8px #FFF;
     margin: 20px;
-    
+    background-color: #b2b2bd;
 }
 .addbtn {
     width: 350px;
@@ -181,11 +181,11 @@ h3 {
     cursor: pointer;
     grid-row: 1;
     grid-column: 1;
-    background-color: #9291A1;
-    background-image: url("https://cdn.icon-icons.com/icons2/834/PNG/512/plus_icon-icons.com_66718.png") ;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-size:30%;
+    background-color: #b2b2bd;
+    background-image: url("https://cdn.icon-icons.com/icons2/834/PNG/512/plus_icon-icons.com_66718.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30%;
 }
 .addbtn:active{
     filter:brightness(0.9);

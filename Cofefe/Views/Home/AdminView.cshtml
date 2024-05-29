@@ -13,7 +13,7 @@
     <div class="filter">
         <form style="grid-row:1;" class="filtercatalog" method="post" action="/Home/GetUsers" id="userForm">
             <button type="submit" class="btnproductcatalog">
-                <p id="catalog1">Каталог пользователей</p>
+                <p id="catalog1">Пользователи</p>
             </button>
         </form>
         <form style="grid-row:2;" class="filtercatalog" method="post" action="/Home/GetProducts" id="catalogForm">
@@ -61,7 +61,7 @@
                             </div>
                             <div class="divproductinf">
                                 <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
-                                <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
+                                <h3 style="font-weight:600;grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
                                 <div class="divproductcost">
                                     <h3 style="grid-column:1; margin-left:5px; font-size:25px;margin-top:10px;">@product.Cost ₽</h3>
                                 </div>
@@ -118,7 +118,7 @@
     }
     else
     {
-        <div style="background-color:#1B1924;">
+        <div style="background-color:#121119;">
             <p style="color:#F7F7F7; margin-left:20px;">Выберите один из каталогов</p>
         </div>
         
