@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewData["Title"] = "Редактирование продукта";
+}
+@using Cofefe.ViewModels
+@using Cofefe.Models
+@using Cofefe.Controllers
+@model ProductUpdateViewModel
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/AddProductStyle.css" />
+
+<div class="add-product_main">
+    <form asp-action="UpdateProduct" asp-controller="Home" method="post" class="add-product_main_cell">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="add-product_main_cell_name">
+            <h1>Редактирование товара</h1>
+        </div>
+
+        <div class="add-product_main_cell_title">
+            <input class="add-product_main_cell_title_input" type="text" value="@Model.Name" placeholder="Наименование" name="title" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_desc">
+            <input class="add-product_main_cell_desc_input" type="text" name="desc" value="@Model.Description" placeholder="Описание товара" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" required min="1" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_weight">
+            <input class="add-product_main_cell_weight_input" type="text" value="@Model.Weight" name="weight" pattern="[0-9]+" title="Введите только цифры" placeholder="Вес товара (г.)" required min="1" maxlength="5" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_cost">
+            <input class="add-product_main_cell_cost_input" type="text" value="@Model.Cost" name="cost" pattern="[0-9]+" title="Введите только цифры" placeholder="Цена товара (₽)" required min="1" maxlength="5" />
+            <span asp-validation-for="Cost" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_acidity">
+            <select class="select-css" value="@Model.Acidity" required>
+                <option value="Низкая">Низкая</option>
+                <option value="Средняя">Средняя</option>
+                <option value="Высокая">Высокая</option>
+            </select>
+            <span asp-validation-for="Acidity" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_density">
+            <select class="select-css" value="@Model.Density" required>
+                <option value="Низкая">Низкая</option>
+                <option value="Средняя">Средняя</option>
+                <option value="Высокая">Высокая</option>
+            </select>
+            <span asp-validation-for="Density" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_growth">
+            <select class="select-css" value="@Model.Growth" required>
+                <option value="Боливия">Боливия</option>
+                <option value="Бразилия">Бразилия</option>
+                <option value="Гватемала">Гватемала</option>
+                <option value="Кения">Кения</option>
+                <option value="Китай">Китай</option>
+                <option value="Коста-Рика">Коста-Рика</option>
+                <option value="Перу">Перу</option>
+                <option value="Руанда">Руанда</option>
+                <option value="Эфиопия">Эфиопия</option>
+            </select>
+            <span asp-validation-for="Growth" class="text-danger"></span>
+        </div>
+
+        <div class="add-product_main_cell_type">
+            <select class="select-css" value="@Model.Type" required>
+                <option value="Milk">Milk</option>
+                <option value="Espresso">Espresso</option>
+                <option value="Filter">Filter</option>
+            </select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="add-product_main_cell_btn">Сохранить</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

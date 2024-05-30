@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Личный кабинет";
 }
-@model IQueryable<User>
+@model User
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/cabinetStyle.css" />
    
 <div class="сabinet_main">
@@ -21,6 +21,11 @@
                         <button class="btn" type="submit">Редактирование данных</button>
                     </form>
                 </div>
+                <div class="сabinet_main_cell_content_button_address">
+                    <form asp-controller="Home" asp-action="Address" method="get">
+                        <button class="btn" type="submit">Изменить адрес</button>
+                    </form>
+                </div>
                 <div class="сabinet_main_cell_content_button_exit">
                     <form asp-controller="Home" asp-action="Logout" method="post">
                         <button class="btn" type="submit">Выход</button>
@@ -28,15 +33,12 @@
                 </div>
             </div>
             <div class="сabinet_main_cell_content_info">
-                @foreach (var user in Model)
-                {
-                    <p>ФИО: @user.FIO</p>
+                    <p>ФИО: @Model.FIO</p>
                     <p>
-                        @($"8({user.PhoneNumber.Substring(1, 3)})-{user.PhoneNumber.Substring(4, 3)}-{user.PhoneNumber.Substring(7, 2)}-{user.PhoneNumber.Substring(9, 2)}")
+                    @($"8({Model.PhoneNumber.Substring(1, 3)})-{Model.PhoneNumber.Substring(4, 3)}-{Model.PhoneNumber.Substring(7, 2)}-{Model.PhoneNumber.Substring(9, 2)}")
                     </p>
-                    <p>Логин: @user.Login</p>
-                    <p>Адрес: @user.Address</p>
-                }
+                <p>Логин: @Model.Login</p>
+                <p>Адрес: @Model.Address</p>
             </div>
         </div>
     </div>

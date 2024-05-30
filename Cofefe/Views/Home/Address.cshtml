@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Редактирование/Добавление адреса";
+}
+@model Address
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/AddressStyle.css" />
+<div class="address_main">
+    <div class="address_main_cell">
+        
+
+        @if (Model.Street == null && Model.Flat == null && Model.City == null && Model.Home == null)
+        {
+            <h2 class="address_title">Добавление адреса</h2>
+            <div class="address_card">
+                <form class="address_form" asp-controller="Home" asp-action="AddressEdit" method="post">
+                    <div>
+                        <label for="city">Город:</label>
+                        <input type="text" id="city" name="City" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required />
+                    </div>
+                    <div>
+                        <label for="street">Улица:</label>
+                        <input type="text" id="street" name="Street" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required />
+                    </div>
+                    <div>
+                        <label for="home">Дом:</label>
+                        <input type="text" id="home" name="Home" required autocomplete="off" maxlength="4" title="Введите только цифры" pattern="[0-9]+" />
+                    </div>
+                    <div>
+                        <label for="flat">Квартира:</label>
+                        <input type="text" id="flat" name="Flat" required autocomplete="off" maxlength="4" title="Введите только цифры" pattern="[0-9]+" />
+                    </div>
+                    <button type="submit">Сохранить</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <h2 class="address_title">Редактирование адреса</h2>
+            <div class="address_card edit_form">
+                <form class="address_form" asp-controller="Home" asp-action="AddressEdit" method="post">
+                    <div>
+                        <label for="city">Город:</label>
+                        <input type="text" id="city" name="City" value="@Model.City" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required />
+                    </div>
+                    <div>
+                        <label for="street">Улица:</label>
+                        <input type="text" id="street" name="Street" value="@Model.Street" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required />
+                    </div>
+                    <div>
+                        <label for="home">Дом:</label>
+                        <input type="text" id="home" name="Home" value="@Model.Home" required autocomplete="off" maxlength="4" title="Введите только цифры" pattern="[0-9]+" />
+                    </div>
+                    <div>
+                        <label for="flat">Квартира:</label>
+                        <input type="text" id="flat" name="Flat" value="@Model.Flat" required autocomplete="off" maxlength="4" title="Введите только цифры" pattern="[0-9]+" />
+                    </div>
+                    <button type="submit">Сохранить</button>
+                </form>
+            </div>
+        }
+    </div>
+</div>

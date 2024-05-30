@@ -11,6 +11,7 @@ using Cofefe.Data;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.RegularExpressions;
+using System.Net.NetworkInformation;
 
 namespace Cofefe.Controllers
 {
@@ -36,13 +37,41 @@ namespace Cofefe.Controllers
             VM.CategoryProducts = _context.CategoryProducts.ToList();
             VM.Categories = _context.Categoryes.ToList();
 
-            ViewBag.IsUsersCatalog = true;
+            ViewBag.CatalogType = "Products";
             return View("AdminView", VM);
         }
         [HttpPost]
+        public IActionResult GetOrders()
+        {
+            ViewBag.CatalogType = "Orders";
+            UserProductViewmodel VM = new UserProductViewmodel();
+            VM.Users = _context.Users.ToList();
+            VM.Products = _context.Products.ToList();
+            VM.CategoryProducts = _context.CategoryProducts.ToList();
+            VM.Categories = _context.Categoryes.ToList();
+            VM.AllOrders = _context.Orders.Where(o => o.StatusID == 1).ToList();
+            return View("AdminView", VM);
+        }
+
+        [HttpPost]
+        public IActionResult GetSentOrders()
+        {
+            ViewBag.CatalogType = "SentOrders"; 
+            UserProductViewmodel VM = new UserProductViewmodel();
+            VM.Users = _context.Users.ToList();
+            VM.Products = _context.Products.ToList();
+            VM.CategoryProducts = _context.CategoryProducts.ToList();
+            VM.Categories = _context.Categoryes.ToList();
+            VM.SentOrders = _context.Orders.Where(o => o.StatusID == 2).ToList();
+            return View("AdminView", VM);
+        }
+
+        
+
+        [HttpPost]
         public IActionResult GetUsers()
         {
-            ViewBag.IsUsersCatalog = false;
+            ViewBag.CatalogType = "Users";
             UserProductViewmodel VM = new UserProductViewmodel();
             VM.Users = _context.Users.ToList();
             VM.Products = _context.Products.ToList();
@@ -51,11 +80,9 @@ namespace Cofefe.Controllers
             return View("AdminView", VM);
         }
 
-       
+
         public ViewResult Index(string searchString, string acidity, string density, string growth, string type)
         {
-            
-
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             List<int> favoriteProductIds = _context.FavoriteProducts
                 .Where(fp => fp.UserID == userId)
@@ -124,18 +151,90 @@ namespace Cofefe.Controllers
             return View(VM);
         }
 
+
+        public IActionResult Address()
+        {
+            var usr = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetInt32("UserId"));
+            var userAddress = usr.Address;
+
+            return View("Address", ParseAddress(userAddress));
+            
+        }
+
+
+        public static Address ParseAddress(string addressString)
+        {
+            Address address = new Address();
+
+            string[] parts = addressString.Split(',');
+
+            foreach (var part in parts)
+            {
+                string trimmedPart = part.Trim();
+
+                if (trimmedPart.StartsWith("г."))
+                {
+                    address.City = trimmedPart.Substring(2).Trim();
+                }
+                else if (trimmedPart.StartsWith("ул."))
+                {
+                    address.Street = trimmedPart.Substring(3).Trim();
+                }
+                else if (trimmedPart.StartsWith("д."))
+                {
+                    address.Home = trimmedPart.Substring(2).Trim();
+                }
+                else if (trimmedPart.StartsWith("кв."))
+                {
+                    address.Flat = trimmedPart.Substring(3).Trim();
+                }
+            }
+
+            return address;
+        }
+
+        [HttpPost]
+        public IActionResult AddressEdit(string city, string street, string home, string flat)
+        {
+           
+            var currentUser = _context.Users.FirstOrDefault(u => u.Id == HttpContext.Session.GetInt32("UserId"));
+
+            if (currentUser != null)
+            {
+                string address = "";
+
+                if (!string.IsNullOrEmpty(city))
+                    address += "г." + city;
+
+                if (!string.IsNullOrEmpty(street))
+                    address += ", ул." + street;
+
+                if (!string.IsNullOrEmpty(home))
+                    address += ", д." + home;
+
+                if (!string.IsNullOrEmpty(flat))
+                    address += ", кв." + flat;
+
+                currentUser.Address = address;
+
+                _context.SaveChanges();
+
+                return View("Cabinet", currentUser);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddOrRemoveFavorite(int productId, bool isFavorite)
         {
-            // Получаем текущего пользователя из сессии
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
-                // Если пользователь не аутентифицирован, возвращаем ошибку или перенаправляем на страницу входа
                 return RedirectToAction("Login");
             }
 
-                // Удаляем продукт из избранного, если он там есть
                 var favoriteProduct = await _context.FavoriteProducts.FirstOrDefaultAsync(fp => fp.ProductID == productId && fp.UserID == userId);
                 if (favoriteProduct != null)
                 {
@@ -240,6 +339,7 @@ namespace Cofefe.Controllers
                 UserProductCartViewModel VM = new UserProductCartViewModel
                 {
                     ShoppingCartItems = cartItems,
+                    UserAuth = _context.Users.FirstOrDefault(x=>x.Id == userId)
                 };
                 return View(VM);
             }
@@ -468,7 +568,7 @@ namespace Cofefe.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "У пользователя ";
+                TempData["ErrorMessage"] = "У пользователя есть заказы";
                 return RedirectToAction("AdminView");
             }
             
@@ -481,7 +581,7 @@ namespace Cofefe.Controllers
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 int UID = HttpContext.Session.GetInt32("UserId").Value;
-                var User = _context.Users.Where(u => u.Id == UID);
+                var User = _context.Users.FirstOrDefault(u => u.Id == UID);
                 return View("Cabinet", User);
             }
             else { return View("Login"); }
@@ -534,11 +634,12 @@ namespace Cofefe.Controllers
                     if (!string.IsNullOrEmpty(updatedUser.Password))
                     {
                         existingUser.Password = updatedUser.Password;
+                        _context.SaveChanges();
+                        return View("Cabinet", existingUser);
                     }
                 }
                 
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                
             }
         
             return View(updatedUser); 
@@ -623,33 +724,42 @@ namespace Cofefe.Controllers
 
             if (cartItems.Any())
             {
-                int orderId = GenerateOrderId();
-
-                int statusId = 1; 
-                
-                foreach (var item in cartItems)
+                var user = _context.Users.FirstOrDefault(x => x.Id == userId && x.Address != "");
+                if (user != null)
                 {
-                    var cartItem = _context.Products.FirstOrDefault(x => x.Id == item.ProductID);
-                    int PCATO = cartItem.Cost;
-                    var order = new Order
+                    int orderId = GenerateOrderId();
+
+                    int statusId = 1;
+
+                    foreach (var item in cartItems)
                     {
-                        UserID = userId.Value,
-                        ProductID = item.ProductID,
-                        StatusID = statusId,
-                        OrderId = orderId,
-                        ProductCount = item.ProductCount,
-                        ProductCostAtTimeOrder = PCATO,
-                    };
-                    _context.Orders.Add(order);
+                        var cartItem = _context.Products.FirstOrDefault(x => x.Id == item.ProductID);
+                        int PCATO = cartItem.Cost;
+                        var order = new Order
+                        {
+                            UserID = userId.Value,
+                            ProductID = item.ProductID,
+                            StatusID = statusId,
+                            OrderId = orderId,
+                            ProductCount = item.ProductCount,
+                            ProductCostAtTimeOrder = PCATO,
+                        };
+                        _context.Orders.Add(order);
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    _context.ShoppingCarts.RemoveRange(cartItems);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
                 }
-
-                await _context.SaveChangesAsync();
-
-                _context.ShoppingCarts.RemoveRange(cartItems);
-                await _context.SaveChangesAsync();
+                return RedirectToAction("Cart");
             }
-
-            return RedirectToAction("Cart");
+            else
+            {
+                return RedirectToAction("Cart");
+            }
+            
         }
 
         private int GenerateOrderId()
@@ -657,12 +767,39 @@ namespace Cofefe.Controllers
             return (int)DateTime.Now.Ticks;
         }
 
+        [HttpPost]
+        public IActionResult ChangeOrderStatus(int orderId, string status)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            if (order == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            switch (status)
+            {
+                case "send":
+                    order.StatusID = 2;
+                    break;
+                case "cancel":
+                    order.StatusID = 3;
+                    break;
+                default:
+                    
+                    break;
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("AdminView");
+        }
+
 
         [HttpPost]
-        public IActionResult DecreaseProductCount(int productID)
+        public IActionResult DecreaseProductCount(int productID, int userId)
         {
             var shoppingCartItem = _context.ShoppingCarts
-                .FirstOrDefault(item => item.ProductID == productID);
+                .FirstOrDefault(item => item.ProductID == productID && item.UserID == userId);
 
             if (shoppingCartItem != null)
             {
@@ -674,10 +811,10 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
-        public IActionResult IncreaseProductCount(int productID)
+        public IActionResult IncreaseProductCount(int productID, int userId)
         {
             var shoppingCartItem = _context.ShoppingCarts
-                .FirstOrDefault(item => item.ProductID == productID);
+                .FirstOrDefault(item => item.ProductID == productID && item.UserID == userId);
 
             if (shoppingCartItem != null)
             {
@@ -686,6 +823,82 @@ namespace Cofefe.Controllers
                 _context.SaveChanges();
             }
             return Ok();
+        }
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult UpdateProduct(int id)
+        {
+            var product = _context.Products
+                .Where(p => p.Id == id)
+                .Select(p => new ProductUpdateViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Weight = p.Weight,
+                    Cost = p.Cost,
+                    Acidity = _context.CategoryProducts.FirstOrDefault(cp => cp.ProductID == id && cp.CategoryID == 1).Value,
+                    Density = _context.CategoryProducts.FirstOrDefault(cp => cp.ProductID == id && cp.CategoryID == 2).Value,
+                    Growth = _context.CategoryProducts.FirstOrDefault(cp => cp.ProductID == id && cp.CategoryID == 3).Value,
+                    Type = _context.CategoryProducts.FirstOrDefault(cp => cp.ProductID == id && cp.CategoryID == 4).Value
+                }).FirstOrDefault();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProduct(ProductUpdateViewModel model)
+        {
+            if (model.Name != null && model.Description != null && model.Weight != null && model.Cost != null && model.Acidity != null && model.Density != null && model.Growth != null && model.Type != null)
+            {
+                using (var con = new ApplicationContext())
+                {
+                    var product = con.Products.FirstOrDefault(p => p.Id == model.Id);
+                    if (product == null)
+                    {
+                        return NotFound();
+                    }
+
+                    product.Name = model.Name;
+                    product.Description = model.Description;
+                    product.Cost = model.Cost;
+                    product.Weight = model.Weight;
+
+                    con.SaveChanges();
+
+                    var categoryProducts = con.CategoryProducts.Where(cp => cp.ProductID == model.Id).ToList();
+
+                    UpdateCategoryProductValue(categoryProducts, 1, model.Acidity);
+                    UpdateCategoryProductValue(categoryProducts, 2, model.Density);
+                    UpdateCategoryProductValue(categoryProducts, 3, model.Growth);
+                    UpdateCategoryProductValue(categoryProducts, 4, model.Type);
+
+                    con.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        private void UpdateCategoryProductValue(List<CategoryProduct> categoryProducts, int categoryId, string value)
+        {
+            var categoryProduct = categoryProducts.FirstOrDefault(cp => cp.CategoryID == categoryId);
+            if (categoryProduct != null)
+            {
+                categoryProduct.Value = value;
+            }
         }
 
 

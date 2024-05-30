@@ -36,8 +36,8 @@
                         <div class="card_main_count">
                             <h3>Количество: <span id="productCount-@shoppingCartItem.ProductID">@shoppingCartItem.ProductCount</span></h3>
                             <div class="card_main_count_str">
-                                <button class="card_main_count_btn" onclick="decreaseCount('@shoppingCartItem.ProductID')">-</button>
-                                <button class="card_main_count_btn" onclick="increaseCount('@shoppingCartItem.ProductID')">+</button>
+                                <button class="card_main_count_btn" onclick="decreaseCount('@shoppingCartItem.ProductID', '@Model.UserAuth.Id')">-</button>
+                                <button class="card_main_count_btn" onclick="increaseCount('@shoppingCartItem.ProductID', '@Model.UserAuth.Id')">+</button>
                             </div>
                         </div>
                         <div class="card_main_cost">
@@ -45,6 +45,8 @@
                         </div>
                         <form asp-action="RemoveFromCart" asp-controller="Home" class="card_main_btn" method="post">
                             <input type="hidden" name="productId" value="@shoppingCartItem.Product.Id">
+                            
+
                             <button type="submit" class="card_main_btn_style">Убрать из корзины</button>
                         </form>
                     </div>
@@ -62,6 +64,16 @@
     </div>
 
 </div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+        alert(errorMessage);
+        
+    }
+    </script>
+}
 <script>
     function updateTotalCost() {
         var totalCost = 0;
@@ -73,7 +85,7 @@
         document.getElementById('totalCost').textContent = 'Суммарная цена: ' + totalCost.toFixed(2);
     }
 
-    function decreaseCount(productId, productCost) {
+    function decreaseCount(productId, userId) {
         var countElement = document.getElementById("productCount-" + productId);
         var currentCount = parseInt(countElement.textContent);
         if (currentCount > 1) {
@@ -82,7 +94,10 @@
             $.ajax({
                 type: 'POST',
                 url: '/Home/DecreaseProductCount',
-                data: { productId: productId },
+                data: {
+                    productId: productId,
+                    userId: userId
+                },
                 success: function (response) {
                 },
                 error: function (xhr, status, error) {
@@ -91,7 +106,7 @@
         }
     }
 
-    function increaseCount(productId, productCost) {
+    function increaseCount(productId, userId) {
         var countElement = document.getElementById("productCount-" + productId);
         var currentCount = parseInt(countElement.textContent);
         countElement.textContent = currentCount + 1;
@@ -99,7 +114,10 @@
         $.ajax({
             type: 'POST',
             url: '/Home/IncreaseProductCount',
-            data: { productId: productId },
+            data: {
+                productId: productId,
+                userId: userId
+            },
             success: function (response) {
             },
             error: function (xhr, status, error) {
@@ -111,6 +129,8 @@
             document.getElementById("orderForm").submit();
         }
     }
+
+
     document.addEventListener("DOMContentLoaded", function () {
         updateTotalCost();
     });

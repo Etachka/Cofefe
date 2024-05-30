@@ -8,5 +8,7 @@ namespace Cofefe.ViewModels
         public List<User> Users { get; set; }
         public List<Category> Categories { get; set; }
         public List<CategoryProduct> CategoryProducts { get; set; }
+        public List<Order> AllOrders {  get; set; }
+        public List<Order> SentOrders { get; set; }
     }
 }

@@ -32,7 +32,7 @@
 }
 .сabinet_main_cell_content_buttons {
     display: grid;
-    grid-template-rows: 33% 33% 33%;
+    grid-template-rows: 25% 25% 25% 25%;
     grid-column: 1;
 }
 .сabinet_main_cell_content_button_orders {
@@ -51,8 +51,15 @@
     display: flex;
     flex-wrap: wrap;
     align-content: center;
+    grid-row: 4;
+}
+.сabinet_main_cell_content_button_address {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
     grid-row: 3;
 }
+
 .сabinet_main_cell_content_info {
     display: grid;
     /*grid-template-rows: 33% 33% 33%;*/
