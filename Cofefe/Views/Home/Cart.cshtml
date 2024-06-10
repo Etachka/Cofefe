@@ -34,19 +34,23 @@
                             <h3>Вес: @shoppingCartItem.Product.Weight</h3>
                         </div>
                         <div class="card_main_count">
-                            <h3>Количество: <span id="productCount-@shoppingCartItem.ProductID">@shoppingCartItem.ProductCount</span></h3>
+                            <h3>
+                                Количество:
+                                <input type="number" id="productCount-@shoppingCartItem.ProductID" value="@shoppingCartItem.ProductCount" min="1" max="@shoppingCartItem.Product.StockQuantity">
+                            </h3>
                             <div class="card_main_count_str">
                                 <button class="card_main_count_btn" onclick="decreaseCount('@shoppingCartItem.ProductID', '@Model.UserAuth.Id')">-</button>
                                 <button class="card_main_count_btn" onclick="increaseCount('@shoppingCartItem.ProductID', '@Model.UserAuth.Id')">+</button>
                             </div>
                         </div>
                         <div class="card_main_cost">
-                            <h3>Цена: @shoppingCartItem.Product.Cost</h3>
-                        </div>
-                        <form asp-action="RemoveFromCart" asp-controller="Home" class="card_main_btn" method="post">
-                            <input type="hidden" name="productId" value="@shoppingCartItem.Product.Id">
-                            
+                            <h3>Цена: <span id="soloPrice-@shoppingCartItem.ProductID">@shoppingCartItem.Product.Cost</span></h3>
+                            <h3>Стоимоть: <span id="totalPrice-@shoppingCartItem.ProductID">@(shoppingCartItem.Product.Cost * @shoppingCartItem.ProductCount)</span></h3>
 
+                        </div>
+
+                        <form asp-action="RemoveFromCart" asp-controller="Home" class="card_main_btn" method="post" onsubmit="confirmRemoval(event)">
+                            <input type="hidden" name="productId" value="@shoppingCartItem.Product.Id">
                             <button type="submit" class="card_main_btn_style">Убрать из корзины</button>
                         </form>
                     </div>
@@ -78,58 +82,112 @@
     function updateTotalCost() {
         var totalCost = 0;
         document.querySelectorAll('.catalog_card').forEach(function (card) {
-            var count = parseInt(card.querySelector('span[id^="productCount-"]').textContent);
-            var cost = parseFloat(card.querySelector('.card_main_cost h3').textContent.replace('Цена: ', ''));
-            totalCost += count * cost;
+            var countElement = card.querySelector('input[id^="productCount-"]');
+            var count = parseInt(countElement.value);
+            var productId = countElement.id.split('-')[1];
+            var soloPrice = parseFloat(document.getElementById("soloPrice-" + productId).textContent);
+            totalCost += count * soloPrice;
         });
         document.getElementById('totalCost').textContent = 'Суммарная цена: ' + totalCost.toFixed(2);
     }
 
     function decreaseCount(productId, userId) {
         var countElement = document.getElementById("productCount-" + productId);
-        var currentCount = parseInt(countElement.textContent);
-        if (currentCount > 1) {
-            countElement.textContent = currentCount - 1;
+        var currentCount = parseInt(countElement.value);
+        var minCount = parseInt(countElement.getAttribute("min"));
+        if (currentCount > minCount) {
+            countElement.value = currentCount - 1;
+            var newCount = currentCount - 1;
+            updatePrice(productId, newCount);
             updateTotalCost();
-            $.ajax({
-                type: 'POST',
-                url: '/Home/DecreaseProductCount',
-                data: {
-                    productId: productId,
-                    userId: userId
-                },
-                success: function (response) {
-                },
-                error: function (xhr, status, error) {
-                }
-            });
+            updateDatabase(productId, userId, newCount); // Вызываем функцию для обновления значения в базе данных
         }
     }
 
     function increaseCount(productId, userId) {
         var countElement = document.getElementById("productCount-" + productId);
-        var currentCount = parseInt(countElement.textContent);
-        countElement.textContent = currentCount + 1;
-        updateTotalCost();
+        var currentCount = parseInt(countElement.value);
+        var maxCount = parseInt(countElement.getAttribute("max"));
+        if (currentCount < maxCount) {
+            countElement.value = currentCount + 1;
+            var newCount = currentCount + 1;
+            updatePrice(productId, newCount);
+            updateTotalCost();
+            updateDatabase(productId, userId, newCount); // Вызываем функцию для обновления значения в базе данных
+        }
+    }
+
+    function updateDatabase(productId, userId, newCount) {
         $.ajax({
             type: 'POST',
-            url: '/Home/IncreaseProductCount',
+            url: '/Home/UpdateProductCount',
             data: {
                 productId: productId,
-                userId: userId
+                userId: userId,
+                newCount: newCount
             },
             success: function (response) {
+                // Действия после успешного обновления в базе данных, если необходимо
             },
             error: function (xhr, status, error) {
+                // Обработка ошибок, если необходимо
             }
         });
     }
+
+    document.querySelectorAll('input[type="number"]').forEach(function (input) {
+        input.addEventListener('change', function () {
+            var productId = this.id.split("-")[1];
+            var userId = '@Model.UserAuth.Id'; // Ваш способ получения Id пользователя
+            var newCount = parseInt(this.value);
+            var maxCount = parseInt(this.getAttribute('max'));
+            if (newCount > maxCount) {
+                this.value = maxCount;
+                newCount = maxCount;
+            }
+
+            // Обновление значения в базе данных
+            updateDatabase(productId, userId, newCount);
+
+            // Обновление цены на странице
+            updatePrice(productId, newCount);
+
+            updateTotalCost();
+        });
+    });
+
+    function updatePrice(productId, newCount) {
+        var priceElement = document.getElementById("totalPrice-" + productId);
+        var soloPrice = parseFloat(document.getElementById("soloPrice-" + productId).textContent); // Получаем цену одного товара
+        var newPrice = soloPrice * newCount; // Умножаем цену одного товара на новое количество
+        priceElement.textContent = newPrice.toFixed(2); // Обновляем отображаемую цену
+    }
+
+    document.querySelectorAll('input[type="number"]').forEach(function (input) {
+        input.addEventListener('input', function () {
+            var min = parseInt(this.getAttribute('min'));
+            var max = parseInt(this.getAttribute('max'));
+            var val = parseInt(this.value);
+            if (val < min) {
+                this.value = min;
+            } else if (val > max) {
+                this.value = max;
+            }
+            updateTotalCost();
+        });
+    });
+    function confirmRemoval(event) {
+        event.preventDefault(); // Останавливаем отправку формы
+        if (confirm("Вы уверены, что хотите удалить этот товар из корзины?")) {
+            event.target.submit(); // Если пользователь нажал "OK", отправляем форму
+        }
+    }
+
     function confirmOrder() {
         if (confirm("Вы точно хотите оформить заказ? Проверьте адрес доставки у себя в профиле.")) {
             document.getElementById("orderForm").submit();
         }
     }
-
 
     document.addEventListener("DOMContentLoaded", function () {
         updateTotalCost();

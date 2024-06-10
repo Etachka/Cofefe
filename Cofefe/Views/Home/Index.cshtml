@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Cofefe";
+    ViewData["Title"] = "Гланая страница";
     int itemCount = 0;
 }
 @using Cofefe.ViewModels
@@ -20,8 +20,8 @@
 
                     <div class="aciditycontent">
                         
-                        <select class="select-css" style="grid-row:1/span 3" name="acidity">
-                            <option></option>
+                        <select class="select-css" style="grid-row:1/span 3" name="acidity" required>
+                            <option value="" selected disabled>Выберите кислотноть</option>
                             <option>Низкая</option>
                             <option>Средняя</option>
                             <option>Высокая</option>
@@ -34,8 +34,8 @@
                     </div>
                     <div class="densitycontent">
                        
-                        <select class="select-css" style="grid-row:1/span 3" name="density">
-                            <option></option>
+                        <select class="select-css" style="grid-row:1/span 3" name="density" required>
+                            <option value="" selected disabled>Выберите плотность</option>
                             <option>Низкая</option>
                             <option>Средняя</option>
                             <option>Высокая</option>
@@ -48,8 +48,8 @@
                     </div>
                     <div class="growthcontent">
                         
-                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth">
-                            <option></option>
+                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth" required>
+                            <option value="" selected disabled>Выберите страну</option>
                             <option>Боливия</option>
                             <option>Бразилия</option>
                             <option>Гватемала</option>
@@ -68,8 +68,8 @@
                     </div>
                     <div class="roastcontent">
                        
-                        <select class="select-css" style="grid-row:1/span 3" name="type">
-                            <option></option>
+                        <select class="select-css" style="grid-row:1/span 3" name="type" required>
+                            <option value="" selected disabled>Выберите тип приготовления</option>
                             <option>Milk</option>
                             <option>Espresso</option>
                             <option>Filter</option>
@@ -160,13 +160,18 @@
                             {
                                 @if (inf.c.Id == 5)
                                 {
-                                <h3 class="gradetext" alt="0">@inf.cp.Value</h3>
+                                @* <h3 class="gradetext" alt="0">@inf.cp.Value</h3> *@
                                 }
                                 @* @if (inf.c.Id == 6)
                                 {
                                 <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
                                 } *@
+                                
                             }
+                            <div style="grid-column:3; display: flex;font-size: 1.3em;align-items: center;justify-content: center;">
+                                <h3>На складе:@product.StockQuantity</h3>
+                            </div>
+                            
                     </div>
 
 

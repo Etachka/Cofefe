@@ -58,7 +58,7 @@
     grid-column: 2;
     grid-row: 2;
     display:grid;
-    grid-template-rows: 15% 85%;
+    grid-template-rows: 35% 65%;
 }
 .card_main_count_str {
     grid-row:2;
@@ -74,7 +74,7 @@
 }
 
 .card_main_count_btn{
-    margin:15px 5px 35px 5px;
+    margin:15px 5px;
     border-radius:5px;
     border:0px;
 }
@@ -88,12 +88,14 @@
     grid-row: 2;
     align-content:center;
     justify-content:center;
-    display:flex;
+    display:grid;
+    grid-template-rows:45px auto;
     flex-wrap:wrap;
     
 }
 .card_main_btn_style {
     border: 0px solid #0e0f12;
+    grid-row: 2;
     border-radius: 10px;
     background-color: #fff;
     color: #000;

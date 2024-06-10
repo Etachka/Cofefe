@@ -320,11 +320,16 @@ namespace Cofefe.Controllers
         public IActionResult OrderList()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var orders = _context.Orders
+            OrderStatusVM VM = new OrderStatusVM
+            {
+                Orders = _context.Orders
                     .Where(o => o.UserID == userId)
                     .Include(o => o.Product)
-                    .ToList();
-            return View(orders);
+                    .ToList(),
+                Statuses = _context.Statuses.ToList(),
+            
+            };
+            return View(VM);
         }
 
         public ViewResult Cart()
@@ -339,7 +344,8 @@ namespace Cofefe.Controllers
                 UserProductCartViewModel VM = new UserProductCartViewModel
                 {
                     ShoppingCartItems = cartItems,
-                    UserAuth = _context.Users.FirstOrDefault(x=>x.Id == userId)
+                    UserAuth = _context.Users.FirstOrDefault(x=>x.Id == userId),
+                    Products = _context.Products.ToList(),
                 };
                 return View(VM);
             }
@@ -520,12 +526,15 @@ namespace Cofefe.Controllers
                 {
                     ProductID = productId,
                     UserID = userId.Value,
-                    ProductCount = 1 
+                    ProductCount = 1
                 };
                 _context.Add(newItem);
             }
 
             await _context.SaveChangesAsync();
+
+            TempData["message"] = "Товар добавлен в корзину!";
+            TempData["messageType"] = "success";
 
             return RedirectToAction(returnUrl);
         }
@@ -770,19 +779,28 @@ namespace Cofefe.Controllers
         [HttpPost]
         public IActionResult ChangeOrderStatus(int orderId, string status)
         {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
-            if (order == null)
+            var orders = _context.Orders.Where(o => o.OrderId == orderId).ToList();
+            if (orders == null)
             {
                 return RedirectToAction("Index");
             }
-
             switch (status)
             {
                 case "send":
-                    order.StatusID = 2;
+                    foreach (var order in orders)
+                    {
+                        var product = _context.Products.FirstOrDefault(p => p.Id == order.ProductID && order.StatusID == 1);
+                        product.StockQuantity -= order.ProductCount;
+                        _context.Products.Update(product);
+                        order.StatusID = 2;
+                    }
                     break;
                 case "cancel":
-                    order.StatusID = 3;
+                    foreach (var order in orders)
+                    {
+                        order.StatusID = 3;
+                        
+                    }
                     break;
                 default:
                     
@@ -825,7 +843,21 @@ namespace Cofefe.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult UpdateProductCount(int productId, int userId, int newCount)
+        {
+            var shoppingCartItem = _context.ShoppingCarts
+                .FirstOrDefault(item => item.ProductID == productId && item.UserID == userId);
 
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.ProductCount = newCount;
+
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
 
 
 

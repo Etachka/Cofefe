@@ -2,7 +2,7 @@
     width: auto;
     height: 100%;
     display: grid;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 70px auto 70px;
     /*background-color: #1B1924;*/
     background-color: #653e34;
     min-height: 803px;

@@ -1,9 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Заказы";
-    var groupedOrders = Model.GroupBy(o => o.OrderId);
+    var groupedOrders = Model.Orders.GroupBy(o => o.OrderId);
     int summ = 0;
 }
-@model List<Order>
+@using Cofefe.ViewModels;
+@model OrderStatusVM;
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/OrderListStyle.css" />
 <div class="main_order">
     <div class="main_name_order">
@@ -14,16 +15,20 @@
             @if (groupedOrders.Any())
             {
             @foreach (var group in groupedOrders)
-            {
+            {   
                 summ = 0;
+                    var firstOrder = group.First();
+                    var status = Model.Statuses.FirstOrDefault(x=>x.Id == firstOrder.StatusID);
                 <div class="catalog_card_order">
                     <div class="card_main_name">
                         <h2>Заказ номер @group.Key</h2>
                     </div>
+                        <h3 style="margin-bottom:5px;margin-left:5px;font-size: 1.3em;">@status.Name</h3>
                     @foreach (var order in group)
                     {
                         
                         <div class="catalog_card">
+                                
                             <div style="margin-left:10px">
                                 <div class="card_main_name_title">
                                     <h3>@order.Product.Name X @order.ProductCount</h3>
