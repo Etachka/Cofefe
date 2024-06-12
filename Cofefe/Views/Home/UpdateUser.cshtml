@@ -13,18 +13,22 @@
         </div>
 
         <div style="grid-column:3; grid-row:2" class="create-user_main_cell_number">
+            <label for="number">Номер телефона:</label>
             <input style="grid-column:3;" class="create-user_main_cell_number_input" type="text" id="number" name="PhoneNumber" placeholder="Номер телефона" pattern="[0-9]+|[^\s]+" title="Введите только цифры" maxlength="11" autocomplete="off" value="@Model.PhoneNumber" required minlength="11" />
         </div>
 
         <div style="grid-column:3; grid-row:3" class="create-user_main_cell_log">
+            <label for="log">Логин:</label>
             <input style="grid-column:3;" class="create-user_main_cell_log_input" type="text" id="log" name="Login" placeholder="Логин" pattern="[^\s]+" autocomplete="off" title="Введите корректное значение" value="@Model.Login" required min="1" />
         </div>
 
         <div style="grid-column:3; grid-row:4" class="create-user_main_cell_pass">
+            <label for="oldPass">Старый пароль:</label>
             <input style="grid-column:3;" class="create-user_main_cell_pass_input" type="password" id="oldPass" name="OldPassword" placeholder="Старый пароль" autocomplete="off" />
         </div>
 
         <div style="grid-column:3; grid-row:5" class="create-user_main_cell_pass">
+            <label for="newPass">Новый пароль:</label>
             <input style="grid-column:3;" class="create-user_main_cell_pass_input" type="password" id="newPass" name="Password" placeholder="Новый пароль" autocomplete="off" />
         </div>
 

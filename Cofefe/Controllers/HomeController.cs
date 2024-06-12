@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.RegularExpressions;
 using System.Net.NetworkInformation;
+using PagedList;
+using System.Drawing.Printing;
 
 namespace Cofefe.Controllers
 {
@@ -81,7 +83,8 @@ namespace Cofefe.Controllers
         }
 
 
-        public ViewResult Index(string searchString, string acidity, string density, string growth, string type)
+
+        public ViewResult Index(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 10)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             List<int> favoriteProductIds = _context.FavoriteProducts
@@ -138,7 +141,9 @@ namespace Cofefe.Controllers
                 query = query.Where(p => roastProductIds.Contains(p.Id));
             }
 
-            List<Product> searchResults = query.ToList();
+            int totalCount = query.Count();
+            int skip = (page - 1) * pageSize;
+            List<Product> searchResults = query.Skip(skip).Take(pageSize).ToList();
 
             ProductCategoryViewModel VM = new ProductCategoryViewModel
             {
@@ -146,6 +151,14 @@ namespace Cofefe.Controllers
                 CategoryProducts = _context.CategoryProducts.ToList(),
                 Categories = _context.Categoryes.ToList(),
                 FavoriteProductIDs = favoriteProductIds.ToList(),
+                PageSize = pageSize,
+                CurrentPage = page,
+                TotalCount = totalCount,
+                SearchString = searchString,
+                Acidity = acidity,
+                Density = density,
+                Growth = growth,
+                Type = type
             };
 
             return View(VM);
@@ -201,25 +214,49 @@ namespace Cofefe.Controllers
 
             if (currentUser != null)
             {
-                string address = "";
+                if (flat == null)
+                {
+                    string address = "";
 
-                if (!string.IsNullOrEmpty(city))
-                    address += "г." + city;
+                    if (!string.IsNullOrEmpty(city))
+                        address += "г." + city;
 
-                if (!string.IsNullOrEmpty(street))
-                    address += ", ул." + street;
+                    if (!string.IsNullOrEmpty(street))
+                        address += ", ул." + street;
 
-                if (!string.IsNullOrEmpty(home))
-                    address += ", д." + home;
+                    if (!string.IsNullOrEmpty(home))
+                        address += ", д." + home;
 
-                if (!string.IsNullOrEmpty(flat))
-                    address += ", кв." + flat;
+                    currentUser.Address = address;
 
-                currentUser.Address = address;
+                    _context.SaveChanges();
 
-                _context.SaveChanges();
+                    return View("Cabinet", currentUser);
+                }
 
-                return View("Cabinet", currentUser);
+                if (flat != null)
+                {
+                    string address = "";
+
+                    if (!string.IsNullOrEmpty(city))
+                        address += "г." + city;
+
+                    if (!string.IsNullOrEmpty(street))
+                        address += ", ул." + street;
+
+                    if (!string.IsNullOrEmpty(home))
+                        address += ", д." + home;
+
+                    if (!string.IsNullOrEmpty(flat))
+                        address += ", кв." + flat;
+
+                    currentUser.Address = address;
+
+                    _context.SaveChanges();
+
+                    return View("Cabinet", currentUser);
+                }
+
             }
 
             return RedirectToAction("Index");
@@ -252,7 +289,7 @@ namespace Cofefe.Controllers
 
 
 
-        public ViewResult Favorite(string searchString, string acidity, string density, string growth, string type)
+        public ViewResult Favorite(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 10)
         {
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
@@ -298,7 +335,9 @@ namespace Cofefe.Controllers
                         .Any(cp => cp.CategoryID == 4 && cp.ProductID == p.Id && cp.Value == type));
                 }
 
-                List<Product> searchResults = query.ToList();
+                int totalCount = query.Count();
+                int skip = (page - 1) * pageSize;
+                List<Product> searchResults = query.Skip(skip).Take(pageSize).ToList();
 
                 ProductCategoryViewModel VM = new ProductCategoryViewModel
                 {
@@ -306,6 +345,14 @@ namespace Cofefe.Controllers
                     CategoryProducts = _context.CategoryProducts.ToList(),
                     Categories = _context.Categoryes.ToList(),
                     FavoriteProductIDs = favoriteProductIds.ToList(),
+                    PageSize = pageSize,
+                    CurrentPage = page,
+                    TotalCount = totalCount,
+                    SearchString = searchString,
+                    Acidity = acidity,
+                    Density = density,
+                    Growth = growth,
+                    Type = type
                 };
 
                 return View(VM);
@@ -317,42 +364,96 @@ namespace Cofefe.Controllers
 
         }
 
-        public IActionResult OrderList()
+        public IActionResult OrderList(int page = 1, int pageSize = 8)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var ordersQuery = _context.Orders
+                .Where(o => o.UserID == userId)
+                .Include(o => o.Product)
+                .ToList(); // Выполняем запрос к базе данных и загружаем все заказы в память
+
+            // Группируем заказы по OrderID
+            var groupedOrders = ordersQuery
+                .GroupBy(o => o.OrderId)
+                .ToList();
+
+            // Общее количество уникальных заказов
+            int totalCount = groupedOrders.Count();
+
+            // Выполняем пагинацию по уникальным заказам
+            var pagedGroupedOrders = groupedOrders
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Разгруппируем заказы для передачи в представление
+            var pagedOrders = pagedGroupedOrders
+                .SelectMany(g => g)
+                .ToList();
+
             OrderStatusVM VM = new OrderStatusVM
             {
-                Orders = _context.Orders
-                    .Where(o => o.UserID == userId)
-                    .Include(o => o.Product)
-                    .ToList(),
+                Orders = pagedOrders,
                 Statuses = _context.Statuses.ToList(),
-            
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalCount = totalCount // Общее количество уникальных заказов
             };
+
             return View(VM);
         }
 
-        public ViewResult Cart()
+        //public ViewResult Cart()
+        //{
+        //    if(HttpContext.Session.GetInt32("UserId") != null)
+        //    {
+        //        int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+        //        var cartItems = _context.ShoppingCarts
+        //            .Where(cart => cart.UserID == userId)
+        //            .Include(cart => cart.Product)
+        //            .ToList();
+        //        UserProductCartViewModel VM = new UserProductCartViewModel
+        //        {
+        //            ShoppingCartItems = cartItems,
+        //            UserAuth = _context.Users.FirstOrDefault(x=>x.Id == userId),
+        //            Products = _context.Products.ToList(),
+        //        };
+        //        return View(VM);
+        //    }
+        //    else { return View("Login"); }
+        //}
+
+        public ViewResult Cart(int page = 1, int pageSize = 5)
         {
-            if(HttpContext.Session.GetInt32("UserId") != null)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-                var cartItems = _context.ShoppingCarts
-                    .Where(cart => cart.UserID == userId)
-                    .Include(cart => cart.Product)
+                var cartItemsQuery = _context.ShoppingCarts
+            .Where(cart => cart.UserID == userId)
+            .Include(cart => cart.Product);
+
+                int totalCount = cartItemsQuery.Count(); // Получите общее количество элементов
+                var cartItems = cartItemsQuery
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToList();
                 UserProductCartViewModel VM = new UserProductCartViewModel
                 {
                     ShoppingCartItems = cartItems,
-                    UserAuth = _context.Users.FirstOrDefault(x=>x.Id == userId),
+                    UserAuth = _context.Users.FirstOrDefault(x => x.Id == userId),
                     Products = _context.Products.ToList(),
+                    PageSize = pageSize,
+                    CurrentPage = page,
+                    TotalCount = totalCount
                 };
                 return View(VM);
             }
             else { return View("Login"); }
         }
-        public ViewResult AdminView()
+
+        public ViewResult AdminView(string errorMessage)
         {
+            ViewData["StockErrorMessage"] = errorMessage;
             if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 return View();
@@ -409,12 +510,17 @@ namespace Cofefe.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddProduct(string title, string description, int weight, int cost, string acidity, string density, string growth,  string type)
+        public IActionResult AddProduct(string title, string description, int weight, int cost, string acidity, string density, string growth,  string type, string base64Image)
         {
             if (title != null && description != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
             {
                 using (var con = new ApplicationContext())
                 {
+                    string imageData = null;
+                    if (!string.IsNullOrEmpty(base64Image))
+                    {
+                        imageData = base64Image;
+                    }
                     con.Products.AddRange(new[]
                     {
                         new Product{
@@ -422,7 +528,7 @@ namespace Cofefe.Controllers
                             Description = description,
                             Cost = cost,
                             Weight = weight,
-                            Image = "",
+                            Image = imageData,
                             StockQuantity = 100},
                     });
                     con.SaveChanges();
@@ -514,11 +620,15 @@ namespace Cofefe.Controllers
             }
 
             var existingItem = await _context.ShoppingCarts.FirstOrDefaultAsync(item => item.ProductID == productId && item.UserID == userId);
-
+            var product = _context.Products.FirstOrDefault(p => p.Id == productId);
             if (existingItem != null)
             {
-                existingItem.ProductCount++;
-                _context.Update(existingItem);
+                if (!(existingItem.ProductCount >= product.StockQuantity))
+                {
+                    existingItem.ProductCount++;
+                    _context.Update(existingItem);
+                }
+                
             }
             else
             {
@@ -601,26 +711,25 @@ namespace Cofefe.Controllers
         {
             var userService = new UserService(_context);
             var user = userService.GetUser(login, password);
-            if(user != null)
+            if (user != null)
             {
                 HttpContext.Session.SetInt32("UserId", user.Id);
+                if (HttpContext.Session.GetInt32("UserId") != 1)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View("AdminView");
+                }
             }
-			
-
-			if (HttpContext.Session.GetInt32("UserId") != 1 && user != null)
+            else
             {
-                return RedirectToAction("Index", "Home");
-            }
-			else if (HttpContext.Session.GetInt32("UserId") == 1)
-			{
-				return View("AdminView");
-			}
-
-			else
-			{
-                return View();
+                TempData["ErrorMessage"] = "Неверный логин или пароль";
+                return View("Login");
             }
         }
+
 
         [HttpGet]
         public IActionResult UpdateUser()
@@ -668,29 +777,51 @@ namespace Cofefe.Controllers
 
 
         [HttpPost]
-        public IActionResult Registration(string firstn, string secondn, string patronymic, string pass, string log, string number, string city, string street, string home, string flat)
+        public IActionResult Registration(string firstn, string secondn, string patronymic, string pass, string log, string number)
         {
-            if (firstn != null && secondn != null && patronymic != null && pass != null && log != null && number != null && number.Length == 11)
+            if (firstn != null && secondn != null && pass != null && log != null && number != null && number.Length == 11)
             {
                 using (var con = new ApplicationContext())
                 {
-                    string address = "";
-                    if (city != null || street != null || home != null || flat != null)
+                    var existingUser = con.Users.SingleOrDefault(u => u.PhoneNumber == number);
+                    if (existingUser != null)
                     {
-                        address = "г." + city + ", " + "ул." + street + ", " + "д." + home + ", " + "кв." + flat;
+                        TempData["ErrorMessage"] = "Пользователь с таким номером телефона уже существует.";
+                        return View();
                     }
-                    con.Users.AddRange(new[]
+                    if (patronymic != null)
+                    {
+                        con.Users.AddRange(new[]
                     {
                         new User{
+
                             FIO = firstn + " " + secondn.Substring(0,1) + "." + patronymic.Substring(0,1) + ".",
                             Password = pass,
                             Login = log,
-                            Address = address,
+                            Address = "",
                             PhoneNumber = number,
                             role = 2,
                         }
                     });
-                    con.SaveChanges();
+                        con.SaveChanges();
+                    }
+                    if (patronymic == null)
+                    {
+                        con.Users.AddRange(new[]
+                    {
+                        new User{
+
+                            FIO = firstn + " " + secondn.Substring(0,1) + ".",
+                            Password = pass,
+                            Login = log,
+                            Address = "",
+                            PhoneNumber = number,
+                            role = 2,
+                        }
+                    });
+                        con.SaveChanges();
+                    }
+
                 }
                 
                 return View("Login");
@@ -790,20 +921,36 @@ namespace Cofefe.Controllers
                     foreach (var order in orders)
                     {
                         var product = _context.Products.FirstOrDefault(p => p.Id == order.ProductID && order.StatusID == 1);
-                        product.StockQuantity -= order.ProductCount;
-                        _context.Products.Update(product);
-                        order.StatusID = 2;
+                        if (product != null)
+                        {
+                            var remainingStock = product.StockQuantity - order.ProductCount;
+
+                            if (remainingStock >= 0)
+                            {
+                                product.StockQuantity = remainingStock;
+                                _context.Products.Update(product);
+                                order.StatusID = 2;
+                            }
+                            else
+                            {
+                                TempData["StockErrorMessage"] = "Не хватает на складе";
+                                HttpContext.Session.SetString("StockErrorMessage", "Не хватает на складе");
+                                var errorMessage = HttpContext.Session.GetString("StockErrorMessage");
+
+                                // Помещаем значение в ViewData
+                                ViewData["StockErrorMessage"] = errorMessage;
+                                return RedirectToAction("AdminView", new { errorMessage = TempData["StockErrorMessage"] });
+                            }
+                        }
                     }
                     break;
                 case "cancel":
                     foreach (var order in orders)
                     {
                         order.StatusID = 3;
-                        
                     }
                     break;
                 default:
-                    
                     break;
             }
 

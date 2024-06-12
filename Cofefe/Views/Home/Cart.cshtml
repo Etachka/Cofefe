@@ -58,6 +58,14 @@
             }
         }
     </div>
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Cart", new { page = i, pageSize = Model.PageSize })">@i</a>
+            </li>
+        }
+    </ul>
     <div class="cart_to_order">
         <div class="panelcount1">
             <span id="totalCost">Суммарная цена: 0</span>

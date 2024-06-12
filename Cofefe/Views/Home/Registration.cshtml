@@ -18,7 +18,7 @@
         </div>
 
         <div class="create-user_main_cell_patronymic">
-            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
+            <input class="create-user_main_cell_patronymic_input" type="text" id="patronymic" name="patronymic" placeholder="Отчество" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" min="1" />
         </div>
 
         <div class="create-user_main_cell_log">
@@ -44,7 +44,10 @@
 @if (TempData["ErrorMessage"] != null)
 {
     <script>
-        var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
-        alert(errorMessage);
+        async function displayErrorMessage() {
+            var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+            alert(errorMessage);
+        }
+        displayErrorMessage();
     </script>
 }

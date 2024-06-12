@@ -132,17 +132,27 @@
                             }
                             
                             <h3 class="order-total">Итоговая стоимость: @summ ₽</h3>
-                            <form asp-action="ChangeOrderStatus" class="deldiv2" asp-controller="Home" method="post">
-                                <input type="hidden" name="orderId" value="@AllOrder.Key" />
-                                <button type="submit" name="status" value="send" class="btnchangestatus">
-                                    Отправить
-                                </button>
-                                <button type="submit" style="margin-left:10px" name="status" value="cancel" class="btnchangestatus">
-                                    Отменить
-                                </button>
-                            </form>
+
+                            <div class="deldiv2">
+                                <form asp-action="ChangeOrderStatus" asp-controller="Home" method="post" onsubmit="confirmRemoval(event, 'send')">
+                                    <input type="hidden" name="orderId" value="@AllOrder.Key" />
+                                    <button type="submit" class="btnchangestatus">
+                                        Отправить
+                                    </button>
+                                </form>
+
+                                <form asp-action="ChangeOrderStatus" asp-controller="Home" method="post" onsubmit="confirmRemoval(event, 'cancel')">
+                                    <input type="hidden" name="orderId" value="@AllOrder.Key" />
+                                    <button type="submit" style="margin-left:10px" class="btnchangestatus">
+                                        Отменить
+                                    </button>
+                                </form>
+                            </div>
+                            
+                           
                         </div>
                     }
+                    
                     break;
                 case "SentOrders":
                     groupedOrders = Model.SentOrders.GroupBy(o => o.OrderId);
@@ -203,13 +213,7 @@
                                 <input type="hidden" name="userId" value="@user.Id" />
                                 <button type="submit" class="btndel">Удалить</button>
                             </form>
-                            @if (TempData["ErrorMessage"] != null)
-                            {
-                                <script>
-                                    var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
-                                    alert(errorMessage);
-                                </script>
-                            }
+                            
                         </div>
                     }
                     break;
@@ -228,3 +232,43 @@
         
     }
 </div>
+@if (TempData["ErrorMessage"] != null)
+{
+    <script async>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+            console.log("errorMessage:", errorMessage);
+            alert(errorMessage);
+        });
+    </script>
+}
+@if (!string.IsNullOrEmpty(ViewData["StockErrorMessage"] as string))
+{
+    <script async>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@Html.Raw(ViewData["StockErrorMessage"])';
+            alert(errorMessage);
+        });
+    </script>
+}
+<script>
+    function confirmRemoval(event, status) {
+        event.preventDefault(); // Останавливаем отправку формы
+        var message = status === 'send' ? 'Вы уверены, что хотите отправить этот заказ?' : 'Вы уверены, что хотите отменить этот заказ?';
+        if (confirm(message)) {
+            var form = event.target;
+            var formData = new FormData(form);
+            formData.append('status', status); // Добавляем параметр status
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    // Можно выполнить дополнительные действия при успешном запросе
+                    // Например, перенаправление на другую страницу
+                    window.location.href = response.url;
+                }
+            });
+        }
+    }
+</script>

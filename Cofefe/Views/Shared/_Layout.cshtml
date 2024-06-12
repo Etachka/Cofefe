@@ -16,8 +16,9 @@
             <form style="grid-column: 1; justify-content:center; display:flex;"asp-action="Index" asp-controller="Home">
                 <button class="shoppagesbtn">Каталог</button>
             </form>
-            <form style="grid-column: 2; justify-content:center; display:flex;" asp-action="Cart" asp-controller="Home">
-                <button class="shoppagesbtn" style="grid-column:2;">Корзина</button>
+            <form style="grid-column: 2; justify-content:center; display:flex; position: relative;" asp-action="Cart" asp-controller="Home">
+                <button id="cartButton" class="shoppagesbtn" style="grid-column:2;">Корзина</button>
+                <div class="circle"></div>
             </form>
             <form style="grid-column: 3; justify-content:center; display:flex;" asp-action="Favorite" asp-controller="Home">
                 <button type="submit" class="shoppagesbtn">Избранное</button>

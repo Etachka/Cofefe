@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Заказы";
-    var groupedOrders = Model.Orders.GroupBy(o => o.OrderId);
-    int summ = 0;
+    // var groupedOrders = Model.Orders.GroupBy(o => o.OrderId);
+    // int summ = 0;
 }
 @using Cofefe.ViewModels;
-@model OrderStatusVM;
+@model OrderStatusVM
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/OrderListStyle.css" />
 <div class="main_order">
     <div class="main_name_order">
@@ -12,45 +12,71 @@
     </div>
     <div class="main_catalog_order">
         <div class="catalog_products_order">
-            @if (groupedOrders.Any())
+            @if (Model.Orders.Any())
             {
-            @foreach (var group in groupedOrders)
-            {   
-                summ = 0;
+                var groupedOrders = Model.Orders.GroupBy(o => o.OrderId); // Создайте groupedOrders в представлении
+                int summ = 0;
+
+                @foreach (var group in groupedOrders)
+                {
+                    summ = 0;
                     var firstOrder = group.First();
-                    var status = Model.Statuses.FirstOrDefault(x=>x.Id == firstOrder.StatusID);
-                <div class="catalog_card_order">
-                    <div class="card_main_name">
-                        <h2>Заказ номер @group.Key</h2>
-                    </div>
-                        <h3 style="margin-bottom:5px;margin-left:5px;font-size: 1.3em;">@status.Name</h3>
-                    @foreach (var order in group)
-                    {
-                        
-                        <div class="catalog_card">
-                                
-                            <div style="margin-left:10px">
-                                <div class="card_main_name_title">
-                                    <h3>@order.Product.Name X @order.ProductCount</h3>
-                                </div>
-                                <div style="margin-bottom:3px;" class="card_main_cost">
-                                    <h3>Цена: @(order.ProductCostAtTimeOrder * order.ProductCount)</h3>
-                                    @{
+                    var status = Model.Statuses.FirstOrDefault(x => x.Id == firstOrder.StatusID);
+                    <div class="catalog_card_order">
+                        <div class="card_main_name">
+                            <h2>Заказ номер @group.Key</h2>
+                        </div>
+                        @{
+                            string statusClass = "";
+                            switch (@status.Name)
+                            {
+                                case "Новый заказ":
+                                    statusClass = "new-order";
+                                    break;
+                                case "Заказ отправлен":
+                                    statusClass = "order-sent";
+                                    break;
+                                case "Заказ отменён":
+                                    statusClass = "order-cancelled";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        <h3 class="status-label @statusClass">@status.Name</h3>
+                        @foreach (var order in group)
+                        {
+                            <div class="catalog_card">
+                                <div style="margin-left:10px">
+                                    <div class="card_main_name_title">
+                                        <h3>@order.Product.Name X @order.ProductCount</h3>
+                                    </div>
+                                    <div style="margin-bottom:3px;" class="card_main_cost">
+                                        <h3>Цена: @(order.ProductCostAtTimeOrder * order.ProductCount)</h3>
+                                        @{
                                             summ += order.ProductCostAtTimeOrder * order.ProductCount;
-                                    }
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                                
-                        </div>
-                    }
-                    <h3 style="margin-top:10px; font-size:20px; margin-left:15px">Итоговая стоимость: @summ</h3>
-                </div>
-            }
+                        }
+                        <h3 style="margin-top:10px; font-size:20px; margin-left:15px">Итоговая стоимость: @summ</h3>
+                    </div>
+                }
             }
             else
             {
                 <h2>Нет заказов</h2>
             }
         </div>
+
+        <ul class="pagination">
+            @for (int i = 1; i <= Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("OrderList", new { page = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+            }
+        </ul>
     </div>
 </div>

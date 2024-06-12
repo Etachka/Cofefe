@@ -20,7 +20,7 @@
 
                     <div class="aciditycontent">
                         
-                        <select class="select-css" style="grid-row:1/span 3" name="acidity" required>
+                        <select class="select-css" style="grid-row:1/span 3" name="acidity" >
                             <option value="" selected disabled>Выберите кислотноть</option>
                             <option>Низкая</option>
                             <option>Средняя</option>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="densitycontent">
                        
-                        <select class="select-css" style="grid-row:1/span 3" name="density" required>
+                        <select class="select-css" style="grid-row:1/span 3" name="density" >
                             <option value="" selected disabled>Выберите плотность</option>
                             <option>Низкая</option>
                             <option>Средняя</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="growthcontent">
                         
-                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth" required>
+                        <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5" name="growth" >
                             <option value="" selected disabled>Выберите страну</option>
                             <option>Боливия</option>
                             <option>Бразилия</option>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="roastcontent">
                        
-                        <select class="select-css" style="grid-row:1/span 3" name="type" required>
+                        <select class="select-css" style="grid-row:1/span 3" name="type" >
                             <option value="" selected disabled>Выберите тип приготовления</option>
                             <option>Milk</option>
                             <option>Espresso</option>
@@ -178,12 +178,27 @@
                     <form asp-action="AddToCart" style="grid-column: 2;grid-row: 2; align-content: center;justify-content:center;flex-wrap:wrap;display:flex;" asp-controller="Home" method="post">
                         <input type="hidden" name="returnUrl" value="Index">
                         <input type="hidden" name="productId" value="@product.Id">
-                        <button type="submit" class="buttonbuy">В корзину</button>
+                        <button type="submit" class="buttonbuy" id="addToCartButton">В корзину</button>
                     </form>
                 </div>
                 itemCount++;
             }
         </div>
+        <div class="pagination">
+    @if (Model.Products.Any())
+    {
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+    @for (int i = 1; i <= Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+    {
+        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = Model.PageSize, searchString = Model.SearchString, acidity = Model.Acidity, density = Model.Density, growth = Model.Growth, type = Model.Type })">@i</a>
+        </li>
+    }
+</ul>
+        </nav>
+    }
+</div>
     </div>
     
 </div>
@@ -203,9 +218,22 @@
             } else {
                 wordForm = 'товаров';
             }
-            itemCountElement.innerText = itemCount + ' ' + wordForm;
+            itemCountElement.innerText = itemCount + ' '     + wordForm;
         }
     });
 </script>
 
-
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var addToCartButtons = document.querySelectorAll('.buttonbuy');
+    addToCartButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var cartButton = document.getElementById('cartButton');
+            cartButton.classList.add('clicked');
+            setTimeout(function () {
+                cartButton.classList.remove('clicked');
+            }, 2000);
+        });
+    });
+});
+</script>

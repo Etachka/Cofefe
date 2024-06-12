@@ -91,3 +91,22 @@
     grid-column: 3;
     grid-row: 1;
 }
+
+.status-label {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    font-size: 1.3em;
+}
+
+
+.status-label.new-order {
+    color: yellow; /* жёлтый */
+}
+
+.status-label.order-sent {
+    color: green; /* зелёный */
+}
+
+.status-label.order-cancelled {
+    color: red; /* красный */
+}

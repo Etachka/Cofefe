@@ -10,22 +10,27 @@
         </div>
 
         <div class="add-product_main_cell_title">
+            <label for="title">Наименование:</label>
             <input class="add-product_main_cell_title_input" type="text" id="title" name="title" placeholder="Наименование" autocomplete="off" required min="1"/>
         </div>
 
         <div class="add-product_main_cell_desc">
+            <label for="description">Описание товара:</label>
             <input class="add-product_main_cell_desc_input" type="text" id="description" name="description" placeholder="Описание товара" required min="1" />
         </div>
 
         <div class="add-product_main_cell_weight">
+            <label for="weight">Вес товара (г.):</label>
             <input class="add-product_main_cell_weight_input" type="text" id="weight" name="weight" pattern="[0-9]+" title="Введите только цифры" placeholder="Вес товара (г.)" required min="1" maxlength="5"/>
         </div>
 
         <div class="add-product_main_cell_cost">
+            <label for="cost">цена товара (₽):</label>
             <input class="add-product_main_cell_cost_input" type="text" id="cost" name="cost" pattern="[0-9]+" title="Введите только цифры" placeholder="цена товара (₽)" required min="1" maxlength="5" />
         </div>
 
         <div class="add-product_main_cell_acidity">
+            <label for="acidity">Выберите кислотность:</label>
             <select class="select-css" style="grid-row:1/span 3; margin-bottom:15px;" name="acidity" required>
                 <option value="" selected disabled>Выберите кислотность</option>
                 <option>Низкая</option>
@@ -35,6 +40,7 @@
         </div>
 
         <div class="add-product_main_cell_density">
+            <label for="density">Выберите плотность:</label>
             <select class="select-css" style="grid-row:1/span 3; margin-bottom:15px;" name="density" required>
                 <option value="" selected disabled>Выберите плотность</option>
                 <option>Низкая</option>
@@ -44,6 +50,7 @@
         </div>
 
         <div class="add-product_main_cell_growth">
+            <label for="growth">Выберите страну:</label>
             <select class="select-css" style="grid-column:1/span 2; grid-row:1/span 5; margin-bottom:15px;" name="growth" required>
                 <option value="" selected disabled>Выберите страну</option>
                 <option>Боливия</option>
@@ -59,14 +66,54 @@
         </div>
 
         <div class="add-product_main_cell_type">
+            <label for="type">Выберите тип приготовления:</label>
             <select class="select-css" style="grid-row:1/span 3; margin-bottom:15px;" name="type" required>
                 <option value="" selected disabled>Выберите тип приготовления</option>
                 <option>Milk</option>
                 <option>Espresso</option>
                 <option>Filter</option>
-            </select>
+            </select>   
         </div>
+        <div class="add-product_main_cell_img" style="grid-column:2/span 3;">
+            <label for="productImage">Загрузить изображение:</label>
+            <input type="file" id="productImage" name="productImage" accept="image/*" />
+            <input type="hidden" id="base64Image" name="base64Image" />
+            <img id="previewImage" src="#" alt="Ваше изображение" style="display: none; max-width: 100px; margin-top: 10px;" />
+            <span id="fileError" style="color:red; display:none;">Пожалуйста, выберите изображение.</span>
+        </div>
+
 
         <button type="submit" class="add-product_main_cell_btn">Добавить</button>
     </form>
 </div>
+<script>
+    document.getElementById('productImage').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const fileError = document.getElementById('fileError');
+
+        if (file) {
+            // Check if the file type is an image
+            if (!file.type.startsWith('image/')) {
+                fileError.style.display = 'block';
+                this.value = ''; // Clear the input value
+                document.getElementById('previewImage').style.display = 'none';
+                return;
+            } else {
+                fileError.style.display = 'none';
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64Image = e.target.result.split(',')[1]; // Extract Base64 part
+                document.getElementById('base64Image').value = base64Image;
+
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            document.getElementById('previewImage').style.display = 'none';
+        }
+    });
+</script>

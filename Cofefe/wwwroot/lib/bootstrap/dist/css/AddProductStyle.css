@@ -1,11 +1,11 @@
 ﻿.add-product_main {
     width: auto;
-    height: 100%;
+    height: auto;
     display: grid;
     background-color: #653e34;
     min-height: 803px;
     grid-template-columns: 30% 40% 30%;
-    grid-template-rows: 5% 90% 5%;
+    grid-template-rows: 5% auto 5%;
 }
 
 .add-product_main_cell {
@@ -17,7 +17,7 @@
     box-shadow: 0 4px 8px black;
     display: grid;
     grid-template-columns: 5% 44% 2% 44% 5%;
-    grid-template-rows: 15% 15% 15% 15% 15% 5% 15%;
+    grid-template-rows: 15% 15% 15% 15% 15% 15% 10%;
 }
 .add-product_main_cell_name {
     grid-row: 1;
@@ -210,6 +210,16 @@
     .add-product_main_cell_type_input::placeholder {
         padding-left: 5px;
     }
+
+.add-product_main_cell_img {
+    grid-row: 6;
+    grid-column: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
 
 .add-product_main_cell_btn {
     grid-row: 7;

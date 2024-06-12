@@ -189,9 +189,10 @@
     display: grid;
     grid-template-rows: 33% 33% 33%;
 }
-.maincatalog{
-    display:grid;
-    grid-template-rows:75px 1fr;
+.maincatalog {
+    display: grid;
+    background-color: #653e34;
+    grid-template-rows: 75px 1fr;
 }
 .catalog {
     grid-row: 2;
@@ -472,9 +473,48 @@ h3 {
     padding: .6em .8em .5em 1.4em;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    background-color: #653e34;
+    margin: 20px 0;
+}
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+        .pagination li a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #050607;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+
+        .pagination li.active a {
+            background-color: #391022;
+        }
 
 
+.circle {
+    width: 20px;
+    height: 20px;
+    background-color: #d1ad9d;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0; /* начально скрытый */
+    transition: opacity 0.5s ease-in-out; /* плавное появление */
+}
 
+.shoppagesbtn.clicked + .circle {
+    opacity: 1; /* показать кружок при нажатии на кнопку */
+}
 
 
 @font-face {

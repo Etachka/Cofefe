@@ -9,10 +9,12 @@
         </div>
 
         <div class="autorize_main_cell_login">
+            <label style="align-content:center" for="login">Логин:</label>
             <input class="autorize_main_cell_login_input" type="text" id="login" name="login" placeholder="Логин" autocomplete="off" required min="1" />
         </div>
 
         <div class="autorize_main_cell_pass">
+            <label style="align-content:center" for="password">Пароль:</label>
             <input class="autorize_main_cell_pass_input" type="password" id="password" name="password" placeholder="Пароль" required min="1" />
         </div>
 
@@ -21,3 +23,12 @@
         <button formaction="/Home/Registration" formmethod="get" class="autorize_main_cell_btn_reg " formnovalidate>Регистрация</button>
     </form>
 </div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script async>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("@Html.Raw(TempData["ErrorMessage"])");
+        });
+    </script>
+}
