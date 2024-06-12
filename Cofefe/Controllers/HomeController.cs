@@ -164,6 +164,12 @@ namespace Cofefe.Controllers
             return View(VM);
         }
 
+        public IActionResult AgreementPage()
+        {
+           
+            return View();
+
+        }
 
         public IActionResult Address()
         {

@@ -14,7 +14,7 @@
 
         <div style="grid-column:3; grid-row:2" class="create-user_main_cell_number">
             <label for="number">Номер телефона:</label>
-            <input style="grid-column:3;" class="create-user_main_cell_number_input" type="text" id="number" name="PhoneNumber" placeholder="Номер телефона" pattern="[0-9]+|[^\s]+" title="Введите только цифры" maxlength="11" autocomplete="off" value="@Model.PhoneNumber" required minlength="11" />
+            <input style="grid-column:3;" class="create-user_main_cell_number_input" type="text" id="number" name="PhoneNumber" placeholder="Номер телефона" pattern="^8[0-9]+" title="Пример номера: 8__________" maxlength="11" autocomplete="off" value="@Model.PhoneNumber" required minlength="11" />
         </div>
 
         <div style="grid-column:3; grid-row:3" class="create-user_main_cell_log">
