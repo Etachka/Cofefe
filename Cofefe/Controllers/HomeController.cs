@@ -1042,39 +1042,57 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProduct(ProductUpdateViewModel model)
+        public IActionResult UpdateProduct(int id, string title, string desc, int weight, int cost, string acidity, string density, string growth, string type, string base64Image)
         {
-            if (model.Name != null && model.Description != null && model.Weight != null && model.Cost != null && model.Acidity != null && model.Density != null && model.Growth != null && model.Type != null)
+            if (id != null && title != null && desc != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
             {
                 using (var con = new ApplicationContext())
                 {
-                    var product = con.Products.FirstOrDefault(p => p.Id == model.Id);
+                    
+                    var product = con.Products.FirstOrDefault(p => p.Id == id);
                     if (product == null)
                     {
                         return NotFound();
                     }
 
-                    product.Name = model.Name;
-                    product.Description = model.Description;
-                    product.Cost = model.Cost;
-                    product.Weight = model.Weight;
-
+                    product.Name = title;
+                    product.Description = desc;
+                    product.Cost = cost;
+                    product.Weight = weight;
+                    string imageData = null;
+                    if (!string.IsNullOrEmpty(base64Image))
+                    {
+                        imageData = base64Image;
+                        product.Image = imageData;
+                    }
+                    
                     con.SaveChanges();
 
-                    var categoryProducts = con.CategoryProducts.Where(cp => cp.ProductID == model.Id).ToList();
+                    var categoryProducts = con.CategoryProducts.Where(cp => cp.ProductID == id).ToList();
 
-                    UpdateCategoryProductValue(categoryProducts, 1, model.Acidity);
-                    UpdateCategoryProductValue(categoryProducts, 2, model.Density);
-                    UpdateCategoryProductValue(categoryProducts, 3, model.Growth);
-                    UpdateCategoryProductValue(categoryProducts, 4, model.Type);
+                    UpdateCategoryProductValue(categoryProducts, 1, acidity);
+                    UpdateCategoryProductValue(categoryProducts, 2, density);
+                    UpdateCategoryProductValue(categoryProducts, 3, growth);
+                    UpdateCategoryProductValue(categoryProducts, 4, type);
 
                     con.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminView");
             }
-
-            return View(model);
+            ProductUpdateViewModel VM = new ProductUpdateViewModel
+            {
+                Id = id,
+                Name = title,
+                Description = desc,
+                Weight = weight,
+                Cost = cost,
+                Acidity = acidity,
+                Density = density,
+                Growth = growth,
+                Type = type
+            };
+            return View(VM);
         }
 
         private void UpdateCategoryProductValue(List<CategoryProduct> categoryProducts, int categoryId, string value)

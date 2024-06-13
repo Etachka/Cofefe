@@ -77,10 +77,10 @@
                                     </div>
                                 </div>
                             </div>
-                            @* <form class="upddiv" method="get" action="/Home/UpdateProduct">
+                            <form class="upddiv" method="get" action="/Home/UpdateProduct">
                                 <input type="hidden" name="id" value="@product.Id" />
                                 <button type="submit" class="btndel">Редактировать</button>
-                            </form> *@
+                            </form>
                             @if (product.IsHidden == true)
                             {
                                 <form class="deldiv" style="grid-column:2;grid-row:2;" method="post" action="/Home/VisibleProduct">

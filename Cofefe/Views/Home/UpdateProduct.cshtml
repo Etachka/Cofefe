@@ -18,45 +18,46 @@
         </div>
 
         <div class="add-product_main_cell_title">
+            <label for="title">Наименование:</label>
             <input class="add-product_main_cell_title_input" type="text" value="@Model.Name" placeholder="Наименование" name="title" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
-            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="add-product_main_cell_desc">
+            <label for="description">Описание товара:</label>
             <input class="add-product_main_cell_desc_input" type="text" name="desc" value="@Model.Description" placeholder="Описание товара" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" required min="1" />
-            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="add-product_main_cell_weight">
-            <input class="add-product_main_cell_weight_input" type="text" value="@Model.Weight" name="weight" pattern="[0-9]+" title="Введите только цифры" placeholder="Вес товара (г.)" required min="1" maxlength="5" />
-            <span asp-validation-for="Weight" class="text-danger"></span>
+            <label for="weight">Вес товара (г.):</label>
+            <input class="add-product_main_cell_weight_input" type="text" value="@Model.Weight" name="weight" pattern="[0-9]+"title="Введите только цифры" placeholder="Вес товара (г.)" required min="1" maxlength="5" />
         </div>
 
         <div class="add-product_main_cell_cost">
-            <input class="add-product_main_cell_cost_input" type="text" value="@Model.Cost" name="cost" pattern="[0-9]+" title="Введите только цифры" placeholder="Цена товара (₽)" required min="1" maxlength="5" />
-            <span asp-validation-for="Cost" class="text-danger"></span>
+            <label for="cost">цена товара (₽):</label>
+            <input class="add-product_main_cell_cost_input" type="text" value="@Model.Cost" name="cost"  pattern="[0-9]+" title="Введите только цифры" placeholder="Цена товара (₽)" required min="1" maxlength="5" />
         </div>
 
         <div class="add-product_main_cell_acidity">
-            <select class="select-css" value="@Model.Acidity" required>
+            <label for="cost">цена товара (₽):</label>
+            <select class="select-css" name="acidity" value="@Model.Acidity" required>
                 <option value="Низкая">Низкая</option>
                 <option value="Средняя">Средняя</option>
                 <option value="Высокая">Высокая</option>
             </select>
-            <span asp-validation-for="Acidity" class="text-danger"></span>
         </div>
 
         <div class="add-product_main_cell_density">
-            <select class="select-css" value="@Model.Density" required>
+            <label for="density">Выберите плотность:</label>
+            <select class="select-css" name="density" value="@Model.Density" required>
                 <option value="Низкая">Низкая</option>
                 <option value="Средняя">Средняя</option>
                 <option value="Высокая">Высокая</option>
             </select>
-            <span asp-validation-for="Density" class="text-danger"></span>
         </div>
 
         <div class="add-product_main_cell_growth">
-            <select class="select-css" value="@Model.Growth" required>
+            <label for="growth">Выберите страну:</label>
+            <select class="select-css" name="growth" value="@Model.Growth" required>
                 <option value="Боливия">Боливия</option>
                 <option value="Бразилия">Бразилия</option>
                 <option value="Гватемала">Гватемала</option>
@@ -67,24 +68,57 @@
                 <option value="Руанда">Руанда</option>
                 <option value="Эфиопия">Эфиопия</option>
             </select>
-            <span asp-validation-for="Growth" class="text-danger"></span>
         </div>
 
         <div class="add-product_main_cell_type">
-            <select class="select-css" value="@Model.Type" required>
+            <label for="type">Выберите тип приготовления:</label>
+            <select class="select-css" name="type" value="@Model.Type" required>
                 <option value="Milk">Milk</option>
                 <option value="Espresso">Espresso</option>
                 <option value="Filter">Filter</option>
             </select>
-            <span asp-validation-for="Type" class="text-danger"></span>
         </div>
 
+        <div class="add-product_main_cell_img" style="grid-column:2/span 3;">
+            <label for="productImage">Загрузить изображение:</label>
+            <input type="file" id="productImage" name="productImage" accept="image/*" />
+            <input type="hidden" id="base64Image" name="base64Image" />
+            <img id="previewImage" src="#" alt="Ваше изображение" style="display: none; max-width: 100px; margin-top: 10px;" />
+            <span id="fileError" style="color:red; display:none;">Пожалуйста, выберите изображение.</span>
+        </div>
+        <input type="hidden" name="Id" value="@Model.Id" />
         <button type="submit" class="add-product_main_cell_btn">Сохранить</button>
     </form>
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<script>
+    document.getElementById('productImage').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const fileError = document.getElementById('fileError');
+
+        if (file) {
+            // Check if the file type is an image
+            if (!file.type.startsWith('image/')) {
+                fileError.style.display = 'block';
+                this.value = ''; // Clear the input value
+                document.getElementById('previewImage').style.display = 'none';
+                return;
+            } else {
+                fileError.style.display = 'none';
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64Image = e.target.result.split(',')[1]; // Extract Base64 part
+                document.getElementById('base64Image').value = base64Image;
+
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            document.getElementById('previewImage').style.display = 'none';
+        }
+    });
+</script>   
