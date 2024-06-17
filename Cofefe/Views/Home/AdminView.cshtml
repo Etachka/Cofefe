@@ -12,22 +12,22 @@
 
 <div class="main">
     <div class="filter">
-        <form style="grid-row:1;" class="filtercatalog" method="post" action="/Home/GetUsers" id="userForm">
+        <form style="grid-row:1;" class="filtercatalog" method="get" action="/Home/GetUsers" id="userForm">
             <button type="submit" class="btnproductcatalog">
                 <p id="catalog1">Пользователи</p>
             </button>
         </form>
-        <form style="grid-row:2;" class="filtercatalog" method="post" action="/Home/GetProducts" id="catalogForm">
+        <form style="grid-row:2;" class="filtercatalog" method="get" action="/Home/GetProducts" id="catalogForm">
             <button type="submit" class="btnproductcatalog" style="width:160px;">
                 <p id="catalog2">Каталог товаров</p>
             </button>
         </form>
-        <form style="grid-row:3;" class="filtercatalog" method="post" action="/Home/GetOrders" id="catalogForm">
+        <form style="grid-row:3;" class="filtercatalog" method="get" action="/Home/GetOrders" id="catalogForm">
             <button type="submit" class="btnproductcatalog" style="width:160px;">
                 <p id="catalog2">Неотправленные заказы</p>
             </button>
         </form>
-        <form style="grid-row:4;" class="filtercatalog" method="post" action="/Home/GetSentOrders" id="catalogForm">
+        <form style="grid-row:4;" class="filtercatalog" method="get" action="/Home/GetSentOrders" id="catalogForm">
             <button type="submit" class="btnproductcatalog" style="width:160px;">
                 <p id="catalog2">Отправленные заказы</p>
             </button>
@@ -74,6 +74,7 @@
                                     <h3 style="font-weight:600;grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
                                     <div class="divproductcost">
                                         <h3 style="grid-column:1; margin-left:5px; font-size:25px;margin-top:10px;">@product.Cost ₽</h3>
+                                        <h3 style="grid-column:2; margin-top:17px;">На складе:@product.StockQuantity</h3>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +84,7 @@
                             </form>
                             @if (product.IsHidden == true)
                             {
-                                <form class="deldiv" style="grid-column:2;grid-row:2;" method="post" action="/Home/VisibleProduct">
+                                <form class="deldiv" style="grid-column:2;grid-row:2;" method="post" action="/Home/VisibleProduct" id="productForm" data-stock="@product.StockQuantity">
                                     <input type="hidden" name="productId" value="@product.Id" />
                                     <button type="submit" class="btndel">Показать</button>
                                 </form>
@@ -271,4 +272,14 @@
             });
         }
     }
+</script>
+<script>
+    document.getElementById('productForm').addEventListener('submit', function (event) {
+        var stockQuantity = parseInt(this.getAttribute('data-stock'), 10);
+
+        if (stockQuantity === 0) {
+            event.preventDefault(); // Prevent the form from submitting
+            alert('Продуктов нет на складе');
+        }
+    });
 </script>

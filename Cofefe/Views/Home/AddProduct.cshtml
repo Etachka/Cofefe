@@ -11,12 +11,12 @@
 
         <div class="add-product_main_cell_title">
             <label for="title">Наименование:</label>
-            <input class="add-product_main_cell_title_input" type="text" id="title" name="title" placeholder="Наименование" autocomplete="off" required min="1"/>
+            <input class="add-product_main_cell_title_input" type="text" id="title" name="title" placeholder="Наименование" pattern="^(?=.*[A-Za-zА-Яа-яЁё])[A-Za-zА-Яа-яЁё\s]+$" autocomplete="off" required min="1" />
         </div>
 
         <div class="add-product_main_cell_desc">
             <label for="description">Описание товара:</label>
-            <input class="add-product_main_cell_desc_input" type="text" id="description" name="description" placeholder="Описание товара" required min="1" />
+            <input class="add-product_main_cell_desc_input" type="text" id="description" name="description" maxlength="80" pattern="^(?=.*[A-Za-zА-Яа-яЁё])[A-Za-zА-Яа-яЁё\s]+$" placeholder="Описание товара" required min="1" />
         </div>
 
         <div class="add-product_main_cell_weight">
@@ -73,6 +73,10 @@
                 <option>Espresso</option>
                 <option>Filter</option>
             </select>   
+        </div>
+        <div class="add-product_main_cell_count">
+            <label for="cost">количество на складе (шт.):</label>
+            <input class="add-product_main_cell_count_input" type="text" name="quantity" pattern="[0-9]+" title="Введите только цифры" placeholder="количество на складе (шт.)" required min="1" maxlength="5" />
         </div>
         <div class="add-product_main_cell_img" style="grid-column:2/span 3;">
             <label for="productImage">Загрузить изображение:</label>

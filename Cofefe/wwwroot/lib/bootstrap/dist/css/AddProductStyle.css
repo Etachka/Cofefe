@@ -1,11 +1,11 @@
 ﻿.add-product_main {
     width: auto;
-    height: auto;
+    height: 100%;
     display: grid;
     background-color: #653e34;
     min-height: 803px;
     grid-template-columns: 30% 40% 30%;
-    grid-template-rows: 5% auto 5%;
+    grid-template-rows: 5% 90% 5%;
 }
 
 .add-product_main_cell {
@@ -17,7 +17,7 @@
     box-shadow: 0 4px 8px black;
     display: grid;
     grid-template-columns: 5% 44% 2% 44% 5%;
-    grid-template-rows: 15% 15% 15% 15% 15% 15% 10%;
+    grid-template-rows: 15% 10% 10% 15% 15% 15% 10% 10%;
 }
 .add-product_main_cell_name {
     grid-row: 1;
@@ -212,17 +212,34 @@
     }
 
 .add-product_main_cell_img {
-    grid-row: 6;
+    grid-row: 7;
     grid-column: 4;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
 }
+.add-product_main_cell_count {
+    grid-row: 6;
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
 
+.add-product_main_cell_count_input {
+    grid-column: 2;
+    border-radius: 35px;
+    height: 50px;
+    width: 350px;
+    border: 1px solid black;
+    font-size: 20px;
+    padding-left: 5px;
+}
 
 .add-product_main_cell_btn {
-    grid-row: 7;
+    grid-row: 8;
     grid-column: 2 / span 3;
     margin: 15px 45px 15px 45px;
     border-radius: 35px;

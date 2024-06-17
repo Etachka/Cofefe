@@ -152,6 +152,7 @@
                             </button>
                             </div>
                             <input type="hidden" name="productId" value="@product.Id">
+                            <input type="hidden" name="returnUrl" value="@Url.Action("Index", new { page = Model.CurrentPage, pageSize = Model.PageSize, searchString = Model.SearchString, acidity = Model.Acidity, density = Model.Density, growth = Model.Growth, type = Model.Type })">
                         </form>
                         @foreach (var inf in Model.CategoryProducts
                            .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
@@ -175,7 +176,7 @@
 
 
                     <form asp-action="AddToCart" style="grid-column: 2;grid-row: 2; align-content: center;justify-content:center;flex-wrap:wrap;display:flex;" asp-controller="Home" method="post">
-                        <input type="hidden" name="returnUrl" value="Index">
+                        <input type="hidden" name="returnUrl" value="@Url.Action("Index", new { page = Model.CurrentPage, pageSize = Model.PageSize, searchString = Model.SearchString, acidity = Model.Acidity, density = Model.Density, growth = Model.Growth, type = Model.Type })">
                         <input type="hidden" name="productId" value="@product.Id">
                         <button type="submit" class="buttonbuy" id="addToCartButton">В корзину</button>
                     </form>

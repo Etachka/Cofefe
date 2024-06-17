@@ -30,7 +30,7 @@ namespace Cofefe.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetProducts()
         {
             UserProductViewmodel VM = new UserProductViewmodel();
@@ -42,7 +42,7 @@ namespace Cofefe.Controllers
             ViewBag.CatalogType = "Products";
             return View("AdminView", VM);
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetOrders()
         {
             ViewBag.CatalogType = "Orders";
@@ -55,7 +55,7 @@ namespace Cofefe.Controllers
             return View("AdminView", VM);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetSentOrders()
         {
             ViewBag.CatalogType = "SentOrders"; 
@@ -70,7 +70,7 @@ namespace Cofefe.Controllers
 
         
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetUsers()
         {
             ViewBag.CatalogType = "Users";
@@ -84,7 +84,7 @@ namespace Cofefe.Controllers
 
 
 
-        public ViewResult Index(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 10)
+        public ViewResult Index(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 6)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             List<int> favoriteProductIds = _context.FavoriteProducts
@@ -270,7 +270,7 @@ namespace Cofefe.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddOrRemoveFavorite(int productId, bool isFavorite)
+        public async Task<IActionResult> AddOrRemoveFavorite(int productId, bool isFavorite, string returnUrl)
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
@@ -290,15 +290,15 @@ namespace Cofefe.Controllers
                     await _context.SaveChangesAsync();
                 }
 
-            return RedirectToAction("Index");
+            return Redirect(returnUrl);
         }
 
 
 
-        public ViewResult Favorite(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 10)
+        public ViewResult Favorite(string searchString, string acidity, string density, string growth, string type, int page = 1, int pageSize = 6)
         {
             if (HttpContext.Session.GetInt32("UserId") != null)
-            {
+            { 
                 int userId = HttpContext.Session.GetInt32("UserId").Value;
 
                 var favoriteProductIds = _context.FavoriteProducts
@@ -370,6 +370,7 @@ namespace Cofefe.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult OrderList(int page = 1, int pageSize = 8)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
@@ -483,7 +484,7 @@ namespace Cofefe.Controllers
             {
                 product.IsHidden = true;
                 _context.SaveChanges();
-                return RedirectToAction("AdminView") ;
+                return RedirectToAction("GetProducts", "Home") ;
             }
             else
             {
@@ -496,12 +497,12 @@ namespace Cofefe.Controllers
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == productId);
 
-            if (product != null)
+            if (product != null && product.StockQuantity != 0)
             {
                 product.IsHidden = false;
                 _context.SaveChanges();
                 TempData["Message"] = "Product visible successfully!";
-                return RedirectToAction("AdminView");
+                return RedirectToAction("GetProducts", "Home");
             }
             else
             {
@@ -516,9 +517,9 @@ namespace Cofefe.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddProduct(string title, string description, int weight, int cost, string acidity, string density, string growth,  string type, string base64Image)
+        public IActionResult AddProduct(string title, string description, int quantity, int weight, int cost, string acidity, string density, string growth,  string type, string base64Image)
         {
-            if (title != null && description != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
+            if (title != null && description != null && weight != null && cost != null && quantity != null && acidity != null && density != null && growth != null && type != null)
             {
                 using (var con = new ApplicationContext())
                 {
@@ -526,6 +527,10 @@ namespace Cofefe.Controllers
                     if (!string.IsNullOrEmpty(base64Image))
                     {
                         imageData = base64Image;
+                    }
+                    else
+                    {
+                        imageData = "";
                     }
                     con.Products.AddRange(new[]
                     {
@@ -535,7 +540,7 @@ namespace Cofefe.Controllers
                             Cost = cost,
                             Weight = weight,
                             Image = imageData,
-                            StockQuantity = 100},
+                            StockQuantity = quantity},
                     });
                     con.SaveChanges();
                     var prod = _context.Products.FirstOrDefault(x => x.Name == title);
@@ -652,7 +657,7 @@ namespace Cofefe.Controllers
             TempData["message"] = "Товар добавлен в корзину!";
             TempData["messageType"] = "success";
 
-            return RedirectToAction(returnUrl);
+            return Redirect(returnUrl);
         }
 
         [HttpPost]
@@ -689,12 +694,12 @@ namespace Cofefe.Controllers
             {
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("AdminView");
+                return RedirectToAction("GetUsers", "Home");
             }
             else
             {
                 TempData["ErrorMessage"] = "У пользователя есть заказы";
-                return RedirectToAction("AdminView");
+                return RedirectToAction("GetUsers", "Home");
             }
             
         }
@@ -758,12 +763,12 @@ namespace Cofefe.Controllers
                     if (!string.IsNullOrEmpty(updatedUser.Password))
                     {
                         existingUser.Password = updatedUser.Password;
-                        _context.SaveChanges();
-                        return View("Cabinet", existingUser);
+                        
                     }
                 }
-                
-                
+                _context.SaveChanges();
+                return View("Cabinet", existingUser);
+
             }
         
             return View(updatedUser); 
@@ -855,14 +860,11 @@ namespace Cofefe.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> CreateOrder()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            
 
             var cartItems = await _context.ShoppingCarts
                 .Where(item => item.UserID == userId)
@@ -934,7 +936,12 @@ namespace Cofefe.Controllers
                             if (remainingStock >= 0)
                             {
                                 product.StockQuantity = remainingStock;
+                                if (product.StockQuantity == 0)
+                                {
+                                    product.IsHidden = true;
+                                }
                                 _context.Products.Update(product);
+
                                 order.StatusID = 2;
                             }
                             else
@@ -945,7 +952,7 @@ namespace Cofefe.Controllers
 
                                 // Помещаем значение в ViewData
                                 ViewData["StockErrorMessage"] = errorMessage;
-                                return RedirectToAction("AdminView", new { errorMessage = TempData["StockErrorMessage"] });
+                                return RedirectToAction("GetOrders", new { errorMessage = TempData["StockErrorMessage"] });
                             }
                         }
                     }
@@ -962,7 +969,7 @@ namespace Cofefe.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("AdminView");
+            return RedirectToAction("GetOrders", "Home");
         }
 
 
@@ -1025,6 +1032,7 @@ namespace Cofefe.Controllers
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
+                    Count = p.StockQuantity,
                     Weight = p.Weight,
                     Cost = p.Cost,
                     Acidity = _context.CategoryProducts.FirstOrDefault(cp => cp.ProductID == id && cp.CategoryID == 1).Value,
@@ -1042,9 +1050,9 @@ namespace Cofefe.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProduct(int id, string title, string desc, int weight, int cost, string acidity, string density, string growth, string type, string base64Image)
+        public IActionResult UpdateProduct(int id, string title, string desc, int weight, int cost, int quantity, string acidity, string density, string growth, string type, string base64Image)
         {
-            if (id != null && title != null && desc != null && weight != null && cost != null && acidity != null && density != null && growth != null && type != null)
+            if (id != null && title != null && desc != null && weight != null && quantity != null && cost != null && acidity != null && density != null && growth != null && type != null)
             {
                 using (var con = new ApplicationContext())
                 {
@@ -1058,6 +1066,7 @@ namespace Cofefe.Controllers
                     product.Name = title;
                     product.Description = desc;
                     product.Cost = cost;
+                    product.StockQuantity = quantity;
                     product.Weight = weight;
                     string imageData = null;
                     if (!string.IsNullOrEmpty(base64Image))
@@ -1078,7 +1087,7 @@ namespace Cofefe.Controllers
                     con.SaveChanges();
                 }
 
-                return RedirectToAction("AdminView");
+                return RedirectToAction("GetProducts", "Home");
             }
             ProductUpdateViewModel VM = new ProductUpdateViewModel
             {
@@ -1086,6 +1095,7 @@ namespace Cofefe.Controllers
                 Name = title,
                 Description = desc,
                 Weight = weight,
+                Count = quantity,
                 Cost = cost,
                 Acidity = acidity,
                 Density = density,
@@ -1104,6 +1114,30 @@ namespace Cofefe.Controllers
             }
         }
 
+
+        [HttpGet]
+        public IActionResult CheckUserAddress()
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            var user = _context.Users.Find(userId.Value);
+            if (user != null && !string.IsNullOrEmpty(user.Address))
+            {
+                return RedirectToAction("CreateOrder");
+            }
+
+            return View("Cabinet", user);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteOrder(int orderId)
+        {
+            var orders = _context.Orders.Where(x => x.OrderId == orderId);
+
+            _context.Orders.RemoveRange(orders);
+            _context.SaveChanges();
+
+            return RedirectToAction("OrderList"); // Пример редиректа после удаления заказа
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

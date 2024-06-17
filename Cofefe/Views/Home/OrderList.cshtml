@@ -16,7 +16,6 @@
             {
                 var groupedOrders = Model.Orders.GroupBy(o => o.OrderId); // Создайте groupedOrders в представлении
                 int summ = 0;
-
                 @foreach (var group in groupedOrders)
                 {
                     summ = 0;
@@ -61,6 +60,13 @@
                             </div>
                         }
                         <h3 style="margin-top:10px; font-size:20px; margin-left:15px">Итоговая стоимость: @summ</h3>
+                        @if (status.Name == "Новый заказ")
+                        {
+                            <form id="deleteOrderForm_@group.Key" asp-action="DeleteOrder" asp-controller="Home" method="post">
+                                <button type="button" class="buttonbuy" onclick="confirmDelete('@group.Key')">Удалить заказ</button>
+                                <input type="hidden" name="orderId" value="@group.Key" />
+                            </form>
+                        }
                     </div>
                 }
             }
@@ -80,3 +86,11 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function confirmDelete(orderId) {
+        if (confirm("Вы хотите отменить заказ?")) {
+            document.getElementById("deleteOrderForm_" + orderId).submit();
+        }
+    }
+</script>

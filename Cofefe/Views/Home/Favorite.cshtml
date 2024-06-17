@@ -126,7 +126,7 @@
                         </div>
                         <div class="divproductinf">
                             <h3 style="grid-row:1; margin-left:5px;">@product.Description</h3>
-                            <h3 style="grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
+                            <h3 style="font-weight:600;grid-row:2; margin-left:5px; margin-top:10px;">Вес: @product.Weight г.</h3>
                             <div class="divproductcost">
                                 <h3 style="grid-column:1; margin-left:5px; font-size:25px;margin-top:10px;">@product.Cost ₽</h3>
                             </div>
@@ -155,6 +155,7 @@
                                 </button>
                             </div>
                             <input type="hidden" name="productId" value="@product.Id">
+                            <input type="hidden" name="returnUrl" value="@Url.Action("Favorite", new { page = Model.CurrentPage, pageSize = Model.PageSize, searchString = Model.SearchString, acidity = Model.Acidity, density = Model.Density, growth = Model.Growth, type = Model.Type })">
                         </form>
                         @foreach (var inf in Model.CategoryProducts
                        .Join(Model.Categories, cp => cp.CategoryID, c => c.Id, (cp, c) => new { cp, c })
@@ -162,20 +163,22 @@
                         {
                             @if (inf.c.Id == 5)
                             {
-                                <h3 class="gradetext" alt="0">@inf.cp.Value</h3>
+                                @* <h3 class="gradetext" alt="0">@inf.cp.Value</h3> *@
                             }
                             @* @if (inf.c.Id == 6)
                             {
                                 <button class="commentbtn">Отзывы ( @inf.cp.Value )</button>
                             } *@
                         }
-
+                        <div style="grid-column:3; display: flex;font-size: 1.3em;align-items: center;justify-content: center;">
+                                <h3>На складе:@product.StockQuantity</h3>
+                            </div>
 
                     </div>
 
 
                     <form asp-action="AddToCart" style="grid-column: 2;grid-row: 2; align-content: center;justify-content:center;flex-wrap:wrap;display:flex;" asp-controller="Home" method="post">
-                         <input type="hidden" name="returnUrl" value="Favorite">
+                         <input type="hidden" name="returnUrl" value="@Url.Action("Favorite", new { page = Model.CurrentPage, pageSize = Model.PageSize, searchString = Model.SearchString, acidity = Model.Acidity, density = Model.Density, growth = Model.Growth, type = Model.Type })">
                         <input type="hidden" name="productId" value="@product.Id">
                         <button type="submit" class="buttonbuy">В корзину</button>
                     </form>
@@ -220,4 +223,18 @@
             itemCountElement.innerText = itemCount + ' ' + wordForm;
         }
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var addToCartButtons = document.querySelectorAll('.buttonbuy');
+    addToCartButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var cartButton = document.getElementById('cartButton');
+            cartButton.classList.add('clicked');
+            setTimeout(function () {
+                cartButton.classList.remove('clicked');
+            }, 2000);
+        });
+    });
+});
 </script>

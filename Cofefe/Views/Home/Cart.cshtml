@@ -70,7 +70,7 @@
         <div class="panelcount1">
             <span id="totalCost">Суммарная цена: 0</span>
         </div>
-        <form asp-action="CreateOrder" asp-controller="Home" method="post" id="orderForm">
+        <form asp-action="CreateOrder" asp-controller="Home" method="get" id="orderForm">
             <button type="button" class="cart_to_order_btn" onclick="confirmOrder()">Сделать заказ</button>
         </form>
     </div>
@@ -193,8 +193,12 @@
 
     function confirmOrder() {
         if (confirm("Вы точно хотите оформить заказ? Проверьте адрес доставки у себя в профиле.")) {
-            document.getElementById("orderForm").submit();
+            checkUserAddress();
         }
+    }
+
+    function checkUserAddress() {
+        window.location.href = '@Url.Action("CheckUserAddress", "Home")';
     }
 
     document.addEventListener("DOMContentLoaded", function () {

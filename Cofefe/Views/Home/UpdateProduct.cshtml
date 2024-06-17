@@ -19,12 +19,12 @@
 
         <div class="add-product_main_cell_title">
             <label for="title">Наименование:</label>
-            <input class="add-product_main_cell_title_input" type="text" value="@Model.Name" placeholder="Наименование" name="title" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" autocomplete="off" required min="1" />
+            <input class="add-product_main_cell_title_input" type="text" value="@Model.Name" placeholder="Наименование" name="title" pattern="^(?=.*[A-Za-zА-Яа-яЁё])[A-Za-zА-Яа-яЁё\s]+$" title="Введите только буквы" autocomplete="off" required min="1" />
         </div>
 
         <div class="add-product_main_cell_desc">
             <label for="description">Описание товара:</label>
-            <input class="add-product_main_cell_desc_input" type="text" name="desc" value="@Model.Description" placeholder="Описание товара" pattern="[A-Za-zА-Яа-яЁё]+" title="Введите только буквы" required min="1" />
+            <input class="add-product_main_cell_desc_input" type="text" name="desc" value="@Model.Description" placeholder="Описание товара" pattern="^(?=.*[A-Za-zА-Яа-яЁё])[A-Za-zА-Яа-яЁё,.\s]+$" title="Введите только буквы" required min="1" />
         </div>
 
         <div class="add-product_main_cell_weight">
@@ -79,13 +79,19 @@
             </select>
         </div>
 
+        <div class="add-product_main_cell_count">
+            <label for="cost">количество на складе (шт.):</label>
+            <input class="add-product_main_cell_count_input" type="text" value="@Model.Count" name="quantity" pattern="[0-9]+" title="Введите только цифры" placeholder="количество на складе (шт.)" required min="1" maxlength="5" />
+        </div>
+
         <div class="add-product_main_cell_img" style="grid-column:2/span 3;">
             <label for="productImage">Загрузить изображение:</label>
-            <input type="file" id="productImage" name="productImage" accept="image/*" />
-            <input type="hidden" id="base64Image" name="base64Image" />
-            <img id="previewImage" src="#" alt="Ваше изображение" style="display: none; max-width: 100px; margin-top: 10px;" />
+            <input type="file" id="productImage" name="productImage" accept="image/*"/>
+            <input type="hidden" id="base64Image" name="base64Image"/>
+            <img id="previewImage" src="#" alt="Ваше изображение" style="display: none; max-width: 80px; margin-top: 10px;"/>
             <span id="fileError" style="color:red; display:none;">Пожалуйста, выберите изображение.</span>
         </div>
+
         <input type="hidden" name="Id" value="@Model.Id" />
         <button type="submit" class="add-product_main_cell_btn">Сохранить</button>
     </form>

@@ -8,6 +8,7 @@ namespace Cofefe.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public double Weight { get; set; }
+        public int Count { get; set; }
         public int Cost { get; set; }
         public string Acidity { get; set; }
         public string Density { get; set; }
