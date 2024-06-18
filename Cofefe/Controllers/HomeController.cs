@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.Net.NetworkInformation;
 using PagedList;
 using System.Drawing.Printing;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Drawing;
 
 namespace Cofefe.Controllers
 {
@@ -496,17 +498,24 @@ namespace Cofefe.Controllers
         public IActionResult VisibleProduct(int productId)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == productId);
-
-            if (product != null && product.StockQuantity != 0)
+            if(product.StockQuantity != 0)
             {
-                product.IsHidden = false;
-                _context.SaveChanges();
-                TempData["Message"] = "Product visible successfully!";
-                return RedirectToAction("GetProducts", "Home");
+                if (product != null)
+                {
+                    product.IsHidden = false;
+                    _context.SaveChanges();
+                    TempData["Message"] = "Product visible successfully!";
+                    return RedirectToAction("GetProducts", "Home");
+                }
+                else
+                {
+                    return Content("Product not found!");
+                }
             }
             else
             {
-                return Content("Product not found!");
+                TempData["StockQuantityMessage"] = "Товаров нет на складе";
+                return RedirectToAction("GetProducts");
             }
         }
 
@@ -580,7 +589,7 @@ namespace Cofefe.Controllers
                     });
                     con.SaveChanges();
                 }
-                return View("AdminView");
+                return RedirectToAction("GetProducts");
             }
             else return View();
         }
@@ -754,23 +763,39 @@ namespace Cofefe.Controllers
         public IActionResult UpdateUser(User updatedUser, string OldPassword)
         {
             var existingUser = _context.Users.Find(updatedUser.Id);
+            var phoneuser = _context.Users.SingleOrDefault(u => u.PhoneNumber == updatedUser.PhoneNumber);
+            if (phoneuser != null)
+            {
+                TempData["ErrorMessage"] = "Пользователь с таким номером телефона уже существует.";
+                return View();
+            }
             if (existingUser != null)
             {
                 existingUser.PhoneNumber = updatedUser.PhoneNumber;
                 existingUser.Login = updatedUser.Login;
+                if ((OldPassword == null && updatedUser.Password != null) || (OldPassword != null && updatedUser.Password == null))
+                {
+                    TempData["ErrorMessage"] = "Заполнено только одно из двух полей для смены пароля";
+                    return RedirectToAction("UpdateUser", updatedUser);
+                }
+                if (existingUser.Password != OldPassword && OldPassword != null)
+                {
+                    TempData["ErrorMessage"] = "Вы ошиблись в своём старом пароле";
+                    return RedirectToAction("UpdateUser", updatedUser);
+                }
                 if (existingUser.Password == OldPassword && OldPassword != null && updatedUser.Password !=null)
                 {
                     if (!string.IsNullOrEmpty(updatedUser.Password))
                     {
                         existingUser.Password = updatedUser.Password;
-                        
+
                     }
                 }
+                
                 _context.SaveChanges();
                 return View("Cabinet", existingUser);
 
             }
-        
             return View(updatedUser); 
         }
 
@@ -946,13 +971,8 @@ namespace Cofefe.Controllers
                             }
                             else
                             {
-                                TempData["StockErrorMessage"] = "Не хватает на складе";
-                                HttpContext.Session.SetString("StockErrorMessage", "Не хватает на складе");
-                                var errorMessage = HttpContext.Session.GetString("StockErrorMessage");
-
-                                // Помещаем значение в ViewData
-                                ViewData["StockErrorMessage"] = errorMessage;
-                                return RedirectToAction("GetOrders", new { errorMessage = TempData["StockErrorMessage"] });
+                                TempData["Aboba"] = "Не хватает на складе";
+                                return RedirectToAction("GetOrders", "Home");
                             }
                         }
                     }

@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
     ViewData["Title"] = "Чит-меню";
-    
 }
 @using Cofefe.ViewModels
 @using Cofefe.Models
@@ -35,7 +34,7 @@
     </div>
     @if (Model != null && Model.Products != null && Model.Products.Any())
     {
-    <div class="catalogAdmin">
+        <div class="catalogAdmin">
             @switch (ViewBag.CatalogType)
             {
                 case "Products":
@@ -125,13 +124,13 @@
                                     }
                                 </div>
                             </div>
-                            
+
                             @if (user != null)
                             {
                                 <h3 style="grid-row:3" class="order-total">ФИО: @user.FIO</h3>
                                 <h3 style="grid-row:4" class="order-total">Адрес: @user.Address</h3>
                             }
-                            
+
                             <h3 class="order-total">Итоговая стоимость: @summ ₽</h3>
 
                             <div class="deldiv2">
@@ -149,12 +148,10 @@
                                     </button>
                                 </form>
                             </div>
-                            
-                           
                         </div>
                     }
-                    
-                    break;
+           break;
+
                 case "SentOrders":
                     groupedOrders = Model.SentOrders.GroupBy(o => o.OrderId);
                     @foreach (var AllOrder in groupedOrders)
@@ -193,16 +190,13 @@
                     break;
 
                 case "Users":
-                    @* <form class="emptycard" method="get" action="/Home/CreateTestUser" id="catalogForm">
-                        <button class="addbtn"></button>
-                    </form> *@
                     @foreach (var user in Model.Users.Where(x => x.role == 2))
                     {
                         <div class="usercard">
                             <div class="namediv">
                                 <h3 class="namecard">@user.FIO</h3>
                             </div>
-                            <div class="propdiv">
+                            <div class="propdiv" style="display:grid;">
                                 <h3 class="namecard" style="grid-row:3; grid-column:1">Номер телефона:</h3>
                                 <h3 class="namecard" style="grid-row:4; grid-column:1">Адресс:</h3>
                                 <h3 class="namecard" style="grid-row:3; grid-column:2">
@@ -214,7 +208,7 @@
                                 <input type="hidden" name="userId" value="@user.Id" />
                                 <button type="submit" class="btndel">Удалить</button>
                             </form>
-                            
+
                         </div>
                     }
                     break;
@@ -230,7 +224,7 @@
         <div style="background-color:#121119;">
             <p style="color:#F7F7F7; margin-left:20px;">Выберите один из каталогов</p>
         </div>
-        
+
     }
 </div>
 @if (TempData["ErrorMessage"] != null)
@@ -243,30 +237,64 @@
         });
     </script>
 }
-@if (!string.IsNullOrEmpty(ViewData["StockErrorMessage"] as string))
+@if (TempData["StockQuantityMessage"] != null)
 {
     <script async>
         document.addEventListener("DOMContentLoaded", function () {
-            var errorMessage = '@Html.Raw(ViewData["StockErrorMessage"])';
-            alert(errorMessage);
+            alert("@Html.Raw(TempData["StockQuantityMessage"])");
         });
     </script>
 }
+@if (TempData["Aboba"] != null)
+{
+    <div id="error-panel" class="error-panel">
+        @TempData["Aboba"]
+    </div>
+    <style>
+        .error-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorPanel = document.getElementById("error-panel");
+            if (errorPanel) {
+                errorPanel.style.display = "block";
+                setTimeout(function () {
+                    errorPanel.style.opacity = "0";
+                    setTimeout(function () {
+                        errorPanel.style.display = "none";
+                    }, 1000); // Время на анимацию исчезновения
+                }, 5000); // Панель исчезнет через 5 секунд
+            }
+        });
+    </script>
+}
+
 <script>
     function confirmRemoval(event, status) {
-        event.preventDefault(); // Останавливаем отправку формы
+        event.preventDefault();
         var message = status === 'send' ? 'Вы уверены, что хотите отправить этот заказ?' : 'Вы уверены, что хотите отменить этот заказ?';
         if (confirm(message)) {
             var form = event.target;
             var formData = new FormData(form);
-            formData.append('status', status); // Добавляем параметр status
+            formData.append('status', status);
             fetch(form.action, {
                 method: form.method,
                 body: formData
             }).then(response => {
                 if (response.ok) {
-                    // Можно выполнить дополнительные действия при успешном запросе
-                    // Например, перенаправление на другую страницу
                     window.location.href = response.url;
                 }
             });
@@ -274,12 +302,17 @@
     }
 </script>
 <script>
-    document.getElementById('productForm').addEventListener('submit', function (event) {
-        var stockQuantity = parseInt(this.getAttribute('data-stock'), 10);
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById('productForm');
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                var stockQuantity = parseInt(this.getAttribute('data-stock'), 10);
 
-        if (stockQuantity === 0) {
-            event.preventDefault(); // Prevent the form from submitting
-            alert('Продуктов нет на складе');
+                if (stockQuantity === 0) {
+                    event.preventDefault();
+                    alert('Продуктов нет на складе');
+                }
+            });
         }
     });
 </script>

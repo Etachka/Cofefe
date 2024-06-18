@@ -37,3 +37,12 @@
         <button type="submit" class="create-user_main_cell_btn">Сохранить</button>
     </div>
 </form>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script async>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("@Html.Raw(TempData["ErrorMessage"])");
+        });
+    </script>
+}
