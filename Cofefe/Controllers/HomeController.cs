@@ -764,7 +764,7 @@ namespace Cofefe.Controllers
         {
             var existingUser = _context.Users.Find(updatedUser.Id);
             var phoneuser = _context.Users.SingleOrDefault(u => u.PhoneNumber == updatedUser.PhoneNumber);
-            if (phoneuser != null)
+            if (phoneuser != null && phoneuser.Id != updatedUser.Id)
             {
                 TempData["ErrorMessage"] = "Пользователь с таким номером телефона уже существует.";
                 return View();
