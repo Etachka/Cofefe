@@ -27,7 +27,7 @@
     flex-wrap: wrap;
 }
 .card {
-    width: 450px;
+    width: 464px;
     height: 300px;
     border: solid 1px black;
     border-radius: 10px;
@@ -35,7 +35,7 @@
     display: grid;
     margin: 30px;
     background-color: #b2b2bd;
-    grid-template-columns: 240px 210px;
+    grid-template-columns: 240px 224px;
     grid-template-rows: 240px 60px;
 }
 

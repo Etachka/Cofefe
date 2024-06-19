@@ -767,7 +767,7 @@ namespace Cofefe.Controllers
             if (phoneuser != null && phoneuser.Id != updatedUser.Id)
             {
                 TempData["ErrorMessage"] = "Пользователь с таким номером телефона уже существует.";
-                return View();
+                return RedirectToAction("UpdateUser", updatedUser);
             }
             if (existingUser != null)
             {
@@ -793,6 +793,7 @@ namespace Cofefe.Controllers
                 }
                 
                 _context.SaveChanges();
+                TempData["ErrorMessage"] = "Личная информация обновлена";
                 return View("Cabinet", existingUser);
 
             }
